@@ -1,54 +1,17 @@
 public class CheckRules {
 
     public static boolean checkLegalMove(int[][] board, int coordinate) {
+        int maxcoord = board[0].length*board.length;
 
-        if (coordinate < 1 || coordinate > 9) {
+        if (coordinate > maxcoord || coordinate < 1) {
             return false;
         }
-        if (coordinate == 1) {
-            if (board[0][0]==0) {
-                return true;
-            }
-        }
-        if (coordinate == 2) {
-            if (board[0][1]==0) {
-                return true;
-            }
-        }
-        if (coordinate == 3) {
-            if (board[0][2]==0) {
-                return true;
-            }
-        }
-        if (coordinate == 4) {
-            if (board[1][0]==0) {
-                return true;
-            }
-        }
-        if (coordinate == 5) {
-            if (board[1][1]==0) {
-                return true;
-            }
-        }
-        if (coordinate == 6) {
-            if (board[1][2]==0) {
-                return true;
-            }
-        }
-        if (coordinate == 7) {
-            if (board[2][0]==0) {
-                return true;
-            }
-        }
-        if (coordinate == 8) {
-            if (board[2][1]==0) {
-                return true;
-            }
-        }
-        if (coordinate == 9) {
-            if (board[2][2]==0) {
-                return true;
-            }
+
+        int row = coordinate/board[0].length;
+        int col = coordinate%board[0].length-1;
+
+        if (board[row][col]==0) {
+            return true;
         }
         return false;
 
@@ -85,17 +48,18 @@ public class CheckRules {
 
     }
 
-/* testen van de methodes
+// testen van de methodes
 
     public static void main(String[] args) {
-        int[][] board = {{1,0,0},
-                         {0,1,0},
-                         {0,1,1}};
-        int coordinate = 2;
+        int[][] board = {{1,-1,-1},
+                         {1,0,0},
+                         {1,1,1}};
+
+        int coordinate = 1;
 
         //System.out.println(checkLegalMove(board,coordinate));
         System.out.println(checkWinner(board,1));
 
     }
-*/
+
 }
