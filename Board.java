@@ -30,4 +30,16 @@ public class Board {
             System.out.println();
         }
     }
+
+    public void setSize(int size) {this.size = size;}
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setBoard(int[][] board) {this.board = board;}
+
+    public int[][] getBoard() {return board;}
+
+
 }
