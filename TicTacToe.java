@@ -16,7 +16,7 @@ public class TicTacToe {
         int x = randomMove.nextInt(board.getSize());
         int y = randomMove.nextInt(board.getSize());
 
-        if (CheckRules.checkLegalMove(getBoard(), x, y) == true) {
+        if (CheckRules.checkLegalMove(getBoardArray(), x, y) == true) {
             board.updateBoard(ai, x, y);
         } else {
             aiMove(ai);
@@ -24,7 +24,7 @@ public class TicTacToe {
     }
 
     public boolean makeMove(int x, int y) {
-        if (CheckRules.checkLegalMove(getBoard(), x, y)) {
+        if (CheckRules.checkLegalMove(getBoardArray(), x, y)) {
             board.updateBoard(player, x, y);
             return true;
         } else {
@@ -45,7 +45,11 @@ public class TicTacToe {
         this.board = board;
     }
 
-    public int[][] getBoard() {
+    public void getBoard() {
+        return board;
+    }
+
+    public int[][] getBoardArray() {
         return board.getBoard();
     }
 }

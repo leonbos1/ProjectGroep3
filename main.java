@@ -1,18 +1,14 @@
-
-import Board;
 import java.lang.*;
-import CheckRules;
-import TicTacToe;
 import java.util.Scanner;
 class main{
-    public static void main() {
+    public static void main(String[] args) {
         System.out.println("Welkom bij tic-tac-toe!");
         System.out.print("Wilt u eerst spelen (0), of mag de ai eerst (1):");
         Scanner scanner = new Scanner(System.in);
         int choice = Integer.parseInt(scanner.nextLine());
-        TicTacToe game = new TicTacToe;
-        if (choice = 1) {
-            game.aiMove();
+        TicTacToe game = new TicTacToe();
+        if (choice == 1) {
+            game.aiMove(1);
         }
         while (true) {
 
@@ -26,7 +22,7 @@ class main{
 
     public static int[] input(){
         Scanner scanner = new Scanner(System.in);
-        int userInput = Integer.parseInt(scanner.nextLine());
+        int[] userInput = coordinates(Integer.parseInt(scanner.nextLine()));
         return userInput;
     }
 
