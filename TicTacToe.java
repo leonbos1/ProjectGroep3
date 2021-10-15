@@ -20,6 +20,12 @@ public class TicTacToe {
 
         if (CheckRules.checkLegalMoves(board, x, y) == true) {
             board.updateBoard(board.getPlayer(), x, y);
+            if(CheckRules.checkWinner(board, player)) {
+                System.out.println("Het spel is voorbij, de winnaar is speler " + player);
+            }
+            if(CheckRules.checkBoardFull(board)) {
+                System.out.println("Spel is voorbij, er is geen winnaar");
+            }
             switchPlayer = player;
             player = otherPlayer;
             otherPlayer = switchPlayer;
@@ -38,6 +44,12 @@ public class TicTacToe {
             switchPlayer = player;
             player = otherPlayer;
             otherPlayer = switchPlayer;
+            if(CheckRules.checkWinner(board, player)) {
+                System.out.println("Het spel is voorbij, de winnaar is speler " + player);
+            }
+            if(CheckRules.checkBoardFull(board)) {
+                System.out.println("Spel is voorbij, er is geen winnaar");
+            }
         }
         else {
             System.out.println("illegal move");
