@@ -64,7 +64,19 @@ public class CheckRules {
 
        return false;
 
+    }
+
+    public static boolean checkBoardFull(int[][] board) {
+        for (int col = 0; col < board.length; col++) {
+            for (int row = 0; row < board[0].length; row++) {
+                if (board[row][col] == 0) {
+                    return false;
+                }
             }
+        }
+        return true;
+    }
+
 
 // testen van de methodes
 

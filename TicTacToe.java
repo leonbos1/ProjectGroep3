@@ -12,14 +12,15 @@ public class TicTacToe {
         this.player = 1;
     }
 
-    public void aiMove(int ai) {
+    public int aiMove(int ai) {
         int x = randomMove.nextInt(board.getSize());
         int y = randomMove.nextInt(board.getSize());
 
         if (CheckRules.checkLegalMove(getBoardArray(), x, y) == true) {
             board.updateBoard(ai, x, y);
+            return x*board.getSize()+y+1;
         } else {
-            aiMove(ai);
+            return aiMove(ai);
         }
     }
 
