@@ -1,59 +1,37 @@
 import java.lang.Random;
+import Board.*;
+import CheckRules.*;
 
 public class TicTacToe {
 
     private Random randomMove;
     private Board board;
     public int player;
-    public int otherPlayer;
 
     public TicTacToe() {
         randomMove = new Random();
         board = new Board();
         this.player = 1;
-        this.otherPlayer = -1;
     }
 
-    public void aiMove() {
+    public void aiMove(int ai) {
         int x = randomMove.nextInt(board.getSize());
         int y = randomMove.nextInt(board.getSize());
 
         if (CheckRules.checkLegalMoves(board, x, y) == true) {
-            board.updateBoard(board.getPlayer(), x, y);
-            if(CheckRules.checkWinner(board, player)) {
-                System.out.println("Het spel is voorbij, de winnaar is speler " + player);
-            }
-            if(CheckRules.checkBoardFull(board)) {
-                System.out.println("Spel is voorbij, er is geen winnaar");
-            }
-            switchPlayer = player;
-            player = otherPlayer;
-            otherPlayer = switchPlayer;
+            board.updateBoard(ai, x, y);
+        } else {
+            aiMove(ai);
         }
-        else {
-            aiMove();
-
-        }
-
     }
 
-    public void makeMove(int x, int y) {
-
-        if (CheckRules.checkLegalMoves(board, x, y) == true) {
-            board.updateBoard(board.getPlayer(), x, y);
-            switchPlayer = player;
-            player = otherPlayer;
-            otherPlayer = switchPlayer;
-            if(CheckRules.checkWinner(board, player)) {
-                System.out.println("Het spel is voorbij, de winnaar is speler " + player);
-            }
-            if(CheckRules.checkBoardFull(board)) {
-                System.out.println("Spel is voorbij, er is geen winnaar");
-            }
-        }
-        else {
+    public boolean makeMove(int x, int y) {
+        if (CheckRules.checkLegalMoves(board, x, y)) {
+            board.updateBoard(player, x, y);
+            return true;
+        } else {
             System.out.println("illegal move");
-            makeMove();
+            return false;
         }
     }
 

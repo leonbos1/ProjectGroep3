@@ -33,9 +33,7 @@ public class Board {
 
     public void setSize(int size) {this.size = size;}
 
-    public int getSize() {
-        return size;
-    }
+    public int getSize() {return size;}
 
     public void setBoard(int[][] board) {this.board = board;}
 
