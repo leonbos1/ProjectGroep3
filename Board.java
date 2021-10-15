@@ -37,7 +37,7 @@ public class Board {
 
     public void setBoard(int[][] board) {this.board = board;}
 
-    public int[][] getBoard() {return board;}
+    public static int[][] getBoard() {return board;}
 
 
 }

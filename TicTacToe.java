@@ -1,6 +1,4 @@
-import java.lang.Random;
-import Board.*;
-import CheckRules.*;
+import java.util.Random;
 
 public class TicTacToe {
 
@@ -18,7 +16,7 @@ public class TicTacToe {
         int x = randomMove.nextInt(board.getSize());
         int y = randomMove.nextInt(board.getSize());
 
-        if (CheckRules.checkLegalMoves(board, x, y) == true) {
+        if (CheckRules.checkLegalMove(Board.getBoard(), x, y) == true) {
             board.updateBoard(ai, x, y);
         } else {
             aiMove(ai);
@@ -26,7 +24,7 @@ public class TicTacToe {
     }
 
     public boolean makeMove(int x, int y) {
-        if (CheckRules.checkLegalMoves(board, x, y)) {
+        if (CheckRules.checkLegalMove(Board.getBoard(), x, y)) {
             board.updateBoard(player, x, y);
             return true;
         } else {
