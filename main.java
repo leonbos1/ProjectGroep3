@@ -1,7 +1,7 @@
 import Board;
 import java.lang.*;
 import CheckRules;
-import TicTacToe;
+
 import java.util.Scanner;
 class main{
     public static void main() {
