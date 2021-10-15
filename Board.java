@@ -1,3 +1,5 @@
+package Board;
+
 public class Board {
     public int[][] board;
     public int size;

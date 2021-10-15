@@ -45,8 +45,4 @@ public class TicTacToe {
         this.board = board;
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
 }
