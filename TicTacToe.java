@@ -1,4 +1,4 @@
-import java.lang.Random;
+import java.util.Random;
 
 public class TicTacToe {
 
@@ -12,26 +12,24 @@ public class TicTacToe {
         this.player = 1;
     }
 
-    public void aiMove() {
+    public void aiMove(int ai) {
         int x = randomMove.nextInt(board.getSize());
         int y = randomMove.nextInt(board.getSize());
 
-        if (CheckRules.checkLegalMoves(board, x, y) == true) {
-            board.updateBoard(board.getPlayer(), x, y);
+        if (CheckRules.checkLegalMove(getBoard(), x, y) == true) {
+            board.updateBoard(ai, x, y);
+        } else {
+            aiMove(ai);
         }
-        else {
-            aiMove();
-        }
-
     }
 
-    public void makeMove(int x, int y) {
-
-        if (CheckRules.checkLegalMoves(board, x, y) == true) {
-            board.updateBoard(board.getPlayer(), x, y);
-        }
-        else {
+    public boolean makeMove(int x, int y) {
+        if (CheckRules.checkLegalMove(getBoard(), x, y)) {
+            board.updateBoard(player, x, y);
+            return true;
+        } else {
             System.out.println("illegal move");
+            return false;
         }
     }
 
@@ -47,8 +45,7 @@ public class TicTacToe {
         this.board = board;
     }
 
-    public Board getBoard() {
-        return board;
+    public int[][] getBoard() {
+        return board.getBoard();
     }
-
 }
