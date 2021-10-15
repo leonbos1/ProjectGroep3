@@ -1,5 +1,3 @@
-package Board;
-
 public class Board {
     public int[][] board;
     public int size;
@@ -39,7 +37,7 @@ public class Board {
 
     public void setBoard(int[][] board) {this.board = board;}
 
-    public static int[][] getBoard() {return board;}
+    public int[][] getBoard() {return board;}
 
 
 }
