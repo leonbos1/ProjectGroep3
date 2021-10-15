@@ -5,11 +5,13 @@ public class TicTacToe {
     private Random randomMove;
     private Board board;
     public int player;
+    public int otherPlayer;
 
     public TicTacToe() {
         randomMove = new Random();
         board = new Board();
         this.player = 1;
+        this.otherPlayer = -1;
     }
 
     public void aiMove() {
@@ -18,9 +20,13 @@ public class TicTacToe {
 
         if (CheckRules.checkLegalMoves(board, x, y) == true) {
             board.updateBoard(board.getPlayer(), x, y);
+            switchPlayer = player;
+            player = otherPlayer;
+            otherPlayer = switchPlayer;
         }
         else {
             aiMove();
+
         }
 
     }
@@ -29,9 +35,13 @@ public class TicTacToe {
 
         if (CheckRules.checkLegalMoves(board, x, y) == true) {
             board.updateBoard(board.getPlayer(), x, y);
+            switchPlayer = player;
+            player = otherPlayer;
+            otherPlayer = switchPlayer;
         }
         else {
             System.out.println("illegal move");
+            makeMove();
         }
     }
 
