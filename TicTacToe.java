@@ -45,7 +45,7 @@ public class TicTacToe {
         this.board = board;
     }
 
-    public void getBoard() {
+    public Board getBoard() {
         return board;
     }
 
