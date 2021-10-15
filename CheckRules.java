@@ -66,19 +66,30 @@ public class CheckRules {
 
             }
 
+
+    public static boolean checkBoardFull(int[][] board) {
+        for (int col = 0; col < board.length; col++) {
+            for (int row = 0; row < board[0].length; row++) {
+                if (board[row][col] == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 // testen van de methodes
 
     public static void main(String[] args) {
-        int[][] board = {{1,0,0,1,1},
-                         {1,1,0,1,0},
-                         {0,0,0,0,0},
-                         {0,1,0,1,1},
-                         {0,1,1,0,1}};
+        int[][] board = {{1,1,1},
+                         {1,0,1},
+                         {1,1,1}};
 
         int coordinate = 1;
 
         //System.out.println(checkLegalMove(board,2,1));
         //System.out.println(checkWinner(board,1));
+        //System.out.println(checkBoardFull(board));
 
     }
 
