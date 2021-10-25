@@ -17,7 +17,7 @@ class main{
             System.out.println("De win lengte kan niet groter zijn dan het bord zelf!");
             running = false;
         }
-        else if (game.getBoardWinLength()>=1) {
+        else if (game.getBoardWinLength()<=1) {
             System.out.println("De win lengte moet groter zijn dan 1");
             running = false;
         }
@@ -26,7 +26,6 @@ class main{
             if (choice == 1) {
                 int[] aiArray = game.aiMove(2);
                 int x = aiArray[0];
-                int y = aiArray[1];
                 System.out.printf("\nDe ai kiest: %d", x);
             }
 
