@@ -12,19 +12,20 @@ public class TicTacToe {
         this.player = 1;
     }
 
-    public void aiMove(int ai) {
+    public int[] aiMove(int ai) {
         int x = randomMove.nextInt(board.getSize());
         int y = randomMove.nextInt(board.getSize());
 
-        if (CheckRules.checkLegalMove(getBoard(), x, y) == true) {
+        if (CheckRules.checkLegalMove(getBoardArray(), x, y)) {
             board.updateBoard(ai, x, y);
+            return new int[]{x,y};
         } else {
-            aiMove(ai);
+            return aiMove(ai);
         }
     }
 
     public boolean makeMove(int x, int y) {
-        if (CheckRules.checkLegalMove(getBoard(), x, y)) {
+        if (CheckRules.checkLegalMove(getBoardArray(), x, y)) {
             board.updateBoard(player, x, y);
             return true;
         } else {
@@ -45,7 +46,13 @@ public class TicTacToe {
         this.board = board;
     }
 
-    public int[][] getBoard() {
+    public Board getBoard() {
+        return board;
+    }
+
+    public int getBoardWinLength() {return board.win_length;}
+
+    public int[][] getBoardArray() {
         return board.getBoard();
     }
 }
