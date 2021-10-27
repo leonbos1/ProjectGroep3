@@ -24,22 +24,54 @@ class main{
 
             if (CheckRules.checkWinner(game.getBoardArray() ,1)) {
                 System.out.println("Jij wint!");
-                break;
+                System.out.println("Wilt u verder spelen? Toets y of n: ");
+                String next = scanner.nextLine();
+                if (next.equals("y")) {
+                    game.getBoard().clearBoard();
+                }
+                if (next.equals("n")) {
+                    System.out.println("Tot ziens!");
+                    break;
+                }
             }
             if (CheckRules.checkBoardFull(game.getBoardArray())) {
                 System.out.println("Gelijk spel!");
-                break;
+                System.out.println("Wilt u verder spelen? Toets y of n: ");
+                String next = scanner.nextLine();
+                if (next.equals("y")) {
+                    game.getBoard().clearBoard();
+                }
+                if (next.equals("n")) {
+                    System.out.println("Tot ziens!");
+                    break;
+                }
             }
 
             System.out.println("\nDe ai kiest: "+game.aiMove(2));
             game.getBoard().showBoard();
             if (CheckRules.checkWinner(game.getBoardArray() ,2)) {
                 System.out.println("De Ai heeft gewonnen :(");
-                break;
+                System.out.println("Wilt u verder spelen? Toets y of n: ");
+                String next = scanner.nextLine();
+                if (next.equals("y")) {
+                    game.getBoard().clearBoard();
+                }
+                if (next.equals("n")) {
+                    System.out.println("Tot ziens!");
+                    break;
+                }
             }
             if (CheckRules.checkBoardFull(game.getBoardArray())) {
                 System.out.println("Gelijk spel!");
-                break;
+                System.out.println("Wilt u verder spelen? Toets y of n: ");
+                String next = scanner.nextLine();
+                if (next.equals("y")) {
+                    game.getBoard().clearBoard();
+                }
+                if (next.equals("n")) {
+                    System.out.println("Tot ziens!");
+                    break;
+                }
             }
         }
     }

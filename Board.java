@@ -31,6 +31,14 @@ public class Board {
         }
     }
 
+    public void clearBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = 0;
+            }
+        }
+    }
+
     public void setSize(int size) {this.size = size;}
 
     public int getSize() {
