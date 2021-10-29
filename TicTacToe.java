@@ -34,6 +34,10 @@ public class TicTacToe {
         }
     }
 
+    public void removeMove(int x, int y) {
+        board.updateBoard(0, x, y);
+    }
+
     public void setPlayer(int player) {
         this.player = player;
     }
