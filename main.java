@@ -44,22 +44,38 @@ class main{
 
             if (CheckRules.checkWinner(game.getBoardArray() ,1, game.getBoardWinLength())) {
                 System.out.println("Jij wint!");
-                break;
+                if (restart()) {
+                    game.getBoard().clearBoard();
+                } else {
+                    break;
+                }
             }
             if (CheckRules.checkBoardFull(game.getBoardArray())) {
                 System.out.println("Gelijk spel!");
-                break;
+                if (restart()) {
+                    game.getBoard().clearBoard();
+                } else {
+                    break;
+                }
             }
 
             System.out.println("\nDe ai kiest: "+ Arrays.toString(game.aiMove(2)));
             game.getBoard().showBoard();
             if (CheckRules.checkWinner(game.getBoardArray() ,2, game.getBoardWinLength())) {
                 System.out.println("De Ai heeft gewonnen :(");
-                break;
+                if (restart()) {
+                    game.getBoard().clearBoard();
+                } else {
+                    break;
+                }
             }
             if (CheckRules.checkBoardFull(game.getBoardArray())) {
                 System.out.println("Gelijk spel!");
-                break;
+                if (restart()) {
+                    game.getBoard().clearBoard();
+                } else {
+                    break;
+                }
             }
         }
     }
@@ -72,6 +88,22 @@ class main{
         System.out.println("\nKies een column: ");
         int y = Integer.parseInt(scanner.nextLine());
         return new int[]{x,y};
+    }
+
+    public static boolean restart(){
+        while (true) {
+            System.out.println("Wilt u opnieuw spelen? Toets y of n: ");
+            Scanner scanner = new Scanner(System.in);
+            String next = scanner.nextLine();
+            if (next.equals("y")) {
+                return true;
+            }
+            if (next.equals("n")) {
+                System.out.println("Tot ziens!");
+                return false;
+            }
+            System.out.println("Probeer dat opnieuw.");
+        }
     }
 
 

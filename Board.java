@@ -38,6 +38,14 @@ public class Board {
         }
     }
 
+    public void clearBoard() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board[i][j] = 0;
+            }
+        }
+    }
+
     public void setSize(int size) {this.size = size;}
 
     public int getSize() {return size;}
