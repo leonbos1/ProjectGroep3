@@ -16,7 +16,6 @@ public class TicTacToe {
         if (canWin(ai)[0]!=-1) {
             int[] winCoordinate = canWin(ai);
             board.updateBoard(ai, winCoordinate[0], winCoordinate[1]);
-            System.out.println("[0] " + winCoordinate[0]+1 + "[1] " + winCoordinate[1]+1);
             return new int[]{winCoordinate[0]+1,winCoordinate[1]+1};
         }
 
@@ -24,7 +23,6 @@ public class TicTacToe {
             int[][] tempboard = getBoardArray();
             int[] winCoordinate = canWin(1);
             board.updateBoard(ai, winCoordinate[0], winCoordinate[1]);
-            System.out.println("[0] " + winCoordinate[0] + "[1] " + winCoordinate[1]);
             return new int[]{winCoordinate[0]+1,winCoordinate[1]+1};
         }
 
@@ -72,7 +70,6 @@ public class TicTacToe {
     }
 
     public int[] aiMoveVariable(int ai) {
-        System.out.println("VariaBLE activated");
         int[][] scores = scores_for_each_move(getBoardArray(),ai,1);
         int max_score = getMaxScore(scores);
         int maxRow = 0;
@@ -200,7 +197,6 @@ public class TicTacToe {
         }
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[0].length; col++) {
-                System.out.println(scores[row][col]);
             }
         }
 
