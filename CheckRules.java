@@ -10,60 +10,124 @@ public class CheckRules {
         return false;
     }
 
-    public static boolean checkWinner(int[][] board, int player) {
-        int highDiagonalCounter = 0;
-        for (int row = 0; row < board.length; row++) {
-
-            if (board[row][row] == player) {
-                highDiagonalCounter++;
-                if (highDiagonalCounter==board.length) {
+    public static boolean checkWinner(int[][] board, int player, int win_length) {
+        for (int row = 0; row < board[0].length; row++) {
+            for (int col = 0; col < board.length; col++) {
+                if (in_a_row_n_east(player,row, col, board,win_length)) {
+                    return true;
+            }
+                if (in_a_row_n_south(player,row, col, board,win_length)) {
                     return true;
                 }
-            }
-
-            int horizontalCounter = 0;
-            for (int col = 0; col < board[0].length; col++) {
-                if (board[row][col] == player) {
-                    horizontalCounter++;
-                    if (horizontalCounter == board[0].length) {
-                        return true;
-                    }
-                } else {
-                    break;
+                if (in_a_row_n_northeast(player,row, col, board,win_length)) {
+                    return true;
                 }
+                if (in_a_row_n_southeast(player,row, col, board,win_length)) {
+                    return true;
+                }
+        }
+    }
+        return false;
+
+
+    }
+
+    public static boolean in_a_row_n_east(int player, int r_start, int c_start,int[][] board, int win_length) {
+        /*Starting from (row, col) of (r_start, c_start)
+       within the 2d list-of-lists a (array),
+       returns True if there are n ch's in a row
+       heading east and returns False otherwise.
+        */
+        int h = board.length;
+        int w = board[0].length;
+        if (r_start < 0 || r_start > h - 1) {
+            return false;
+        }  // rij buiten de grenzen
+        if (c_start < 0 || c_start + (win_length - 1) > w - 1) {
+            return false;
+        }// kolom buiten de grenzen
+        // lus over elke _offset_ i van de locatie
+        for (int i = 0; i < win_length; i++) {
+            if (board[r_start][c_start + i] != player) {  //klopt niet !
+                return false;
             }
         }
+        return true;  // alle offsets kloppen, dus we geven True terug
+    }
 
-       for (int col = 0; col < board.length; col++) {
+    public static boolean in_a_row_n_south(int player, int r_start, int c_start,int[][] board, int win_length) {
+        /*Starting from (row, col) of (r_start, c_start)
+       within the 2d list-of-lists a (array),
+       returns True if there are n ch's in a row
+       heading south and returns False otherwise.
+        */
+        int h = board.length;
+        int w = board[0].length;
 
-            int verticalCounter = 0;
-            for (int row = 0; row < board[0].length; row++) {
-                if (board[row][col] == player) {
-                    verticalCounter++;
-                    if (verticalCounter == board[0].length) {
-                        return true;
-                    }
-                } else {
-                    break;
-                }
+        if (r_start < 0 || r_start + (win_length-1) > h - 1) {
+            return false;
+        }  // rij buiten de grenzen
+        if (c_start < 0 || c_start > w - 1) {
+            return false;
+        }// kolom buiten de grenzen
+
+        // lus over elke _offset_ i van de locatie
+        for (int i = 0; i < win_length; i++) {
+            if (board[r_start+i][c_start] != player) {  //klopt niet !
+                return false;
             }
-       }
+        }
+        return true;  // alle offsets kloppen, dus we geven True terug
+    }
 
-       int lowDiagonalCounter = 0;
-       int j = 0;
-       for (int i = board[0].length-1; i >= 0; i-- ) {
-               if (board[i][j] == player) {
-                   lowDiagonalCounter++;
-                    if (lowDiagonalCounter==board.length) {
-                        return true;
-                    }
-               }
-               j++;
+    public static boolean in_a_row_n_northeast(int player, int r_start, int c_start,int[][] board, int win_length) {
+        /*Starting from (row, col) of (r_start, c_start)
+       within the 2d list-of-lists a (array),
+       returns True if there are n ch's in a row
+       heading northeast and returns False otherwise.
+       */
+        int h = board.length;
+        int w = board[0].length;
 
-       }
+        if ( r_start - (win_length-1) < 0 || r_start > h - 1) {
+            return false;
+        }  // rij buiten de grenzen
+        if ( c_start < 0 || c_start + (win_length-1) > w - 1) {
+            return false;
+        }// kolom buiten de grenzen
 
-       return false;
+        // lus over elke _offset_ i van de locatie
+        for (int i = 0; i < win_length; i++) {
+            if (board[r_start-i][c_start+i] != player) {  //klopt niet !
+                return false;
+            }
+        }
+        return true;  // alle offsets kloppen, dus we geven True terug
+    }
 
+    public static boolean in_a_row_n_southeast(int player, int r_start, int c_start,int[][] board, int win_length) {
+         /*Starting from (row, col) of (r_start, c_start)
+       within the 2d list-of-lists a (array),
+       returns True if there are n ch's in a row
+       heading southeast and returns False otherwise.
+       */
+        int h = board.length;
+        int w = board[0].length;
+
+        if (r_start < 0 || r_start + (win_length-1) > h - 1) {
+            return false;
+        }  // rij buiten de grenzen
+        if (c_start < 0 || c_start + (win_length-1) > w - 1) {
+            return false;
+        }// kolom buiten de grenzen
+
+        // lus over elke _offset_ i van de locatie
+        for (int i = 0; i < win_length; i++) {
+            if (board[r_start+i][c_start+i] != player) {  //klopt niet !
+                return false;
+            }
+        }
+        return true;  // alle offsets kloppen, dus we geven True terug
     }
 
     public static boolean checkBoardFull(int[][] board) {
@@ -80,18 +144,5 @@ public class CheckRules {
 
 // testen van de methodes
 
-    public static void main(String[] args) {
-        int[][] board = {{1,0,0,1,1},
-                         {1,1,0,1,0},
-                         {0,0,0,0,0},
-                         {0,1,0,1,1},
-                         {0,1,1,0,1}};
-
-        int coordinate = 1;
-
-        //System.out.println(checkLegalMove(board,2,1));
-        //System.out.println(checkWinner(board,1));
-
-    }
 
 }
