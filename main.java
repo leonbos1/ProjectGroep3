@@ -24,9 +24,9 @@ class main{
 
         if (running) {
             if (choice == 1) {
-                int[] aiArray = game.aiMove(2);
-                int x = aiArray[0];
-                System.out.printf("\nDe ai kiest: %d", x);
+                int[] aiArray;
+                aiArray = game.aiMove(2);
+                System.out.println("\nDe ai kiest: "+ Arrays.toString(aiArray));
             }
 
             System.out.println();
@@ -36,7 +36,7 @@ class main{
         while (running) {
             while (true) {
                 int[] move = input();
-                if (game.makeMove(move[0], move[1])) {
+                if (game.makeMove(move[0]-1, move[1]-1)) {
                     game.getBoard().showBoard();
                     break;
                 }
@@ -59,10 +59,14 @@ class main{
                 }
             }
 
-            System.out.println("\nDe ai kiest: "+ Arrays.toString(game.aiMove(2)));
+            int[] aiArray;
+            aiArray = game.aiMove(2);
+            System.out.println("\nDe ai kiest: "+ Arrays.toString(aiArray));
+
             game.getBoard().showBoard();
             if (CheckRules.checkWinner(game.getBoardArray() ,2, game.getBoardWinLength())) {
                 System.out.println("De Ai heeft gewonnen :(");
+                running = false;
                 if (restart()) {
                     game.getBoard().clearBoard();
                 } else {
