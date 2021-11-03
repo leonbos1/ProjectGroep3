@@ -37,7 +37,6 @@ public class Server{
             while((line = reader.readLine()) != null){
                 System.out.println(line);
 
-
                 line = null;
             }
 

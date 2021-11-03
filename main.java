@@ -18,9 +18,10 @@ class main{
         int port = 7789;
         Server server = new Server(ip, port);
 
-        server.send("login leon");
+        server.send("login anoniemeblobvis");
         server.send("get gamelist");
         server.send("get playerlist");
+
     }
 
     public static void cmdTicTacToe() {
