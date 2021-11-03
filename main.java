@@ -11,8 +11,13 @@ class main{
         int choice = Integer.parseInt(scanner.nextLine());
 
         System.out.print("Hoe groot is het speelboard?:");
+        int size = Integer.parseInt(scanner.nextLine());
 
-        TicTacToe game = new TicTacToe();
+        System.out.print("Wat is de benodigde lengte om te winnen?:");
+        int win_length = Integer.parseInt(scanner.nextLine());
+
+        TicTacToe game = new TicTacToe(win_length, size);
+
         if (game.getBoardWinLength()>game.getBoardArray().length) {
             System.out.println("De win lengte kan niet groter zijn dan het bord zelf!");
             running = false;
@@ -37,6 +42,7 @@ class main{
             while (true) {
                 int[] move = input();
                 if (game.makeMove(move[0]-1, move[1]-1)) {
+                    System.out.println("test");
                     game.getBoard().showBoard();
                     break;
                 }

@@ -5,11 +5,18 @@ public class TicTacToe {
     private Random randomMove;
     private Board board;
     public int player;
+    public int win_length;
+    public int size;
 
     public TicTacToe() {
         randomMove = new Random();
-        board = new Board();
         this.player = 1;
+        this.win_length = 3;
+    }
+
+    public TicTacToe(int winLength, int size) {
+        board = new Board(size);
+        this.win_length = winLength;
     }
 
     public int[] aiMove(int ai) {
@@ -217,7 +224,7 @@ public class TicTacToe {
 
     public boolean makeMove(int row, int col) {
         if (CheckRules.checkLegalMove(getBoardArray(), row, col)) {
-            board.updateBoard(player, row, col);
+            board.updateBoard(this.player, row, col);
             return true;
         } else {
             System.out.println("illegal move");
@@ -245,7 +252,7 @@ public class TicTacToe {
         return board;
     }
 
-    public int getBoardWinLength() {return board.win_length;}
+    public int getBoardWinLength() {return this.win_length;}
 
     public int[][] getBoardArray() {
         return board.getBoard();
