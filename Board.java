@@ -4,10 +4,6 @@ public class Board {
     public int[][] board;
     public int size;
 
-    public Board() {
-        this.size = 3;
-    }
-
     public Board(int size) {
         this.board = new int[size][size];
         this.size = size;

@@ -5,8 +5,8 @@ public class TicTacToe {
     private Random randomMove;
     private Board board;
     private int player;
-    public int win_length;
-    public int size;
+    private int win_length;
+    private int size;
 
     public TicTacToe(int winLength, int size) {
         randomMove = new Random();
