@@ -1,10 +1,31 @@
 import java.lang.*;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.*;
 class main{
 
     public static void main(String[] args) {
+        try {
+            serverTicTacToe();
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+
+    }
+
+    public static void serverTicTacToe() throws IOException {
+        String ip = "145.33.225.170";
+        int port = 7789;
+        Server server = new Server(ip, port);
+
+        server.send("login leon");
+        server.send("get gamelist");
+        server.send("get playerlist");
+    }
+
+    public static void cmdTicTacToe() {
         boolean running = true;
+
         System.out.println("Welkom bij tic-tac-toe!");
         System.out.print("Wilt u eerst spelen (0), of mag de ai eerst (1): ");
         Scanner scanner = new Scanner(System.in);
