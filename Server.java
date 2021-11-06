@@ -52,16 +52,20 @@ public class Server{
                 //    System.out.println(a);
                 //}
                 //System.out.println(arr[0]);
-
                 if (arr[0].equals("SVR")) {
-                    System.out.println(arr[0]);
-                    System.out.println(getUsername());
+                    //System.out.println(arr[0]);
+                    //System.out.println(getUsername());
+                    game.getBoard().showBoard();
 
                     if (arr[1].equals("GAME")) {
                         if (arr[2].equals("MATCH")) {
                             if (arr[3].equals("PLAYERTOMOVE:")) {
                                 if (arr[4].equals(getUsername())) {
-                                    int move = game.aiMoveServer(1);
+                                    int[] movearray = game.aiMove(2);
+                                    System.out.println(movearray[0] +" "+movearray[1]);
+                                    int move = (movearray[0]-1) * (movearray[1]-1);
+                                    System.out.println(move);
+                                    send("move "+move);
 
                                 }
                                 else  {
@@ -71,16 +75,22 @@ public class Server{
                         }
                         else if (arr[2].equals("MOVE")) {
                             if (arr[3].equals("PLAYER:")) {
-                                int move = arr[7];
-                                int row = move / 3;
-                                int col = move % 3;
-                                game.makeMove(row,col)
-
+                                if (arr[4].equals(getUsername()) == false) {
+                                    int move = Integer.parseInt(arr[6]);
+                                    int row = move / 3;
+                                    int col = move % 3;
+                                    game.makeMove(row, col);
+                                    System.out.println("OPPPONENT MOVE " + move);
+                                }
                             }
+
                         }
-                        else if (arr[2] == "YOURTURN") {
-                            if (arr[2] == "TURNMESSAGE:") {
-                                System.out.println(arr[3]);
+                        else if (arr[2].equals("YOURTURN")) {
+                            if (arr[3].equals("TURNMESSAGE:")) {
+                                int[] movearray = game.aiMove(2);
+                                int move = (movearray[0]-1) * (movearray[1]-1);
+                                send("move "+move);
+                                System.out.println(move);
                             }
                         }
                     }
