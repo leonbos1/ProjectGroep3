@@ -61,11 +61,21 @@ public class Server{
                         if (arr[2].equals("MATCH")) {
                             if (arr[3].equals("PLAYERTOMOVE:")) {
                                 if (arr[4].equals(getUsername())) {
-                                    game.aiMove(1)
+                                    int move = game.aiMoveServer(1);
+
                                 }
-                                if (arr[4].equals(getUsername()) == false) {
+                                else  {
                                     System.out.println("not me start");
                                 }
+                            }
+                        }
+                        else if (arr[2].equals("MOVE")) {
+                            if (arr[3].equals("PLAYER:")) {
+                                int move = arr[7];
+                                int row = move / 3;
+                                int col = move % 3;
+                                game.makeMove(row,col)
+
                             }
                         }
                         else if (arr[2] == "YOURTURN") {
