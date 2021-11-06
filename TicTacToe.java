@@ -37,6 +37,28 @@ public class TicTacToe {
         }
     }
 
+    public int aiMoveServer(int ai) {
+        if (canWin(ai)[0]!=-1) {
+            int[] winCoordinate = canWin(ai);
+            board.updateBoard(ai, winCoordinate[0], winCoordinate[1]);
+            return winCoordinate[0]*winCoordinate[1];
+        }
+
+        else if (canWin(1)[0] != -1 ) {
+            int[][] tempboard = getBoardArray();
+            int[] winCoordinate = canWin(1);
+            board.updateBoard(ai, winCoordinate[0], winCoordinate[1]);
+            return winCoordinate[0]*winCoordinate[1];
+        }
+
+        else if (board.getBoard().length == 3) {
+            return aiMove3x3Server(ai);
+        }
+        else {
+            return aiMoveVariableServer(ai);
+        }
+    }
+
     public int[] aiMove3x3(int ai) {
         int row=0;
         int col=0;
@@ -101,6 +123,75 @@ public class TicTacToe {
                 return new int[]{x+1,y+1};
             } else {
                 return aiMoveVariable(ai);
+            }
+        }
+
+    }
+
+    public int aiMove3x3Server(int ai) {
+        int row=0;
+        int col=0;
+        //Als ai begint: in een hoek
+        if (countMoves()==1) {
+            row = 0;
+            col = 0;
+        }
+
+        //Als speler begint: in het midden
+        else if (countMoves() == 2) {
+            if (CheckRules.checkLegalMove(getBoardArray(),1,1)) {
+                row = 1;
+                col = 1;
+            }
+            else {
+                row = 0;
+                col = 0;
+            }
+        }
+
+        else {
+            int x = randomMove.nextInt(board.getSize());
+            int y = randomMove.nextInt(board.getSize());
+            if (CheckRules.checkLegalMove(getBoardArray(), x, y)) {
+                row = x;
+                col = y;
+            } else {
+                return aiMoveVariable(ai);
+            }
+        }
+        board.updateBoard(ai, row, col);
+        return row*col;
+    }
+
+    public int aiMoveVariableServer(int ai) {
+        int[][] scores = scores_for_each_move(getBoardArray(),ai,1);
+        int max_score = getMaxScore(scores);
+        int maxRow = 0;
+        int maxCol = 0;
+
+
+        for (int row = 0; row < getBoardArray().length; row++) {
+            for (int col = 0; col < getBoardArray().length; col++) {
+                if (scores[row][col] == max_score && getBoardArray()[row][col] == 0) {
+                    maxRow = row;
+                    maxCol = col;
+                }
+            }
+        }
+
+        if (CheckRules.checkLegalMove(getBoardArray(),maxRow,maxCol)) {
+            board.updateBoard(ai, maxRow, maxCol);
+            return int maxRow*maxCol;
+        }
+
+        else {
+            int x = randomMove.nextInt(board.getSize());
+            int y = randomMove.nextInt(board.getSize());
+            if (CheckRules.checkLegalMove(getBoardArray(), x, y)) {
+                board.updateBoard(ai, x, y);
+                return x*y;
+            } else {
+                return aiMoveVariableServer(ai);
             }
         }
 

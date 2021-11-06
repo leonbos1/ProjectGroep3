@@ -10,17 +10,16 @@ class main{
         } catch (IOException e) {
             System.out.println("error");
         }
-
     }
 
     public static void serverTicTacToe() throws IOException {
         String ip = "145.33.225.170";
         int port = 7789;
+
         Server server = new Server(ip, port);
 
-        server.send("login anoniemeblobvis");
-        server.send("get gamelist");
-        server.send("get playerlist");
+        server.login();
+        server.challenge("lech","tic-tac-toe");
 
     }
 
