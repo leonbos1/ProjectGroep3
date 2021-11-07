@@ -19,7 +19,7 @@ class main{
         Server server = new Server(ip, port);
 
         server.login();
-        server.challenge("lech","tic-tac-toe");
+        server.subscribe("tic-tac-toe");
 
     }
 

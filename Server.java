@@ -48,63 +48,43 @@ public class Server{
                 line = line.replace("\"","");
                 line = line.replace(",", "");
                 String[] arr = line.split(" ");
-                //for (String a : arr) {
-                //    System.out.println(a);
-                //}
-                //System.out.println(arr[0]);
+
                 if (arr[0].equals("SVR")) {
-                    //System.out.println(arr[0]);
-                    //System.out.println(getUsername());
                     game.getBoard().showBoard();
 
                     if (arr[1].equals("GAME")) {
                         switch (arr[2]) {
-                            //case "MATCH":
-
-                                /*if (arr[3].equals("PLAYERTOMOVE:")) {
-                                    if (arr[4].equals(getUsername())) {
-                                        int[] movearray = game.aiMove(2);
-                                        System.out.println("my row and col " + movearray[0] + " " + movearray[1]);
-                                        int move = (movearray[0] - 1) * (movearray[1] - 1);
-                                        System.out.println("my move single int "+move);
-                                        send("move " + move);
-
-                                    } else {
-                                        System.out.println("not me start");
-                                    }
-                                }
-
-                                 */
                             case "MOVE":
                                 if (arr[3].equals("PLAYER:")) {
                                     if (!arr[4].equals(getUsername())) {
                                         int move = Integer.parseInt(arr[6]);
-                                        System.out.println("opponent move = " + move);
-                                        int row = move / 3;
-                                        int col = move % 3;
-                                        System.out.println("opponent row en col = " + row +" "+col);
+                                        int row = move / 3; int col = move % 3;
                                         game.makeMove(row, col);
-                                        System.out.println("OPPPONENT MOVE " + move);
                                     }
                                 }
-                                else {
-                                    System.out.println("My move = "+arr[6]);
-                                }
-
                                 break;
+
                             case "YOURTURN":
                                 if (arr[3].equals("TURNMESSAGE:")) {
                                     int[] movearray = game.aiMove(2);
                                     int move = ((movearray[0] - 1) * 3) + ((movearray[1] - 1));
-                                    System.out.println("my movearray = "+movearray[0] +" "+movearray[1]);
-                                    send("move " + move);
-                                    System.out.println(move);
+                                    move(move);
                                 }
+                                break;
+
+                            case "DRAW":
+                                System.out.println("Gelijkspel");
+                                break;
+
+                            case "WIN":
+                                System.out.println("Gewonnen");
+                                break;
+
+                            case "LOSS":
+                                System.out.println("Verloren");
                                 break;
                         }
                     }
-
-
                 }
 
                 line = null;
@@ -132,7 +112,9 @@ public class Server{
         send("challenge "+ username+" "+game);
     }
 
-
+    public void move(int move) {
+        send("move "+move);
+    }
 
     public void endConnection(){
         try {
