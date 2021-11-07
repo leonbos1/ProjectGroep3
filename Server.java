@@ -58,40 +58,49 @@ public class Server{
                     game.getBoard().showBoard();
 
                     if (arr[1].equals("GAME")) {
-                        if (arr[2].equals("MATCH")) {
-                            if (arr[3].equals("PLAYERTOMOVE:")) {
-                                if (arr[4].equals(getUsername())) {
+                        switch (arr[2]) {
+                            //case "MATCH":
+
+                                /*if (arr[3].equals("PLAYERTOMOVE:")) {
+                                    if (arr[4].equals(getUsername())) {
+                                        int[] movearray = game.aiMove(2);
+                                        System.out.println("my row and col " + movearray[0] + " " + movearray[1]);
+                                        int move = (movearray[0] - 1) * (movearray[1] - 1);
+                                        System.out.println("my move single int "+move);
+                                        send("move " + move);
+
+                                    } else {
+                                        System.out.println("not me start");
+                                    }
+                                }
+
+                                 */
+                            case "MOVE":
+                                if (arr[3].equals("PLAYER:")) {
+                                    if (!arr[4].equals(getUsername())) {
+                                        int move = Integer.parseInt(arr[6]);
+                                        System.out.println("opponent move = " + move);
+                                        int row = move / 3;
+                                        int col = move % 3;
+                                        System.out.println("opponent row en col = " + row +" "+col);
+                                        game.makeMove(row, col);
+                                        System.out.println("OPPPONENT MOVE " + move);
+                                    }
+                                }
+                                else {
+                                    System.out.println("My move = "+arr[6]);
+                                }
+
+                                break;
+                            case "YOURTURN":
+                                if (arr[3].equals("TURNMESSAGE:")) {
                                     int[] movearray = game.aiMove(2);
-                                    System.out.println(movearray[0] +" "+movearray[1]);
-                                    int move = (movearray[0]-1) * (movearray[1]-1);
+                                    int move = ((movearray[0] - 1) * 3) + ((movearray[1] - 1));
+                                    System.out.println("my movearray = "+movearray[0] +" "+movearray[1]);
+                                    send("move " + move);
                                     System.out.println(move);
-                                    send("move "+move);
-
                                 }
-                                else  {
-                                    System.out.println("not me start");
-                                }
-                            }
-                        }
-                        else if (arr[2].equals("MOVE")) {
-                            if (arr[3].equals("PLAYER:")) {
-                                if (arr[4].equals(getUsername()) == false) {
-                                    int move = Integer.parseInt(arr[6]);
-                                    int row = move / 3;
-                                    int col = move % 3;
-                                    game.makeMove(row, col);
-                                    System.out.println("OPPPONENT MOVE " + move);
-                                }
-                            }
-
-                        }
-                        else if (arr[2].equals("YOURTURN")) {
-                            if (arr[3].equals("TURNMESSAGE:")) {
-                                int[] movearray = game.aiMove(2);
-                                int move = (movearray[0]-1) * (movearray[1]-1);
-                                send("move "+move);
-                                System.out.println(move);
-                            }
+                                break;
                         }
                     }
 
