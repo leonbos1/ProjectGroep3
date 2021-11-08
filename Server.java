@@ -49,7 +49,6 @@ public class Server{
                 line = line.replace(",", "");
                 String[] arr = line.split(" ");
 
-                //SVR GAME CHALLENGE {CHALLENGER: "Sjors", GAMETYPE: "Guess Game", CHALLENGENUMBER: "1"}
 
                 if (arr[0].equals("SVR")) {
                     game.getBoard().showBoard();
