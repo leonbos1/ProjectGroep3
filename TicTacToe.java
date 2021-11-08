@@ -57,6 +57,47 @@ public class TicTacToe {
                 col = 0;
             }
         }
+        else if (countMoves() == 3) {
+            if (getBoardArray()[0][0] == 0) {
+                row = 0;
+                col = 0;
+            } else if (getBoardArray()[0][2] == 0) {
+                row = 0;
+                col = 2;
+            } else if (getBoardArray()[2][0] == 0) {
+                row = 2;
+                col = 0;
+            } else if (getBoardArray()[2][2] == 0) {
+                row = 2;
+                col = 2;
+            }
+            if (getBoardArray()[0][0] == 0) {
+                row = 0;
+                col = 0;
+            } else if (getBoardArray()[0][2] == 0) {
+                row = 0;
+                col = 2;
+            } else if (getBoardArray()[2][0] == 0) {
+                row = 2;
+                col = 0;
+            } else if (getBoardArray()[2][2] == 0) {
+                row = 2;
+                col = 2;
+            }
+            if (getBoardArray()[0][1] == 1 && getBoardArray()[1][0] == 1) {
+                row = 0;
+                col = 0;
+            } else if (getBoardArray()[0][1] == 1 && getBoardArray()[1][2] == 1) {
+                row = 0;
+                col = 2;
+            } else if (getBoardArray()[1][0] == 1 && getBoardArray()[2][1] == 1) {
+                row = 2;
+                col = 0;
+            } else if (getBoardArray()[2][1] == 1 && getBoardArray()[1][2] == 1) {
+                row = 2;
+                col = 2;
+            }
+        }
 
         else {
             int x = randomMove.nextInt(board.getSize());

@@ -49,6 +49,8 @@ public class Server{
                 line = line.replace(",", "");
                 String[] arr = line.split(" ");
 
+                //SVR GAME CHALLENGE {CHALLENGER: "Sjors", GAMETYPE: "Guess Game", CHALLENGENUMBER: "1"}
+
                 if (arr[0].equals("SVR")) {
                     game.getBoard().showBoard();
 
@@ -64,6 +66,9 @@ public class Server{
                                 }
                                 break;
 
+                            case "CHALLENGE":
+                                send("challenge accept "+arr[8]);
+
                             case "YOURTURN":
                                 if (arr[3].equals("TURNMESSAGE:")) {
                                     int[] movearray = game.aiMove(2);
@@ -74,14 +79,17 @@ public class Server{
 
                             case "DRAW":
                                 System.out.println("Gelijkspel");
+                                game = new TicTacToe(3,3);
                                 break;
 
                             case "WIN":
                                 System.out.println("Gewonnen");
+                                game = new TicTacToe(3,3);
                                 break;
 
                             case "LOSS":
                                 System.out.println("Verloren");
+                                game = new TicTacToe(3,3);
                                 break;
                         }
                     }

@@ -2,6 +2,7 @@ import java.lang.*;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
+
 class main{
 
     public static void main(String[] args) {
@@ -19,7 +20,7 @@ class main{
         Server server = new Server(ip, port);
 
         server.login();
-        server.subscribe("tic-tac-toe");
+        server.challenge("test2","tic-tac-toe");
 
     }
 
