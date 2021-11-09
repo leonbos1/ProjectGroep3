@@ -72,7 +72,6 @@ class main{
             while (true) {
                 int[] move = input();
                 if (game.makeMove(move[0]-1, move[1]-1)) {
-                    System.out.println("test");
                     game.getBoard().showBoard();
                     break;
                 }
@@ -102,7 +101,6 @@ class main{
             game.getBoard().showBoard();
             if (CheckRules.checkWinner(game.getBoardArray() ,2, game.getBoardWinLength())) {
                 System.out.println("De Ai heeft gewonnen :(");
-                running = false;
                 if (restart()) {
                     game.getBoard().clearBoard();
                 } else {
