@@ -2,14 +2,22 @@ import java.lang.*;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
-
 class main{
 
     public static void main(String[] args) {
-        try {
-            serverTicTacToe();
-        } catch (IOException e) {
-            System.out.println("error");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Wilt u verbinden met de server(0) of self tegen de AI spelen(1): ");
+        int choice = Integer.parseInt(scanner.nextLine());
+        if (choice == 0) {
+            try {
+                serverTicTacToe();
+            } catch (IOException e) {
+                System.out.println("error");
+            }
+        } else if (choice == 1) {
+            cmdTicTacToe();
+        } else {
+            System.out.println("Verkeerde invoer waarde, probeer het opnieuw.");
         }
     }
 
@@ -20,7 +28,7 @@ class main{
         Server server = new Server(ip, port);
 
         server.login();
-        server.challenge("lech","tic-tac-toe");
+        server.challenge("lech", "tic-tac-toe");
 
     }
 
