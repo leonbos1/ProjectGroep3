@@ -52,7 +52,7 @@ public class TicTacToe {
                 row = 1;
                 col = 1;
             }
-            else {
+            else if (CheckRules.checkLegalMove(getBoardArray(),0,0)) {
                 row = 0;
                 col = 0;
             }
@@ -72,16 +72,16 @@ public class TicTacToe {
                 col = 2;
             }
 
-            if (getBoardArray()[0][1] == 1 && getBoardArray()[1][0] == 1) {
+            if (getBoardArray()[0][1] == 1 && getBoardArray()[1][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,0)) {
                 row = 0;
                 col = 0;
-            } else if (getBoardArray()[0][1] == 1 && getBoardArray()[1][2] == 1) {
+            } else if (getBoardArray()[0][1] == 1 && getBoardArray()[1][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,2)) {
                 row = 0;
                 col = 2;
-            } else if (getBoardArray()[1][0] == 1 && getBoardArray()[2][1] == 1) {
+            } else if (getBoardArray()[1][0] == 1 && getBoardArray()[2][1] == 1 && CheckRules.checkLegalMove(getBoardArray(),2,0)) {
                 row = 2;
                 col = 0;
-            } else if (getBoardArray()[2][1] == 1 && getBoardArray()[1][2] == 1) {
+            } else if (getBoardArray()[2][1] == 1 && getBoardArray()[1][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),2,2)) {
                 row = 2;
                 col = 2;
             }
@@ -94,6 +94,17 @@ public class TicTacToe {
                 col = 0;
             }
         }
+        else if (countMoves() == 4) {
+            if (getBoardArray()[0][0] == 1 && getBoardArray()[2][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,1)) {
+                row = 0;
+                col = 1;
+            }
+            else if (getBoardArray()[0][2] == 1 && getBoardArray()[2][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),1,0)){
+                row = 1;
+                col = 0;
+            }
+        }
+
         else if (countMoves() == 5) {
             if (getBoardArray()[0][0] == 0) {
                 row = 0;
