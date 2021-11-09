@@ -6,12 +6,12 @@ class main{
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Wilt u verbinden met de server(0) of self tegen de AI spelen(1): ");
+        System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");
         int choice = Integer.parseInt(scanner.nextLine());
         if (choice == 0) {
             try {
                 serverTicTacToe();
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 System.out.println("error");
             }
         } else if (choice == 1) {
@@ -21,14 +21,21 @@ class main{
         }
     }
 
-    public static void serverTicTacToe() throws IOException {
+    public static void serverTicTacToe() throws IOException, InterruptedException {
         String ip = "145.33.225.170";
         int port = 7789;
-
+        Scanner scanner = new Scanner(System.in);
         Server server = new Server(ip, port);
 
         server.login();
-        server.challenge("lech", "tic-tac-toe");
+
+        server.playerlist();
+
+        Thread.sleep(1000);
+        System.out.println("Wie wil je uitdagen?");
+        String opponent = scanner.nextLine();
+
+        server.challenge(opponent, "tic-tac-toe");
 
     }
 
@@ -134,7 +141,7 @@ class main{
             Scanner scanner = new Scanner(System.in);
             String next = scanner.nextLine();
             if (next.equals("y")) {
-                return true;
+                cmdTicTacToe();
             }
             if (next.equals("n")) {
                 System.out.println("Tot ziens!");

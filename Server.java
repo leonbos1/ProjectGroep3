@@ -16,7 +16,7 @@ public class Server{
         this.out = new PrintStream(sock.getOutputStream());
         this.in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         game = new TicTacToe(3,3);
-        this.username = "test1";
+        this.username = "ISY3";
 
         boolean alive = true;
         thread = new Thread(() -> {
@@ -39,7 +39,7 @@ public class Server{
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             String line;
             while((line = reader.readLine()) != null){
-                System.out.println(line);
+                //System.out.println(line);
 
                 line = line.replace("[", "");
                 line = line.replace("]","");
@@ -51,7 +51,13 @@ public class Server{
 
 
                 if (arr[0].equals("SVR")) {
-                    game.getBoard().showBoard();
+
+                    if (arr[1].equals("PLAYERLIST")) {
+                        for (int i = 2; i < arr.length; i++) {
+                            System.out.println(arr[i]);
+                        }
+                    }
+
 
                     if (arr[1].equals("GAME")) {
                         switch (arr[2]) {
@@ -61,9 +67,14 @@ public class Server{
                                         int move = Integer.parseInt(arr[6]);
                                         int row = move / 3; int col = move % 3;
                                         game.makeMove(row, col);
+                                        game.getBoard().showBoard();
+                                        System.out.println();
                                     }
                                 }
                                 break;
+
+                            case "MATCH":
+                                System.out.println("Je speelt tegen: "+ arr[8]);
 
                             case "CHALLENGE":
                                 send("challenge accept "+arr[8]);
@@ -73,6 +84,8 @@ public class Server{
                                     int[] movearray = game.aiMove(2);
                                     int move = ((movearray[0] - 1) * 3) + ((movearray[1] - 1));
                                     move(move);
+                                    game.getBoard().showBoard();
+                                    System.out.println();
                                 }
                                 break;
 
