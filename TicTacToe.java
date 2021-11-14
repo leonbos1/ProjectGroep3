@@ -48,12 +48,87 @@ public class TicTacToe {
 
         //Als speler begint: in het midden
         else if (countMoves() == 2) {
-            if (CheckRules.checkLegalMove(getBoardArray(),1,1)) {
+            if (CheckRules.checkLegalMove(getBoardArray(),1,1) && CheckRules.checkLegalMove(getBoardArray(),1,1)) {
                 row = 1;
                 col = 1;
             }
-            else {
+            else if (CheckRules.checkLegalMove(getBoardArray(),0,0) && CheckRules.checkLegalMove(getBoardArray(),0,0)) {
                 row = 0;
+                col = 0;
+            }
+        }
+        else if (countMoves() == 3) {
+            if (getBoardArray()[0][0] == 0) {
+                row = 0;
+                col = 0;
+            } else if (getBoardArray()[0][2] == 0) {
+                row = 0;
+                col = 2;
+            } else if (getBoardArray()[2][0] == 0) {
+                row = 2;
+                col = 0;
+            } if (getBoardArray()[2][2] == 0) {
+                row = 2;
+                col = 2;
+            }
+
+            if (getBoardArray()[0][1] == 1 && getBoardArray()[1][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,0)) {
+                row = 0;
+                col = 0;
+            } else if (getBoardArray()[0][1] == 1 && getBoardArray()[1][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,2)) {
+                row = 0;
+                col = 2;
+            } else if (getBoardArray()[1][0] == 1 && getBoardArray()[2][1] == 1 && CheckRules.checkLegalMove(getBoardArray(),2,0)) {
+                row = 2;
+                col = 0;
+            } else if (getBoardArray()[2][1] == 1 && getBoardArray()[1][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),2,2)) {
+                row = 2;
+                col = 2;
+            }
+            else if (getBoardArray()[0][0] == 1 && getBoardArray()[2][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,1)) {
+                row = 0;
+                col = 1;
+            }
+            else if (getBoardArray()[0][2] == 1 && getBoardArray()[2][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),1,0)){
+                row = 1;
+                col = 0;
+            }
+        }
+        else if (countMoves() == 4) {
+            if (getBoardArray()[0][0] == 1 && getBoardArray()[2][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,1)) {
+                row = 0;
+                col = 1;
+            }
+            else if (getBoardArray()[0][2] == 1 && getBoardArray()[2][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),1,0)){
+                row = 1;
+                col = 0;
+            }
+            else if (getBoardArray()[0][0] == 2 && getBoardArray()[1][1] == 1 && getBoardArray()[2][2] == 1) {
+                row = 2;
+                col = 0;
+            }
+        }
+
+        else if (countMoves() == 5) {
+            if (getBoardArray()[0][0] == 0) {
+                row = 0;
+                col = 0;
+            } else if (getBoardArray()[0][2] == 0) {
+                row = 0;
+                col = 2;
+            } else if (getBoardArray()[2][0] == 0) {
+                row = 2;
+                col = 0;
+            } else if (getBoardArray()[2][2] == 0) {
+                row = 2;
+                col = 2;
+            }
+            else if (getBoardArray()[0][0] == 1 && getBoardArray()[2][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,1)) {
+                row = 0;
+                col = 1;
+            }
+            else if (getBoardArray()[0][2] == 1 && getBoardArray()[2][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),1,0)){
+                row = 1;
                 col = 0;
             }
         }
@@ -65,7 +140,7 @@ public class TicTacToe {
                 row = x;
                 col = y;
             } else {
-                return aiMoveVariable(ai);
+                return aiMove3x3(ai);
             }
         }
         board.updateBoard(ai, row, col);

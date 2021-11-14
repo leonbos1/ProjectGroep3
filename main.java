@@ -5,22 +5,41 @@ import java.io.*;
 class main{
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        //System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");
+        //int choice = Integer.parseInt(scanner.nextLine());
+        //if (choice == 0) {
         try {
             serverTicTacToe();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("error");
         }
+        /*
+        } else if (choice == 1) {
+            cmdTicTacToe();
+        } else {
+            System.out.println("Verkeerde invoer waarde, probeer het opnieuw.");
+        }
 
+         */
     }
 
-    public static void serverTicTacToe() throws IOException {
+    public static void serverTicTacToe() throws IOException, InterruptedException {
         String ip = "145.33.225.170";
         int port = 7789;
+        Scanner scanner = new Scanner(System.in);
         Server server = new Server(ip, port);
 
-        server.send("login anoniemeblobvis");
-        server.send("get gamelist");
-        server.send("get playerlist");
+        server.login();
+
+        server.playerlist();
+
+        //Thread.sleep(1000);
+        //System.out.println("Wie wil je uitdagen?");
+        //String opponent = scanner.nextLine();
+        //server.challenge(opponent, "tic-tac-toe");
+        //server.challenge("itv2c2", "tic-tac-toe");
+        server.subscribe("tic-tac-toe");
 
     }
 
@@ -64,7 +83,6 @@ class main{
             while (true) {
                 int[] move = input();
                 if (game.makeMove(move[0]-1, move[1]-1)) {
-                    System.out.println("test");
                     game.getBoard().showBoard();
                     break;
                 }
@@ -94,7 +112,6 @@ class main{
             game.getBoard().showBoard();
             if (CheckRules.checkWinner(game.getBoardArray() ,2, game.getBoardWinLength())) {
                 System.out.println("De Ai heeft gewonnen :(");
-                running = false;
                 if (restart()) {
                     game.getBoard().clearBoard();
                 } else {
@@ -128,7 +145,7 @@ class main{
             Scanner scanner = new Scanner(System.in);
             String next = scanner.nextLine();
             if (next.equals("y")) {
-                return true;
+                cmdTicTacToe();
             }
             if (next.equals("n")) {
                 System.out.println("Tot ziens!");
