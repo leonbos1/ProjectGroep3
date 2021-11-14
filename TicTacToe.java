@@ -48,11 +48,11 @@ public class TicTacToe {
 
         //Als speler begint: in het midden
         else if (countMoves() == 2) {
-            if (CheckRules.checkLegalMove(getBoardArray(),1,1)) {
+            if (CheckRules.checkLegalMove(getBoardArray(),1,1) && CheckRules.checkLegalMove(getBoardArray(),1,1)) {
                 row = 1;
                 col = 1;
             }
-            else if (CheckRules.checkLegalMove(getBoardArray(),0,0)) {
+            else if (CheckRules.checkLegalMove(getBoardArray(),0,0) && CheckRules.checkLegalMove(getBoardArray(),0,0)) {
                 row = 0;
                 col = 0;
             }
@@ -67,7 +67,7 @@ public class TicTacToe {
             } else if (getBoardArray()[2][0] == 0) {
                 row = 2;
                 col = 0;
-            } else if (getBoardArray()[2][2] == 0) {
+            } if (getBoardArray()[2][2] == 0) {
                 row = 2;
                 col = 2;
             }
@@ -101,6 +101,10 @@ public class TicTacToe {
             }
             else if (getBoardArray()[0][2] == 1 && getBoardArray()[2][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),1,0)){
                 row = 1;
+                col = 0;
+            }
+            else if (getBoardArray()[0][0] == 2 && getBoardArray()[1][1] == 1 && getBoardArray()[2][2] == 1) {
+                row = 2;
                 col = 0;
             }
         }

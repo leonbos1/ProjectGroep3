@@ -16,7 +16,7 @@ public class Server{
         this.out = new PrintStream(sock.getOutputStream());
         this.in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         game = new TicTacToe(3,3);
-        this.username = "ISY3";
+        this.username = "ITV2C3";
 
         boolean alive = true;
         thread = new Thread(() -> {
@@ -39,7 +39,7 @@ public class Server{
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             String line;
             while((line = reader.readLine()) != null){
-                //System.out.println(line);
+                System.out.println(line);
 
                 line = line.replace("[", "");
                 line = line.replace("]","");
@@ -77,7 +77,9 @@ public class Server{
                                 System.out.println("Je speelt tegen: "+ arr[8]);
 
                             case "CHALLENGE":
-                                send("challenge accept "+arr[8]);
+                                if (arr[3].equals("CHALLENGER:")) {
+                                    send("challenge accept " + arr[6]);
+                                }
 
                             case "YOURTURN":
                                 if (arr[3].equals("TURNMESSAGE:")) {
@@ -92,16 +94,20 @@ public class Server{
                             case "DRAW":
                                 System.out.println("Gelijkspel");
                                 game = new TicTacToe(3,3);
+                                //subscribe("tic-tac-toe");
+                                playerlist();
                                 break;
 
                             case "WIN":
                                 System.out.println("Gewonnen");
                                 game = new TicTacToe(3,3);
+                                playerlist();
                                 break;
 
                             case "LOSS":
                                 System.out.println("Verloren");
                                 game = new TicTacToe(3,3);
+                                playerlist();
                                 break;
                         }
                     }
