@@ -3,20 +3,10 @@ import java.util.Scanner;
 public class Board {
     public int[][] board;
     public int size;
-    public int win_length;
 
-    public Board() {
-        Scanner scanner = new Scanner(System.in);
-        this.size = Integer.parseInt(scanner.nextLine());
-        this.board = new int[size][size];
-        System.out.print("Wat is de benodigde lengte om te winnen?:");
-        this.win_length = Integer.parseInt(scanner.nextLine());
-    }
-
-    public Board(int size, int win_length) {
+    public Board(int size) {
         this.board = new int[size][size];
         this.size = size;
-        this.win_length = win_length;
     }
 
     public void updateBoard(int player, int row, int col) {
@@ -38,11 +28,17 @@ public class Board {
         }
     }
 
+    public void clearBoard() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board[i][j] = 0;
+            }
+        }
+    }
+
     public void setSize(int size) {this.size = size;}
 
-    public int getSize() {
-        return size;
-    }
+    public int getSize() {return size;}
 
     public void setBoard(int[][] board) {this.board = board;}
 
