@@ -7,22 +7,21 @@ class main{
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        //System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");
-        //int choice = Integer.parseInt(scanner.nextLine());
-        //if (choice == 0) {
+        System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");
+        int choice = Integer.parseInt(scanner.nextLine());
+        if (choice == 0) {
         try {
             serverTicTacToe();
         } catch (IOException | InterruptedException e) {
             System.out.println("error");
         }
-        /*
+
         } else if (choice == 1) {
             cmdTicTacToe();
         } else {
             System.out.println("Verkeerde invoer waarde, probeer het opnieuw.");
         }
 
-         */
     }
 
     public static void serverTicTacToe() throws IOException, InterruptedException {
