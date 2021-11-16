@@ -1,5 +1,12 @@
 public class CheckRules {
 
+    /**
+     * controleert of een zet legaal is
+     * @param board, row, col
+     * @return boolean of een zet legaal is
+     */
+
+
     public static boolean checkLegalMove(int[][] board, int row, int col) {
 
         if (row >= board.length || col >= board[0].length) {
@@ -9,6 +16,13 @@ public class CheckRules {
         }
         return false;
     }
+
+    /**
+     * roept alle win methodes aan
+     * @param board, player, win lengte
+     * @return boolean of je kan winnen
+     */
+
 
     public static boolean checkWinner(int[][] board, int player, int win_length) {
         for (int row = 0; row < board[0].length; row++) {
@@ -31,6 +45,12 @@ public class CheckRules {
 
     }
 
+    /**
+     * controleert of het mogelijke is om horizontaal te winnen
+     * @param player, row start, col start, board, win lengte
+     * @return boolean of je kan winnen
+     */
+
     public static boolean in_a_row_n_east(int player, int r_start, int c_start,int[][] board, int win_length) {
         int h = board.length;
         int w = board[0].length;
@@ -48,6 +68,12 @@ public class CheckRules {
         }
         return true;
     }
+
+    /**
+     * controleert of het mogelijke is om verticaal te winnen
+     * @param player, row start, col start, board, win lengte
+     * @return boolean of je kan winnen
+     */
 
     public static boolean in_a_row_n_south(int player, int r_start, int c_start,int[][] board, int win_length) {
         int h = board.length;
@@ -68,6 +94,13 @@ public class CheckRules {
         return true;
     }
 
+    /**
+     * controleert of het mogelijke is om te winnen van links boven naar rechts onder
+     * @param player, row start, col start, board, win lengte
+     * @return boolean of je kan winnen
+     */
+
+
     public static boolean in_a_row_n_northeast(int player, int r_start, int c_start,int[][] board, int win_length) {
         int h = board.length;
         int w = board[0].length;
@@ -87,6 +120,12 @@ public class CheckRules {
         return true;
     }
 
+    /**
+     * controleert of het mogelijke is om te winnen van links onder naar rechts boven
+     * @param player, row start, col start, board, win lengte
+     * @return boolean of je kan winnen
+     */
+
     public static boolean in_a_row_n_southeast(int player, int r_start, int c_start,int[][] board, int win_length) {
         int h = board.length;
         int w = board[0].length;
@@ -105,6 +144,12 @@ public class CheckRules {
         }
         return true;
     }
+
+    /**
+     * checkt of het bord vol is
+     * @param board, board array
+     * @return boolean of het vol is
+     */
 
     public static boolean checkBoardFull(int[][] board) {
         for (int col = 0; col < board.length; col++) {

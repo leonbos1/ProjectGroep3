@@ -25,6 +25,10 @@ public class Server{
         thread.start();
     }
 
+    /**
+     * verstuurt berichten naar de server
+     */
+
     public void send(String data){
         try {
             OutputStream output = sock.getOutputStream();
@@ -32,6 +36,10 @@ public class Server{
             writer.println(data);
         } catch(Exception error){System.out.println(error);}
     }
+
+    /**
+     * ontvangt en handled binnenkomende server berichten
+     */
 
     public void receive(){
         try {

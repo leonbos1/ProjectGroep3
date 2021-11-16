@@ -37,6 +37,12 @@ public class TicTacToe {
         }
     }
 
+    /**
+     * Doet een ai move voor een 3x3 bord
+     * @param ai, de int van de ai
+     * @return row en col waar een zet wordt gedaan
+     */
+
     public int[] aiMove3x3(int ai) {
         int row=0;
         int col=0;
@@ -147,6 +153,12 @@ public class TicTacToe {
         return new int[]{row+1,col+1};
     }
 
+    /**
+     * minimax algoritm voor variabele bordgrootte
+     * @param ai, de int van de ai
+     * @return row en col waar een zet wordt gedaan
+     */
+
     public int[] aiMoveVariable(int ai) {
         int[][] scores = scores_for_each_move(getBoardArray(),ai,1);
         int max_score = getMaxScore(scores);
@@ -181,6 +193,12 @@ public class TicTacToe {
 
     }
 
+    /**
+     * Checkt of het spel kan worden gewonnen
+     * @param player, int van de player
+     * @return row en col waar het spel kan worden gewonnen
+     */
+
     public int[] canWin(int player) {
         int maxRow = -1;
         int maxCol = -1;
@@ -205,6 +223,11 @@ public class TicTacToe {
 
     }
 
+    /**
+     * telt hoeveel moves er zijn gedaan
+     * @return aantal moves
+     */
+
     public int countMoves() {
         int moves = 1;
         int[][] board = getBoardArray();
@@ -218,12 +241,24 @@ public class TicTacToe {
         return moves;
     }
 
+    /**
+     * geeft de opponent terug
+     * @param player, de int van de player
+     * @return de int van de tegenstander
+     */
+
     public int getOpponent(int player) {
         if (player==1) {
             return 2;
         }
         return 1;
     }
+
+    /**
+     * geeft een score voor elke mogelijke move
+     * @param board, player, strength (recursion depth)
+     * @return two-dimensional array met scores
+     */
 
     public int[][] scores_for_each_move(int[][] board, int player, int strength) {
         int[][] scores = new int[board.length][board[0].length];
@@ -281,6 +316,12 @@ public class TicTacToe {
         return scores;
     }
 
+    /**
+     * geeft de maximale score in een score array
+     * @param array met scores
+     * @return max score
+     */
+
     private int getMaxScore(int[][] scores) {
         int max_score = scores[0][0];
         for (int row = 0; row < board.board.length; row++) {
@@ -293,6 +334,12 @@ public class TicTacToe {
         return max_score;
     }
 
+    /**
+     * doet een move voor de player
+     * @param row en col
+     * @return boolean of de zet legaal is
+     */
+
     public boolean makeMove(int row, int col) {
         if (CheckRules.checkLegalMove(getBoardArray(), row, col)) {
             board.updateBoard(getPlayer(), row, col);
@@ -302,6 +349,11 @@ public class TicTacToe {
             return false;
         }
     }
+
+    /**
+     * Haalt een move van het bord
+     * @param row en col
+     */
 
     public void removeMove(int row,int col) {
         board.updateBoard(0,row,col);
