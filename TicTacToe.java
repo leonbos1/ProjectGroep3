@@ -44,6 +44,7 @@ public class TicTacToe {
      */
 
     public int[] aiMove3x3(int ai) {
+        int[][] boardArray = getBoardArray();
         int row=0;
         int col=0;
         //Als ai begint: in een hoek
@@ -54,86 +55,86 @@ public class TicTacToe {
 
         //Als speler begint: in het midden
         else if (countMoves() == 2) {
-            if (CheckRules.checkLegalMove(getBoardArray(),1,1) && CheckRules.checkLegalMove(getBoardArray(),1,1)) {
+            if (CheckRules.checkLegalMove(boardArray,1,1) && CheckRules.checkLegalMove(boardArray,1,1)) {
                 row = 1;
                 col = 1;
             }
-            else if (CheckRules.checkLegalMove(getBoardArray(),0,0) && CheckRules.checkLegalMove(getBoardArray(),0,0)) {
+            else if (CheckRules.checkLegalMove(boardArray,0,0) && CheckRules.checkLegalMove(boardArray,0,0)) {
                 row = 0;
                 col = 0;
             }
         }
         else if (countMoves() == 3) {
-            if (getBoardArray()[0][0] == 0) {
+            if (boardArray[0][0] == 0) {
                 row = 0;
                 col = 0;
-            } else if (getBoardArray()[0][2] == 0) {
+            } else if (boardArray[0][2] == 0) {
                 row = 0;
                 col = 2;
-            } else if (getBoardArray()[2][0] == 0) {
+            } else if (boardArray[2][0] == 0) {
                 row = 2;
                 col = 0;
-            } if (getBoardArray()[2][2] == 0) {
+            } if (boardArray[2][2] == 0) {
                 row = 2;
                 col = 2;
             }
 
-            if (getBoardArray()[0][1] == 1 && getBoardArray()[1][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,0)) {
+            if (boardArray[0][1] == 1 && boardArray[1][0] == 1 && CheckRules.checkLegalMove(boardArray,0,0)) {
                 row = 0;
                 col = 0;
-            } else if (getBoardArray()[0][1] == 1 && getBoardArray()[1][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,2)) {
+            } else if (boardArray[0][1] == 1 && boardArray[1][2] == 1 && CheckRules.checkLegalMove(boardArray,0,2)) {
                 row = 0;
                 col = 2;
-            } else if (getBoardArray()[1][0] == 1 && getBoardArray()[2][1] == 1 && CheckRules.checkLegalMove(getBoardArray(),2,0)) {
+            } else if (boardArray[1][0] == 1 && boardArray[2][1] == 1 && CheckRules.checkLegalMove(boardArray,2,0)) {
                 row = 2;
                 col = 0;
-            } else if (getBoardArray()[2][1] == 1 && getBoardArray()[1][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),2,2)) {
+            } else if (boardArray[2][1] == 1 && boardArray[1][2] == 1 && CheckRules.checkLegalMove(boardArray,2,2)) {
                 row = 2;
                 col = 2;
             }
-            else if (getBoardArray()[0][0] == 1 && getBoardArray()[2][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,1)) {
+            else if (boardArray[0][0] == 1 && boardArray[2][2] == 1 && CheckRules.checkLegalMove(boardArray,0,1)) {
                 row = 0;
                 col = 1;
             }
-            else if (getBoardArray()[0][2] == 1 && getBoardArray()[2][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),1,0)){
+            else if (boardArray[0][2] == 1 && boardArray[2][0] == 1 && CheckRules.checkLegalMove(boardArray,1,0)){
                 row = 1;
                 col = 0;
             }
         }
         else if (countMoves() == 4) {
-            if (getBoardArray()[0][0] == 1 && getBoardArray()[2][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,1)) {
+            if (boardArray[0][0] == 1 && boardArray[2][2] == 1 && CheckRules.checkLegalMove(boardArray,0,1)) {
                 row = 0;
                 col = 1;
             }
-            else if (getBoardArray()[0][2] == 1 && getBoardArray()[2][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),1,0)){
+            else if (boardArray[0][2] == 1 && boardArray[2][0] == 1 && CheckRules.checkLegalMove(boardArray,1,0)){
                 row = 1;
                 col = 0;
             }
-            else if (getBoardArray()[0][0] == 2 && getBoardArray()[1][1] == 1 && getBoardArray()[2][2] == 1) {
+            else if (boardArray[0][0] == 2 && boardArray[1][1] == 1 && boardArray[2][2] == 1) {
                 row = 2;
                 col = 0;
             }
         }
 
         else if (countMoves() == 5) {
-            if (getBoardArray()[0][0] == 0) {
+            if (boardArray[0][0] == 0) {
                 row = 0;
                 col = 0;
-            } else if (getBoardArray()[0][2] == 0) {
+            } else if (boardArray[0][2] == 0) {
                 row = 0;
                 col = 2;
-            } else if (getBoardArray()[2][0] == 0) {
+            } else if (boardArray[2][0] == 0) {
                 row = 2;
                 col = 0;
-            } else if (getBoardArray()[2][2] == 0) {
+            } else if (boardArray[2][2] == 0) {
                 row = 2;
                 col = 2;
             }
-            else if (getBoardArray()[0][0] == 1 && getBoardArray()[2][2] == 1 && CheckRules.checkLegalMove(getBoardArray(),0,1)) {
+            else if (boardArray[0][0] == 1 && boardArray[2][2] == 1 && CheckRules.checkLegalMove(boardArray,0,1)) {
                 row = 0;
                 col = 1;
             }
-            else if (getBoardArray()[0][2] == 1 && getBoardArray()[2][0] == 1 && CheckRules.checkLegalMove(getBoardArray(),1,0)){
+            else if (boardArray[0][2] == 1 && boardArray[2][0] == 1 && CheckRules.checkLegalMove(boardArray,1,0)){
                 row = 1;
                 col = 0;
             }
@@ -142,7 +143,7 @@ public class TicTacToe {
         else {
             int x = randomMove.nextInt(board.getSize());
             int y = randomMove.nextInt(board.getSize());
-            if (CheckRules.checkLegalMove(getBoardArray(), x, y)) {
+            if (CheckRules.checkLegalMove(boardArray, x, y)) {
                 row = x;
                 col = y;
             } else {
@@ -160,7 +161,7 @@ public class TicTacToe {
      */
 
     public int[] aiMoveVariable(int ai) {
-        int[][] scores = scores_for_each_move(getBoardArray(),ai,1);
+        int[][] scores = scoresForEachMove(getBoardArray(),ai,1);
         int max_score = getMaxScore(scores);
         int maxRow = 0;
         int maxCol = 0;
@@ -260,7 +261,7 @@ public class TicTacToe {
      * @return two-dimensional array met scores
      */
 
-    public int[][] scores_for_each_move(int[][] board, int player, int strength) {
+    public int[][] scoresForEachMove(int[][] board, int player, int strength) {
         int[][] scores = new int[board.length][board[0].length];
 
         for (int row = 0; row < board.length; row++) {
@@ -300,7 +301,7 @@ public class TicTacToe {
                         scores[row][col] = 0;
                     }
 
-                    int[][] opponent_scores = scores_for_each_move(board, getOpponent(player), strength - 1);
+                    int[][] opponent_scores = scoresForEachMove(board, getOpponent(player), strength - 1);
 
                     int opponent_max_score = getMaxScore(opponent_scores);
                     scores[row][col] = opponent_max_score;
@@ -318,7 +319,7 @@ public class TicTacToe {
 
     /**
      * geeft de maximale score in een score array
-     * @param array met scores
+     * @param scores, array met scores
      * @return max score
      */
 
