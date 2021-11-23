@@ -104,7 +104,7 @@ public class CheckRulesReversi {
         int opponent = getOpponent(player);
         boolean opponentInCol = false;
 
-        for (int i = col+1; i < 7; i++) {
+        for (int i = col+1; i < 8; i++) {
             if (board.board[row][i] == opponent) {
                 opponentInCol = true;
             }
@@ -151,7 +151,7 @@ public class CheckRulesReversi {
         boolean opponentInCol = false;
         int j = col-1;
 
-        for (int i = row+1; i <= 7; i++) {
+        for (int i = row+1; i < 8; i++) {
             if (j < 0) {return false;}
 
             if (board.board[i][j] == opponent) {
@@ -202,7 +202,7 @@ public class CheckRulesReversi {
         boolean opponentInCol = false;
         int j = col + 1;
 
-        for (int i = row+1; i < 7; i++) {
+        for (int i = row+1; i < 8; i++) {
 
             if (j > 7) {return false;}
 
@@ -222,6 +222,7 @@ public class CheckRulesReversi {
         }
         return false;
     }
+
 
     private boolean checkValidMove ( int row, int col, int player){
 

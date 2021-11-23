@@ -8,6 +8,8 @@ public class Reversi {
     private Random randomMove;
     private Board board;
     private int player;
+    ReversiAI ai;
+    CheckRulesReversi rules;
 
     public Reversi(int player) {
         this.randomMove = new Random();
@@ -17,115 +19,116 @@ public class Reversi {
         board.updateBoard(2, 3, 4);
         board.updateBoard(2, 4, 3);
         this.player = player;
+        ai = new ReversiAI(board, getOpponent(player));
+        rules = new CheckRulesReversi(board, player);
+
     }
 
+
     private void makeMove(int player, int row, int col) {
-        CheckRulesReversi rules = new CheckRulesReversi(getBoard(), getPlayer());
         board.updateBoard(player, row, col);
+        int opponent = getOpponent(player);
 
         if (rules.checkLegalUp(row, col, player)) {
             for (int i = row-1; i >= 0; i--) {
-                if (board.getBoard()[i][col] == player) {
-                    break;
-                } else {
-                    board.updateBoard(player, i, col);
+                if (board.board[i][col] == opponent) {
+                    board.board[i][col] = player;
                 }
+                else {break;}
             }
         }
 
         if (rules.checkLegalDown(row, col, player)) {
             for (int i = row+1; i < 8; i++) {
-                if (board.board[i][col] == player) {
-                    break;
-                } else {
-                    board.updateBoard(player, i, col);
+                if (board.board[i][col] == opponent) {
+                    board.board[i][col] = player;
                 }
+                else {break;}
             }
         }
 
         if (rules.checkLegalLeft(row,col, player)) {
             for (int i = col-1; i >= 0; i--) {
-                if (board.board[row][i] == player) {
-                    break;
-                } else {
-                    board.updateBoard(player, row, i);
+                if (board.board[row][i] == opponent) {
+                    board.board[row][i] = player;
                 }
+                else {break;}
             }
         }
 
         if (rules.checkLegalRight(row, col, player)) {
-            for (int i = col+1; i < 8; i++) {
-                if (board.board[row][i] == player) {
-                    break;
-                } else {
-                    board.updateBoard(player, row, i);
+            for (int i = col+1; i <= 7; i++) {
+                if (board.board[row][i] == opponent) {
+                    board.board[row][i] = player;
                 }
+                else {break;}
             }
         }
 
         if (rules.checkLegalLeftUp(row, col, player)) {
             int j = col-1;
+
             for (int i = row-1; i > 0; i--) {
                 if (j < 0) {
                     break;
                 }
-                if (board.board[i][j] == player) {
-                    break;
+                if (board.board[i][j] == opponent) {
+                    board.board[i][j] = player;
+                    j--;
                 } else {
-                    board.updateBoard(player, i, j);
+                    break;
                 }
-                j--;
             }
         }
 
         if (rules.checkLegalLeftDown(row, col, player)) {
             int j = col-1;
-            for (int i = row+1; i < 7; i++) {
-                if (j < 0) {
-                    break;
-                }
-                if (board.board[i][j] == player) {
-                    break;
+
+            for (int i = row+1; i <= 7; i++) {
+                if (j < 0) {break;}
+                if (board.board[i][j] == opponent) {
+                    board.board[i][j] = player;
+                    j--;
                 } else {
-                    board.updateBoard(player, i, j);
+                    break;
                 }
-                j--;
+
             }
         }
 
         if (rules.checkLegalRightUp(row, col, player)) {
             int j = col + 1;
-            for (int i = row-1; i > 0; i--) {
+
+            for (int i = row - 1; i > 0; i--) {
+
                 if (j > 7) {
                     break;
                 }
-                if (board.board[i][j] == player) {
-                    break;
+                if (board.board[i][j] == opponent) {
+                    board.board[i][j] = player;
+                    j++;
                 } else {
-                    board.updateBoard(player, i, j);
+                    break;
                 }
-                j++;
             }
         }
 
         if (rules.checkLegalRightDown(row, col, player)) {
             int j = col + 1;
-            for (int i = row+1; i < 7; i++) {
-                if (j > 7) {
-                    break;
-                }
-                if (board.board[i][j] == player) {
-                    break;
+
+            for (int i = row + 1; i <= 7; i++) {
+                if (j > 7) {break;}
+                if (board.board[i][j] == opponent) {
+                    board.board[i][j] = player;
+                    j++;
                 } else {
-                    board.updateBoard(player, i, j);
+                    break;
                 }
-                j++;
             }
         }
     }
 
     public boolean playerMove(int row, int col) {
-        CheckRulesReversi rules = new CheckRulesReversi(getBoard(), getPlayer());
         if (rules.checkLegalMove(row, col, getPlayer())) {
             makeMove(player, row, col);
             return true;
@@ -135,16 +138,23 @@ public class Reversi {
         }
     }
 
-    public int[] aiMove() {
-        CheckRulesReversi rules = new CheckRulesReversi(getBoard(), getOpponent());
-        int[] move = {randomMove.nextInt(8), randomMove.nextInt(8)};
-        while (!rules.checkLegalMove(move[0], move[1], getOpponent())) {
-            move[0] = randomMove.nextInt(8);
-            move[1] = randomMove.nextInt(8);
-        }
-        makeMove(getOpponent(), move[0], move[1]);
-        return move;
+    public int[] AIMove(int player) {
+
+        int[] result = ai.AIMove(player);
+
+        makeMove(player, result[0],result[1]);
+
+        return result;
     }
+
+    public int[] randomAIMove(int player) {
+        int[] result = ai.RandomAIMove();
+
+        makeMove(player, result[0],result[1]);
+
+        return result;
+    }
+
 
     public boolean canPlay(int player) {
         CheckRulesReversi rules = new CheckRulesReversi(getBoard(), player);
@@ -181,7 +191,7 @@ public class Reversi {
         return board.getBoard();
     }
 
-    public int getOpponent() {
+    public static int getOpponent(int player) {
         if (player == 1) {
             return 2;
         } else {

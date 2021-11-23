@@ -174,9 +174,11 @@ class main{
                         }
                     }
                 } else {
-                    move = game.aiMove();
+
+                    move = game.AIMove(1);
                     System.out.println("De ai doet row: "+(move[0]+1)+" col: "+(move[1]+1));
                     game.getBoard().showBoard();
+
                 }
 
             } else if (game.gameOver()) {
@@ -232,7 +234,7 @@ class main{
                         }
                     }
                 } else {
-                    move = game.aiMove();
+                    move = game.AIMove(2);
                     System.out.println("De ai doet row: "+(move[0]+1)+" col: "+(move[1]+1));
                     game.getBoard().showBoard();
                 }
