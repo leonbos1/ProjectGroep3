@@ -16,7 +16,8 @@ class main{
     //wit is 2
 
     public static void main(String[] args) {
-
+        cmdReversi();
+        /*
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");
         int choice = Integer.parseInt(scanner.nextLine());
@@ -32,6 +33,7 @@ class main{
         } else {
             System.out.println("Verkeerde invoer waarde, probeer het opnieuw.");
         }
+         */
 
     }
 
@@ -140,12 +142,150 @@ class main{
         }
     }
 
+    public static void cmdReversi() {
+        System.out.println("Welkom bij reversi!");
+        System.out.print("Wilt u eerst spelen (0), of mag de ai eerst (1): ");
+        Scanner scanner = new Scanner(System.in);
+        int choice = Integer.parseInt(scanner.nextLine());
+
+        int player;
+        if (choice == 0) {
+            player = 1;
+        } else {
+            player = 2;
+        }
+
+        System.out.println("U bent speler "+player+".");
+
+        Reversi game = new Reversi(player);
+        int[] move;
+        game.getBoard().showBoard();
+
+        while (true) {
+            //player 1
+            if (game.canPlay(1)) {
+                if (player == 1) {
+                    while (true) {
+                        move = input();
+                        if (game.playerMove(move[0] - 1, move[1] - 1)) {
+                            System.out.println();
+                            game.getBoard().showBoard();
+                            break;
+                        }
+                    }
+                } else {
+                    move = game.aiMove();
+                    System.out.println("De ai doet row: "+(move[0]+1)+" col: "+(move[1]+1));
+                    game.getBoard().showBoard();
+                }
+
+            } else if (game.gameOver()) {
+                System.out.println("Speler 1 past.");
+                game.getBoard().showBoard();
+
+                System.out.println("Speler 2 past.");
+                game.getBoard().showBoard();
+
+                System.out.println("Het spel is afgelopen, het resultaat is:");
+                int score1 = game.playerScore(1);
+                int score2 = game.playerScore(2);
+                System.out.println("Speler 1: "+score1);
+                System.out.println("Speler 2: "+score2);
+
+                if (score1 == score2) {
+                    System.out.println("Gelijkspel, goed gespeeld.");
+                    break;
+                } else if (score1 > score2) {
+                    System.out.print("Speler 1 wint!");
+                    if (player == 1) {
+                        System.out.println("Gefeliciteerd!");
+                        break;
+                    } else {
+                        System.out.println("Volgende keer beter.");
+                        break;
+                    }
+                } else {
+                    System.out.print("Speler 2 wint!");
+                    if (player == 2) {
+                        System.out.println("Gefeliciteerd!");
+                        break;
+                    } else {
+                        System.out.println("Volgende keer beter.");
+                        break;
+                    }
+                }
+
+            } else {
+                System.out.println("Speler 1 past.");
+                game.getBoard().showBoard();
+            }
+
+            //player 2
+            if (game.canPlay(2)) {
+                if (player == 2) {
+                    while (true) {
+                        move = input();
+                        if (game.playerMove(move[0] - 1, move[1] - 1)) {
+                            System.out.println();
+                            game.getBoard().showBoard();
+                            break;
+                        }
+                    }
+                } else {
+                    move = game.aiMove();
+                    System.out.println("De ai doet row: "+(move[0]+1)+" col: "+(move[1]+1));
+                    game.getBoard().showBoard();
+                }
+
+            } else if (game.gameOver()) {
+                System.out.println("Speler 2 past.");
+                game.getBoard().showBoard();
+
+                System.out.println("Speler 1 past.");
+                game.getBoard().showBoard();
+
+                System.out.println("Het spel is afgelopen, het resultaat is:");
+                int score1 = game.playerScore(1);
+                int score2 = game.playerScore(2);
+                System.out.println("Speler 1: "+score1);
+                System.out.println("Speler 2: "+score2);
+
+                if (score1 == score2) {
+                    System.out.println("Gelijkspel, goed gespeeld.");
+                    break;
+                } else if (score1 > score2) {
+                    System.out.print("Speler 1 wint!");
+                    if (player == 1) {
+                        System.out.println("Gefeliciteerd!");
+                        break;
+                    } else {
+                        System.out.println("Volgende keer beter.");
+                        break;
+                    }
+                } else {
+                    System.out.print("Speler 2 wint!");
+                    if (player == 2) {
+                        System.out.println("Gefeliciteerd!");
+                        break;
+                    } else {
+                        System.out.println("Volgende keer beter.");
+                        break;
+                    }
+                }
+
+            } else {
+                System.out.println("Speler 2 past.");
+                game.getBoard().showBoard();
+            }
+        }
+    }
+
     public static int[] input(){
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\nKies een row: ");
+        System.out.println("Kies een row: ");
         int x = Integer.parseInt(scanner.nextLine());
-        System.out.println("\nKies een column: ");
+        System.out.println("Kies een column: ");
         int y = Integer.parseInt(scanner.nextLine());
         return new int[]{x,y};
     }
