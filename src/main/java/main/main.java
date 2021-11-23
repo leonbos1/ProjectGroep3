@@ -1,3 +1,10 @@
+package src.main.java.main;
+
+import src.main.java.reversi.CheckRulesReversi;
+import src.main.java.reversi.Reversi;
+import src.main.java.tictactoe.CheckRules;
+import src.main.java.tictactoe.TicTacToe;
+
 import java.lang.*;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -5,7 +12,11 @@ import java.io.*;
 
 class main{
 
+    //zwart is 1
+    //wit is 2
+
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");
         int choice = Integer.parseInt(scanner.nextLine());

@@ -1,3 +1,7 @@
+package src.main.java.tictactoe;
+
+import src.main.java.main.Board;
+
 import java.util.Random;
 
 public class TicTacToe {

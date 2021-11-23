@@ -1,3 +1,5 @@
+package src.main.java.tictactoe;
+
 public class CheckRules {
 
     /**

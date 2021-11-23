@@ -1,3 +1,8 @@
+package src.main.java.main;
+
+import src.main.java.tictactoe.TicTacToe;
+import src.main.java.main.Board;
+
 import java.io.*;
 import java.net.*;
 
@@ -85,9 +90,9 @@ public class Server{
                                 System.out.println("Je speelt tegen: "+ arr[8]);
 
                             case "CHALLENGE":
-                                if (arr[3].equals("CHALLENGER:")) {
-                                    send("challenge accept " + arr[6]);
-                                }
+                                //if (arr[3].equals("CHALLENGER:")) {
+                                //    send("challenge accept " + arr[6]);
+                                //}
 
                             case "YOURTURN":
                                 if (arr[3].equals("TURNMESSAGE:")) {

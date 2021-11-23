@@ -1,3 +1,7 @@
+package src.main.java.reversi;
+
+import src.main.java.main.Board;
+
 public class CheckRulesReversi {
 
     Board board;
