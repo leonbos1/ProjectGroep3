@@ -2,6 +2,7 @@ package src.main.java.main;
 
 import src.main.java.reversi.CheckRulesReversi;
 import src.main.java.reversi.Reversi;
+import src.main.java.reversi.ReversiAI;
 import src.main.java.tictactoe.CheckRules;
 import src.main.java.tictactoe.TicTacToe;
 
@@ -12,11 +13,66 @@ import java.io.*;
 
 class main{
 
-    //zwart is 1
-    //wit is 2
-
     public static void main(String[] args) {
 
+
+        Board board = new Board(8);
+        Reversi reversi = new Reversi(board);
+        Scanner scanner = new Scanner(System.in);
+        board.showBoard();
+
+        while (true) {
+            while (true) {
+                if (CheckRulesReversi.canMove(board.board,1)) {
+                    System.out.println("Row: ");
+                    int row = scanner.nextInt();
+                    System.out.println("Col: ");
+                    int col = scanner.nextInt();
+                    if (CheckRulesReversi.checkLegalMove(board.board, row, col, 1)) {
+                        reversi.makeMove(row, col, 1);
+                        break;
+                    }
+                }
+                else {break;}
+
+            }
+            if (CheckRulesReversi.checkBoardFull(board.board)) {
+                if (CheckRulesReversi.checkWinner(board.board,1)) {
+                    System.out.println("Speler 1 heeft gewonnen");
+                }
+                else if (CheckRulesReversi.checkWinner(board.board,2)) {
+                    System.out.println("Speler 2 heeft gewonnen");
+                }
+                else {
+                    System.out.println("Gelijkspel!!");
+                }
+            }
+
+            board.showBoard();
+
+            if (CheckRulesReversi.canMove(board.board,2)) {
+                reversi.AIMove();
+                board.showBoard();
+            }
+
+            if (CheckRulesReversi.checkBoardFull(board.board)) {
+                if (CheckRulesReversi.checkWinner(board.board,1)) {
+                    System.out.println("Speler 1 heeft gewonnen");
+                    break;
+                }
+                else if (CheckRulesReversi.checkWinner(board.board,2)) {
+                    System.out.println("Speler 2 heeft gewonnen");
+                    break;
+                }
+                else {
+                    System.out.println("Gelijkspel!!");
+                    break;
+                }
+            }
+        }
+
+
+/*
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");
         int choice = Integer.parseInt(scanner.nextLine());
@@ -32,7 +88,7 @@ class main{
         } else {
             System.out.println("Verkeerde invoer waarde, probeer het opnieuw.");
         }
-
+*/
     }
 
     public static void serverTicTacToe() throws IOException, InterruptedException {

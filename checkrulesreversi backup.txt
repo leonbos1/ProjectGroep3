@@ -4,35 +4,43 @@ import src.main.java.main.Board;
 
 public class CheckRulesReversi {
 
-    public static boolean checkLegalMove(int[][] board, int row, int col, int player) {
-        if (!checkValidMove(board,row,col,player)) {return false;}
+    Board board;
+    int player;
 
-        else if (board[row][col] != 0) {return false;}
+    public CheckRulesReversi(Board board, int player) {
+        this.board = board;
+        this.player = player;
+    }
 
-        else if (checkLegalUp(board,row, col, player)) {return true;}
+    public boolean checkLegalMove(int row, int col, int player) {
+        if (!checkValidMove(row,col,player)) {return false;}
 
-        else if (checkLegalDown(board,row, col, player)) {return true;}
+        else if (board.board[row][col] != 0) {return false;}
 
-        else if (checkLegalLeft(board,row,col, player)) {return true;}
+        else if (checkLegalUp(row, col, player)) {return true;}
 
-        else if (checkLegalRight(board,row, col, player)) {return true;}
+        else if (checkLegalDown(row, col, player)) {return true;}
 
-        else if (checkLegalLeftUp(board,row, col, player)) {return true;}
+        else if (checkLegalLeft(row,col, player)) {return true;}
 
-        else if (checkLegalLeftDown(board,row, col, player)) {return true;}
+        else if (checkLegalRight(row, col, player)) {return true;}
 
-        else if (checkLegalRightUp(board,row, col, player)) {return true;}
+        else if (checkLegalLeftUp(row, col, player)) {return true;}
 
-        else if (checkLegalRightDown(board,row, col, player)) {return true;}
+        else if (checkLegalLeftDown(row, col, player)) {return true;}
+
+        else if (checkLegalRightUp(row, col, player)) {return true;}
+
+        else if (checkLegalRightDown(row, col, player)) {return true;}
 
         else {return false;}
     }
 
-    public static boolean canMove(int[][]board, int player) {
+    public boolean canMove(int player) {
 
-        for (int row = 0; row <= 7; row++) {
-            for (int col = 0; col <= 7; col++) {
-                if (checkLegalMove(board,row,col,player)) {
+        for (int row = 0; row < 7; row++) {
+            for (int col = 0; col < 7; col++) {
+                if (checkLegalMove(row,col,player)) {
                     return true;
                 }
             }
@@ -41,11 +49,11 @@ public class CheckRulesReversi {
 
     }
 
-    public static boolean checkBoardFull(int[][]board) {
-
-        for (int row = 0; row <= 7; row++) {
-            for (int col = 0; col <= 7; col++) {
-                if (board[row][col] == 0) {
+    public boolean checkBoardFull() {
+        
+        for (int row = 0; row < 7; row++) {
+            for (int col = 0; col < 7; col++) {
+                if (board.board[row][col] == 0) {
                     return false;
                 }
             }
@@ -54,17 +62,17 @@ public class CheckRulesReversi {
 
     }
 
-    public static boolean checkWinner(int[][]board, int player) {
+    public boolean checkWinner(int player) {
         int opponent = getOpponent(player);
         int player1Stones = 0;
         int player2Stones = 0;
 
-        for (int row = 0; row <= 7; row++) {
-            for (int col = 0; col <= 7; col++) {
-                if (board[row][col] == 1) {
+        for (int row = 0; row < 7; row++) {
+            for (int col = 0; col < 7; col++) {
+                if (board.board[row][col] == 1) {
                     player1Stones++;
                 }
-                else if (board[row][col] == 2) {
+                else if (board.board[row][col] == 2) {
                     player2Stones++;
                 }
             }
@@ -74,92 +82,92 @@ public class CheckRulesReversi {
         } else {return false;}
     }
 
-    public static boolean checkLegalUp(int[][]board, int row, int col, int player) {
+    public boolean checkLegalUp(int row, int col, int player) {
         int opponent = getOpponent(player);
         boolean opponentInCol = false;
 
         for (int i = row-1; i >= 0; i--) {
 
-            if (board[i][col] == opponent) {
+            if (board.board[i][col] == opponent) {
                 opponentInCol = true;
             }
-            else if (board[i][col] == player && opponentInCol) {
+            else if (board.board[i][col] == player && opponentInCol) {
                 return true;
             }
-            else if  (board[i][col] == player && !opponentInCol) {
+            else if  (board.board[i][col] == player && !opponentInCol) {
                 return false;
             }
-            else if  (board[i][col] == 0) {
+            else if  (board.board[i][col] == 0) {
                 return false;
             }
         }
         return false;
     }
 
-    public static boolean checkLegalDown(int[][]board, int row, int col, int player) {
+    public boolean checkLegalDown(int row, int col, int player) {
         int opponent = getOpponent(player);
         boolean opponentInCol = false;
 
         for (int i = row+1; i < 8; i++) {
-            if (board[i][col] == opponent) {
+            if (board.board[i][col] == opponent) {
                 opponentInCol = true;
             }
-            else if (board[i][col] == player && opponentInCol) {
+            else if (board.board[i][col] == player && opponentInCol) {
                 return true;
             }
-            else if  (board[i][col] == player && !opponentInCol) {
+            else if  (board.board[i][col] == player && !opponentInCol) {
                 return false;
             }
-            else if  (board[i][col] == 0) {
+            else if  (board.board[i][col] == 0) {
                 return false;
             }
         }
         return false;
     }
 
-    public static boolean checkLegalLeft(int[][]board, int row, int col, int player) {
+    public boolean checkLegalLeft(int row, int col, int player) {
         int opponent = getOpponent(player);
         boolean opponentInCol = false;
 
         for (int i = col-1; i >= 0; i--) {
-            if (board[row][i] == opponent) {
+            if (board.board[row][i] == opponent) {
                 opponentInCol = true;
             }
-            else if (board[row][i] == player && opponentInCol) {
+            else if (board.board[row][i] == player && opponentInCol) {
                 return true;
             }
-            else if  (board[row][i] == player && !opponentInCol) {
+            else if  (board.board[row][i] == player && !opponentInCol) {
                 return false;
             }
-            else if  (board[row][i] == 0) {
+            else if  (board.board[row][i] == 0) {
                 return false;
             }
         }
         return false;
     }
 
-    public static boolean checkLegalRight(int[][]board, int row, int col, int player) {
+    public boolean checkLegalRight(int row, int col, int player) {
             int opponent = getOpponent(player);
             boolean opponentInCol = false;
 
-            for (int i = col+1; i <= 7; i++) {
-                if (board[row][i] == opponent) {
+            for (int i = col+1; i < 7; i++) {
+                if (board.board[row][i] == opponent) {
                     opponentInCol = true;
                 }
-                else if (board[row][i] == player && opponentInCol) {
+                else if (board.board[row][i] == player && opponentInCol) {
                     return true;
                 }
-                else if  (board[row][i] == player && !opponentInCol) {
+                else if  (board.board[row][i] == player && !opponentInCol) {
                     return false;
                 }
-                else if  (board[row][i] == 0) {
+                else if  (board.board[row][i] == 0) {
                     return false;
                 }
             }
             return false;
     }
 
-    public static boolean checkLegalLeftUp(int[][] board, int row, int col, int player) {
+    public boolean checkLegalLeftUp(int row, int col, int player) {
         int opponent = getOpponent(player);
         boolean opponentInCol = false;
         int j = col-1;
@@ -167,16 +175,16 @@ public class CheckRulesReversi {
         for (int i = row-1; i > 0; i--) {
             if (j < 0) {return false;}
 
-                if (board[i][j] == opponent) {
+                if (board.board[i][j] == opponent) {
                     opponentInCol = true;
                 }
-                else if (board[i][j] == player && opponentInCol) {
+                else if (board.board[i][j] == player && opponentInCol) {
                     return true;
                 }
-                else if  (board[i][j] == player && !opponentInCol) {
+                else if  (board.board[i][j] == player && !opponentInCol) {
                     return false;
                 }
-                else if  (board[i][j] == 0) {
+                else if  (board.board[i][j] == 0) {
                     return false;
                 }
                 j--;
@@ -184,24 +192,24 @@ public class CheckRulesReversi {
         return false;
     }
 
-    public static boolean checkLegalLeftDown(int[][] board, int row, int col, int player) {
+    public boolean checkLegalLeftDown(int row, int col, int player) {
         int opponent = getOpponent(player);
         boolean opponentInCol = false;
         int j = col-1;
 
-        for (int i = row+1; i <= 7; i++) {
+        for (int i = row+1; i < 7; i++) {
             if (j < 0) {return false;}
 
-                if (board[i][j] == opponent) {
+                if (board.board[i][j] == opponent) {
                     opponentInCol = true;
                 }
-                else if (board[i][j] == player && opponentInCol) {
+                else if (board.board[i][j] == player && opponentInCol) {
                     return true;
                 }
-                else if  (board[i][j] == player && !opponentInCol) {
+                else if  (board.board[i][j] == player && !opponentInCol) {
                     return false;
                 }
-                else if  (board[i][j] == 0) {
+                else if  (board.board[i][j] == 0) {
                     return false;
                 }
                 j--;
@@ -209,7 +217,7 @@ public class CheckRulesReversi {
         return false;
     }
 
-    public static boolean checkLegalRightUp(int[][] board, int row, int col, int player) {
+    public boolean checkLegalRightUp(int row, int col, int player) {
         int opponent = getOpponent(player);
         boolean opponentInCol = false;
         int j = col + 1;
@@ -218,16 +226,16 @@ public class CheckRulesReversi {
 
             if (j > 7) {return false;}
 
-            if (board[i][j] == opponent) {
+            if (board.board[i][j] == opponent) {
                 opponentInCol = true;
             }
-            else if (board[i][j] == player && opponentInCol) {
+            else if (board.board[i][j] == player && opponentInCol) {
                 return true;
             }
-            else if  (board[i][j] == player && !opponentInCol) {
+            else if  (board.board[i][j] == player && !opponentInCol) {
                 return false;
             }
-            else if  (board[i][j] == 0) {
+            else if  (board.board[i][j] == 0) {
                 return false;
             }
             j++;
@@ -235,25 +243,25 @@ public class CheckRulesReversi {
         return false;
     }
 
-    public static boolean checkLegalRightDown(int[][] board, int row, int col, int player) {
+    public boolean checkLegalRightDown(int row, int col, int player) {
         int opponent = getOpponent(player);
         boolean opponentInCol = false;
         int j = col + 1;
 
-        for (int i = row+1; i <= 7; i++) {
+        for (int i = row+1; i < 7; i++) {
 
             if (j > 7) {return false;}
 
-            if (board[i][j] == opponent) {
+            if (board.board[i][j] == opponent) {
                 opponentInCol = true;
             }
-            else if (board[i][j] == player && opponentInCol) {
+            else if (board.board[i][j] == player && opponentInCol) {
                 return true;
             }
-            else if  (board[i][j] == player && !opponentInCol) {
+            else if  (board.board[i][j] == player && !opponentInCol) {
                 return false;
             }
-            else if  (board[i][j] == 0) {
+            else if  (board.board[i][j] == 0) {
                 return false;
             }
             j++;
@@ -261,19 +269,19 @@ public class CheckRulesReversi {
         return false;
     }
 
-        private static boolean checkValidMove(int[][] board, int row, int col, int player){
+        private boolean checkValidMove ( int row, int col, int player){
 
             if (row < 0 || col < 0) {
                 return false;
             } else if (row > 7 || col > 7) {
                 return false;
-            } else if (checkValidRowEast(board,row, col, player)) {
+            } else if (checkValidRowEast(row, col, player)) {
                 return true;
-            } else if (checkValidRowSouth(board,row, col, player)) {
+            } else if (checkValidRowSouth(row, col, player)) {
                 return true;
-            } else if (checkValidRowNorthEast(board,row, col, player)) {
+            } else if (checkValidRowNorthEast(row, col, player)) {
                 return true;
-            } else if (checkValidRowSouthEast(board,row, col, player)) {
+            } else if (checkValidRowSouthEast(row, col, player)) {
                 return true;
             } else {
                 return false;
@@ -281,27 +289,27 @@ public class CheckRulesReversi {
 
         }
 
-        private static boolean checkValidRowEast(int[][] board, int row, int col, int player){
+        private boolean checkValidRowEast ( int row, int col, int player){
 
             for (int i = 0; i < 8; i++) {
-                if (board[row][i] == player) {
+                if (board.board[row][i] == player) {
                     return true;
                 }
             }
             return false;
         }
 
-        private static boolean checkValidRowSouth(int[][] board, int row, int col, int player){
+        private boolean checkValidRowSouth ( int row, int col, int player){
 
             for (int i = 0; i < 8; i++) {
-                if (board[i][col] == player) {
+                if (board.board[i][col] == player) {
                     return true;
                 }
             }
             return false;
         }
 
-        private static boolean checkValidRowNorthEast(int[][] board, int row, int col, int player){
+        private boolean checkValidRowNorthEast ( int row, int col, int player){
             col = (row + col) - 7;
             row = 7;
 
@@ -313,14 +321,14 @@ public class CheckRulesReversi {
                 if (row - i < 0 || col + i > 7) {
                     return false;
                 }
-                if (board[row - i][col + i] == player) {
+                if (board.board[row - i][col + i] == player) {
                     return true;
                 }
             }
             return false;
         }
 
-        private static boolean checkValidRowSouthEast(int[][] board, int row, int col, int player){
+        private boolean checkValidRowSouthEast ( int row, int col, int player){
             row = row - col;
             col = 0;
             if (row < 0) {
@@ -331,7 +339,7 @@ public class CheckRulesReversi {
                 if (row + i > 7 || col + i > 7) {
                     return false;
                 }
-                if (board[row + i][col + i] == player) {
+                if (board.board[row + i][col + i] == player) {
                     return true;
                 }
             }
@@ -339,7 +347,7 @@ public class CheckRulesReversi {
             return false;
         }
 
-        public static int getOpponent(int player){
+        public int getOpponent ( int player){
             if (player == 1) {
                 return 2;
             } else {
