@@ -310,7 +310,7 @@ public class CheckRulesReversi {
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public boolean gameOver() {
