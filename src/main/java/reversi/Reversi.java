@@ -13,7 +13,7 @@ public class Reversi {
 
     public Reversi(int player) {
         this.randomMove = new Random();
-        this.board = new Board(8);
+        this.board = new Board(8,8);
         board.updateBoard(1, 3, 3);
         board.updateBoard(1, 4, 4);
         board.updateBoard(2, 3, 4);
@@ -182,6 +182,8 @@ public class Reversi {
     public void setBoard(Board board) {
         this.board = board;
     }
+
+    public void setBoardArray(int[][]board) {this.board.board = board;}
 
     public void setPlayer(int player) {
         this.player = player;

@@ -1,7 +1,6 @@
 package src.main.java.tictactoe;
 
 import src.main.java.main.Board;
-
 import java.util.Random;
 
 public class TicTacToe {
@@ -14,10 +13,11 @@ public class TicTacToe {
 
     public TicTacToe(int winLength, int size) {
         randomMove = new Random();
-        board = new Board(size);
+        board = new Board(size,size);
         this.win_length = winLength;
         this.player = 1;
     }
+
 
     public int[] aiMove(int ai) {
         if (canWin(ai)[0]!=-1) {
@@ -145,8 +145,8 @@ public class TicTacToe {
         }
 
         else {
-            int x = randomMove.nextInt(board.getSize());
-            int y = randomMove.nextInt(board.getSize());
+            int x = randomMove.nextInt(board.getHeigth());
+            int y = randomMove.nextInt(board.getWidth());
             if (CheckRules.checkLegalMove(boardArray, x, y)) {
                 row = x;
                 col = y;
@@ -186,8 +186,8 @@ public class TicTacToe {
         }
 
         else {
-            int x = randomMove.nextInt(board.getSize());
-            int y = randomMove.nextInt(board.getSize());
+            int x = randomMove.nextInt(board.getHeigth());
+            int y = randomMove.nextInt(board.getWidth());
             if (CheckRules.checkLegalMove(getBoardArray(), x, y)) {
                 board.updateBoard(ai, x, y);
                 return new int[]{x+1,y+1};
@@ -385,4 +385,6 @@ public class TicTacToe {
     public int[][] getBoardArray() {
         return board.getBoard();
     }
+
+
 }
