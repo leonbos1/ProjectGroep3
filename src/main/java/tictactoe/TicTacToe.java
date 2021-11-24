@@ -1,7 +1,6 @@
 package src.main.java.tictactoe;
 
 import src.main.java.main.Board;
-
 import java.util.Random;
 
 public class TicTacToe {
@@ -14,10 +13,11 @@ public class TicTacToe {
 
     public TicTacToe(int winLength, int size) {
         randomMove = new Random();
-        board = new Board(size);
+        board = new Board(size,size);
         this.win_length = winLength;
         this.player = 1;
     }
+
 
     public int[] aiMove(int ai) {
         if (canWin(ai)[0]!=-1) {
@@ -385,4 +385,6 @@ public class TicTacToe {
     public int[][] getBoardArray() {
         return board.getBoard();
     }
+
+
 }

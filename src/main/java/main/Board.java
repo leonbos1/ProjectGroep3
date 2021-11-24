@@ -6,9 +6,9 @@ public class Board {
     public int[][] board;
     public int size;
 
-    public Board(int size) {
-        this.board = new int[size][size];
-        this.size = size;
+    public Board(int width, int heigth) {
+        this.board = new int[heigth][width];
+        this.size = width;
     }
 
     public void updateBoard(int player, int row, int col) {
@@ -17,6 +17,16 @@ public class Board {
         } else {
             board[row][col] = player;
         }
+    }
+
+    public void updateBoardFourRow(int player, int col) {
+        for (int i = 0; i < 7; i++) {
+            if (board[i][col] != 0) {
+                board[i-1][col] = player;
+                return;
+            }
+        }
+        board[board.length-1][col] = player;
     }
 
     public void showBoard() {
