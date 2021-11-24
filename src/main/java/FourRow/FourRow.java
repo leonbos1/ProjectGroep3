@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class FourRow {
 
-        private Board board;
+        public Board board;
         private int player;
         CheckRulesFourRow rules;
 

@@ -145,8 +145,8 @@ public class TicTacToe {
         }
 
         else {
-            int x = randomMove.nextInt(board.getSize());
-            int y = randomMove.nextInt(board.getSize());
+            int x = randomMove.nextInt(board.getHeigth());
+            int y = randomMove.nextInt(board.getWidth());
             if (CheckRules.checkLegalMove(boardArray, x, y)) {
                 row = x;
                 col = y;
@@ -186,8 +186,8 @@ public class TicTacToe {
         }
 
         else {
-            int x = randomMove.nextInt(board.getSize());
-            int y = randomMove.nextInt(board.getSize());
+            int x = randomMove.nextInt(board.getHeigth());
+            int y = randomMove.nextInt(board.getWidth());
             if (CheckRules.checkLegalMove(getBoardArray(), x, y)) {
                 board.updateBoard(ai, x, y);
                 return new int[]{x+1,y+1};

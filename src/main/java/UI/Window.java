@@ -10,8 +10,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.control.Button;
 import src.main.java.reversi.CheckRulesReversi;
 import src.main.java.reversi.Reversi;
 
@@ -26,61 +28,56 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Window extends Application {
     src.main.java.reversi.Reversi reversi = new src.main.java.reversi.Reversi(1);
     CheckRulesReversi rules = new CheckRulesReversi(reversi.getBoard(), 1);
-    int Xsize = reversi.getBoard().getSize();
-    int Ysize = reversi.getBoard().getSize();
+    int Xsize = reversi.getBoard().getHeigth();
+    int Ysize = reversi.getBoard().getWidth();
     int xWindowSize = 800;
     int yWindowSize = 800;
     int player = reversi.getPlayer();
+    String game;
 
     Tile[][] tileArray = new Tile[Xsize][Ysize];
 
     private Parent createContent() {
+
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);
 
         for (int i = 0; i < Xsize; i++) {
             for (int j = 0; j < Ysize; j++) {
                 Tile tile = new Tile(i, j);
-                tile.setTranslateX(j*(yWindowSize/Ysize));
-                tile.setTranslateY(i*(xWindowSize/Xsize));
+                tile.setTranslateX(j * (yWindowSize / Ysize));
+                tile.setTranslateY(i * (xWindowSize / Xsize));
                 tileArray[i][j] = (tile);
 
                 if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
                     tileArray[i][j].drawX();
-                }
-                else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
+                } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
                     tileArray[i][j].drawO();
                 }
-                if (rules.checkLegalMove(i,j,player)) {
+                if (rules.checkLegalMove(i, j, player)) {
                     tileArray[i][j].setborder(Color.GREEN);
                 } else {
                     tileArray[i][j].setborder(Color.BLACK);
                 }
 
-
                 root.getChildren().add(tile);
             }
         }
-
-
         return root;
     }
+
 
     public static void main(String[] args) {
 
         launch(args);
     }
 
+
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setScene(new
 
-        Scene(createContent()));
+        primaryStage.setScene(new Scene(createContent()));
         primaryStage.show();
-
-        reversi.getBoard().
-
-        showBoard();
 
     }
 
