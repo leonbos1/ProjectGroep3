@@ -6,7 +6,7 @@ import src.main.java.FourRow.CheckRulesFourRow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FourRow {
+public class FourRowTest {
 
     src.main.java.FourRow.FourRow fourRow = new src.main.java.FourRow.FourRow(1);
     CheckRulesFourRow rules = new CheckRulesFourRow(fourRow.board, 1);
