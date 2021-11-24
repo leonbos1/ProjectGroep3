@@ -1,4 +1,4 @@
-package src.main.java.main;
+package src.main.java.UI;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import src.main.java.reversi.CheckRulesReversi;
 import src.main.java.reversi.Reversi;
 
+import javax.swing.border.Border;
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -22,12 +24,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 //2 is O
 
 public class Window extends Application {
-    Reversi reversi = new Reversi(1);
+    src.main.java.reversi.Reversi reversi = new src.main.java.reversi.Reversi(1);
     CheckRulesReversi rules = new CheckRulesReversi(reversi.getBoard(), 1);
     int Xsize = reversi.getBoard().getSize();
     int Ysize = reversi.getBoard().getSize();
-    int xWindowSize = 1000;
-    int yWindowSize = 1000;
+    int xWindowSize = 800;
+    int yWindowSize = 800;
     int player = reversi.getPlayer();
 
     Tile[][] tileArray = new Tile[Xsize][Ysize];
@@ -48,6 +50,11 @@ public class Window extends Application {
                 }
                 else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
                     tileArray[i][j].drawO();
+                }
+                if (rules.checkLegalMove(i,j,player)) {
+                    tileArray[i][j].setborder(Color.GREEN);
+                } else {
+                    tileArray[i][j].setborder(Color.BLACK);
                 }
 
 
@@ -77,12 +84,48 @@ public class Window extends Application {
 
     }
 
+    private void updateBoard() {
+
+        Color black = Color.BLACK;
+        Color green = Color.GREEN;
+
+        for (int i = 0; i < Xsize; i++) {
+            for (int j = 0; j < Ysize; j++) {
+
+                if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
+                    tileArray[i][j].drawX();
+                } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
+                    tileArray[i][j].drawO();
+                }
+                if (rules.checkLegalMove(i,j,player)) {
+                    tileArray[i][j].setborder(green);
+                } else {
+                    tileArray[i][j].setborder(black);
+                }
+
+
+            }
+        }
+
+    }
+
     private class Tile extends StackPane {
 
         int row;
         int col;
 
+        private Rectangle border = new Rectangle(xWindowSize/Xsize,yWindowSize/Ysize);
         private Text text = new Text();
+
+        private void setborder(Color color) {
+            border.setStroke(color);
+            if (color == Color.GREEN) {
+                border.setStrokeWidth(3);
+            } else {
+                border.setStrokeWidth(1);
+            }
+        }
+
 
         public void drawX() {
             text.setText("X");
@@ -107,7 +150,7 @@ public class Window extends Application {
 
             text.setFont(Font.font(72));
 
-            Rectangle border = new Rectangle(xWindowSize/Xsize,yWindowSize/Ysize);
+            border.setStrokeWidth(1);
             border.setFill(null);
             border.setStroke(Color.BLACK);
 
@@ -119,36 +162,14 @@ public class Window extends Application {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         if (rules.checkLegalMove(getRow(), getCol(), reversi.getPlayer())) {
                             reversi.playerMove(getRow(), getCol());
-                            for (int i = 0; i < Xsize; i++) {
-                                for (int j = 0; j < Ysize; j++) {
-
-                                    if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
-                                        tileArray[i][j].drawX();
-                                    } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
-                                        tileArray[i][j].drawO();
-                                    }
-
-
-                                }
-                            }
+                            updateBoard();
                             turn.set(changeTurn(turn.get()));
                         }
                     }
                 }
-                if (turn.get() == Reversi.getOpponent(player)) {
-                    reversi.AIMove(Reversi.getOpponent(player));
-                    for (int i = 0; i < Xsize; i++) {
-                        for (int j = 0; j < Ysize; j++) {
-
-                            if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
-                                tileArray[i][j].drawX();
-                            } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
-                                tileArray[i][j].drawO();
-                            }
-
-
-                        }
-                    }
+                if (turn.get() == src.main.java.reversi.Reversi.getOpponent(player)) {
+                    reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
+                    updateBoard();
                     turn.set(changeTurn(turn.get()));
                 }
             });
