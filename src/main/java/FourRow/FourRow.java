@@ -130,4 +130,7 @@ public class FourRow {
         return true;
     }
 
+    public void setBoardArray(int[][] board) {
+            this.board.board = board;
+    }
 }
