@@ -7,33 +7,30 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.control.Button;
-import src.main.java.reversi.CheckRulesReversi;
-import src.main.java.reversi.Reversi;
+import src.main.java.FourRow.CheckRulesFourRow;
+import src.main.java.FourRow.FourRow;
 
-import javax.swing.border.Border;
-import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 //1 is X
 //2 is O
 
-public class Window extends Application {
-    src.main.java.reversi.Reversi reversi = new src.main.java.reversi.Reversi(1);
-    CheckRulesReversi rules = new CheckRulesReversi(reversi.getBoard(), 1);
-    int Xsize = reversi.getBoard().getHeigth();
-    int Ysize = reversi.getBoard().getWidth();
+public class FourRowUI extends Application {
+    FourRow fourrow = new FourRow(1);
+
+    int Xsize = fourrow.getBoard().getHeigth();
+    int Ysize = fourrow.getBoard().getWidth();
     int xWindowSize = 800;
     int yWindowSize = 800;
-    int player = reversi.getPlayer();
-    String game;
+    int player = fourrow.getPlayer();
+    CheckRulesFourRow rules = new CheckRulesFourRow(fourrow.getBoard(), player);
+
 
     Tile[][] tileArray = new Tile[Xsize][Ysize];
 
@@ -45,21 +42,16 @@ public class Window extends Application {
         for (int i = 0; i < Xsize; i++) {
             for (int j = 0; j < Ysize; j++) {
                 Tile tile = new Tile(i, j);
+
                 tile.setTranslateX(j * (yWindowSize / Ysize));
                 tile.setTranslateY(i * (xWindowSize / Xsize));
                 tileArray[i][j] = (tile);
 
-                if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
+                if (fourrow.getBoardArray()[i][j] == fourrow.getPlayer()) {
                     tileArray[i][j].drawX();
-                } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
+                } else if (fourrow.getBoardArray()[i][j] == FourRow.getOpponent(fourrow.getPlayer())) {
                     tileArray[i][j].drawO();
                 }
-                if (rules.checkLegalMove(i, j, player)) {
-                    tileArray[i][j].setborder(Color.GREEN);
-                } else {
-                    tileArray[i][j].setborder(Color.BLACK);
-                }
-
                 root.getChildren().add(tile);
             }
         }
@@ -83,23 +75,14 @@ public class Window extends Application {
 
     private void updateBoard() {
 
-        Color black = Color.BLACK;
-        Color green = Color.GREEN;
-
         for (int i = 0; i < Xsize; i++) {
             for (int j = 0; j < Ysize; j++) {
 
-                if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
+                if (fourrow.getBoardArray()[i][j] == fourrow.getPlayer()) {
                     tileArray[i][j].drawX();
-                } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
+                } else if (fourrow.getBoardArray()[i][j] == FourRow.getOpponent(fourrow.getPlayer())) {
                     tileArray[i][j].drawO();
                 }
-                if (rules.checkLegalMove(i,j,player)) {
-                    tileArray[i][j].setborder(green);
-                } else {
-                    tileArray[i][j].setborder(black);
-                }
-
 
             }
         }
@@ -114,14 +97,6 @@ public class Window extends Application {
         private Rectangle border = new Rectangle(xWindowSize/Xsize,yWindowSize/Ysize);
         private Text text = new Text();
 
-        private void setborder(Color color) {
-            border.setStroke(color);
-            if (color == Color.GREEN) {
-                border.setStrokeWidth(3);
-            } else {
-                border.setStrokeWidth(1);
-            }
-        }
 
 
         public void drawX() {
@@ -157,15 +132,15 @@ public class Window extends Application {
             setOnMouseClicked(event -> {
                 if (turn.get() == player) {
                     if (event.getButton() == MouseButton.PRIMARY) {
-                        if (rules.checkLegalMove(getRow(), getCol(), reversi.getPlayer())) {
-                            reversi.playerMove(getRow(), getCol());
+                        if (rules.checkLegalMove(getCol())) {
+                            fourrow.makeMove(player, getCol());
                             updateBoard();
                             turn.set(changeTurn(turn.get()));
                         }
                     }
                 }
-                if (turn.get() == src.main.java.reversi.Reversi.getOpponent(player)) {
-                    reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
+                if (turn.get() == FourRow.getOpponent(player)) {
+                    fourrow.AIMove(FourRow.getOpponent(player));
                     updateBoard();
                     turn.set(changeTurn(turn.get()));
                 }
