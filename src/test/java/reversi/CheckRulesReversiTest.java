@@ -1,6 +1,6 @@
 package src.test.java.reversi;
 
-import org.junit.Before;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;

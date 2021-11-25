@@ -161,12 +161,14 @@ class main{
 
         Reversi game = new Reversi(player);
         int[] move;
+        int turn = 1;
+        boolean pass = false;
         game.getBoard().showBoard();
 
         while (true) {
             //player 1
-            if (game.canPlay(1)) {
-                if (player == 1) {
+            if (game.canPlay(turn)) {
+                if (player == turn) {
                     while (true) {
                         move = input();
                         if (game.playerMove(move[0] - 1, move[1] - 1)) {
@@ -176,18 +178,19 @@ class main{
                         }
                     }
                 } else {
-
-                    move = game.AIMove(1);
+                    move = game.AIMove(turn);
                     System.out.println("De ai doet row: "+(move[0]+1)+" col: "+(move[1]+1));
                     game.getBoard().showBoard();
-
                 }
+                pass = false;
 
-            } else if (game.gameOver()) {
-                System.out.println("Speler 1 past.");
+            } else if (!pass) {
+                System.out.println("Speler "+turn+" past.");
+                pass = true;
                 game.getBoard().showBoard();
 
-                System.out.println("Speler 2 past.");
+            } else {
+                System.out.println("Speler "+turn+" past.");
                 game.getBoard().showBoard();
 
                 System.out.println("Het spel is afgelopen, het resultaat is:");
@@ -218,68 +221,11 @@ class main{
                         break;
                     }
                 }
-
-            } else {
-                System.out.println("Speler 1 past.");
-                game.getBoard().showBoard();
             }
-
-            //player 2
-            if (game.canPlay(2)) {
-                if (player == 2) {
-                    while (true) {
-                        move = input();
-                        if (game.playerMove(move[0] - 1, move[1] - 1)) {
-                            System.out.println();
-                            game.getBoard().showBoard();
-                            break;
-                        }
-                    }
-                } else {
-                    move = game.AIMove(2);
-                    System.out.println("De ai doet row: "+(move[0]+1)+" col: "+(move[1]+1));
-                    game.getBoard().showBoard();
-                }
-
-            } else if (game.gameOver()) {
-                System.out.println("Speler 2 past.");
-                game.getBoard().showBoard();
-
-                System.out.println("Speler 1 past.");
-                game.getBoard().showBoard();
-
-                System.out.println("Het spel is afgelopen, het resultaat is:");
-                int score1 = game.playerScore(1);
-                int score2 = game.playerScore(2);
-                System.out.println("Speler 1: "+score1);
-                System.out.println("Speler 2: "+score2);
-
-                if (score1 == score2) {
-                    System.out.println("Gelijkspel, goed gespeeld.");
-                    break;
-                } else if (score1 > score2) {
-                    System.out.print("Speler 1 wint!");
-                    if (player == 1) {
-                        System.out.println("Gefeliciteerd!");
-                        break;
-                    } else {
-                        System.out.println("Volgende keer beter.");
-                        break;
-                    }
-                } else {
-                    System.out.print("Speler 2 wint!");
-                    if (player == 2) {
-                        System.out.println("Gefeliciteerd!");
-                        break;
-                    } else {
-                        System.out.println("Volgende keer beter.");
-                        break;
-                    }
-                }
-
+            if (turn == 1) {
+                turn = 2;
             } else {
-                System.out.println("Speler 2 past.");
-                game.getBoard().showBoard();
+                turn = 1;
             }
         }
     }
