@@ -37,7 +37,7 @@ public class ReversiUI extends Application {
 
     Tile[][] tileArray = new Tile[Xsize][Ysize];
 
-    private Parent createContent() {
+    public Parent createContent() {
 
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);

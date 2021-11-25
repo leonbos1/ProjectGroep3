@@ -1,6 +1,7 @@
 package src.main.java.UI;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,15 +27,15 @@ public class FourRowUI extends Application {
 
     int Xsize = fourrow.getBoard().getHeigth();
     int Ysize = fourrow.getBoard().getWidth();
-    int xWindowSize = 800;
-    int yWindowSize = 800;
+    double xWindowSize = 700;
+    double yWindowSize = 600;
     int player = fourrow.getPlayer();
     CheckRulesFourRow rules = new CheckRulesFourRow(fourrow.getBoard(), player);
 
 
     Tile[][] tileArray = new Tile[Xsize][Ysize];
 
-    private Parent createContent() {
+    public Parent createContent() {
 
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);
@@ -43,8 +44,8 @@ public class FourRowUI extends Application {
             for (int j = 0; j < Ysize; j++) {
                 Tile tile = new Tile(i, j);
 
-                tile.setTranslateX(j * (yWindowSize / Ysize));
-                tile.setTranslateY(i * (xWindowSize / Xsize));
+                tile.setTranslateX(j * (100));
+                tile.setTranslateY(i * (100));
                 tileArray[i][j] = (tile);
 
                 if (fourrow.getBoardArray()[i][j] == fourrow.getPlayer()) {

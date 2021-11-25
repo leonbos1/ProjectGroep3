@@ -1,5 +1,6 @@
 package src.main.java.main;
 
+import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.TicTacToe;
 import src.main.java.main.Board;
 
@@ -12,16 +13,20 @@ public class Server{
     public OutputStream out;
     public BufferedReader in;
     private Thread thread;
-    private TicTacToe game;
+    private TicTacToe tictactoe;
+    private Reversi reversi;
     public String username;
+    public String game;
 
 
     public Server(String ip, int port) throws IOException {
         this.sock = new Socket(ip, port);
         this.out = new PrintStream(sock.getOutputStream());
         this.in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        game = new TicTacToe(3,3);
+        this.tictactoe = new TicTacToe(3,3);
+        this.reversi = new Reversi(1);
         this.username = "ITV2C3";
+        this.game = game;
 
         boolean alive = true;
         thread = new Thread(() -> {
@@ -79,8 +84,8 @@ public class Server{
                                     if (!arr[4].equals(getUsername())) {
                                         int move = Integer.parseInt(arr[6]);
                                         int row = move / 3; int col = move % 3;
-                                        game.makeMove(row, col);
-                                        game.getBoard().showBoard();
+                                        tictactoe.makeMove(row, col);
+                                        tictactoe.getBoard().showBoard();
                                         System.out.println();
                                     }
                                 }
@@ -96,30 +101,30 @@ public class Server{
 
                             case "YOURTURN":
                                 if (arr[3].equals("TURNMESSAGE:")) {
-                                    int[] movearray = game.aiMove(2);
+                                    int[] movearray = tictactoe.aiMove(2);
                                     int move = ((movearray[0] - 1) * 3) + ((movearray[1] - 1));
                                     move(move);
-                                    game.getBoard().showBoard();
+                                    tictactoe.getBoard().showBoard();
                                     System.out.println();
                                 }
                                 break;
 
                             case "DRAW":
                                 System.out.println("Gelijkspel");
-                                game = new TicTacToe(3,3);
+                                tictactoe = new TicTacToe(3,3);
                                 //subscribe("tic-tac-toe");
                                 playerlist();
                                 break;
 
                             case "WIN":
                                 System.out.println("Gewonnen");
-                                game = new TicTacToe(3,3);
+                                tictactoe = new TicTacToe(3,3);
                                 playerlist();
                                 break;
 
                             case "LOSS":
                                 System.out.println("Verloren");
-                                game = new TicTacToe(3,3);
+                                tictactoe = new TicTacToe(3,3);
                                 playerlist();
                                 break;
                         }

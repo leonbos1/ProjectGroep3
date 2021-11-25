@@ -21,7 +21,7 @@
       <TextField fx:id="hostIP" layoutX="225.0" layoutY="188.0" prefHeight="25.0" prefWidth="95.0" promptText="Server IP" />
       <TextField fx:id="portNumber" layoutX="322.0" layoutY="188.0" prefHeight="25.0" prefWidth="53.0" promptText="Port" />
       <Button fx:id="connectButton" defaultButton="true" layoutX="227.0" layoutY="222.0" mnemonicParsing="false" onAction="#guiServerHub" text="Verbind" />
-      <Button fx:id="playOffline" defaultButton="true" layoutX="287.0" layoutY="222.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Offline spelen">
+      <Button fx:id="playOffline" defaultButton="true" layoutX="287.0" layoutY="222.0" mnemonicParsing="false" prefHeight="25.0" onAction="#offlineMenu" prefWidth="87.0" text="Offline spelen">
          <font>
             <Font size="11.0" />
          </font>

@@ -1,5 +1,6 @@
 package src.main.java.main;
 
+import src.main.java.reversi.CheckRulesReversi;
 import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.CheckRules;
 import src.main.java.tictactoe.TicTacToe;
@@ -9,8 +10,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
 
-import static javafx.application.Application.launch;
-
 class main{
 
     //zwart is 1
@@ -19,7 +18,7 @@ class main{
     public static void main(String[] args) {
         GUI gui = new GUI();
         GUI.main(args);
-//        cmdReversi();
+
         /*
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");

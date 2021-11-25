@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.main.GUI">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="90.0" text="Welkom">
+         <font>
+            <Font name="Bauhaus 93" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="Reversi" defaultButton="true" layoutX="227.0" layoutY="222.0" mnemonicParsing="false" onAction="#playreversi" text="Reversi" />
+      <Button fx:id="FourRow" defaultButton="true" layoutX="227.0" layoutY="322.0" mnemonicParsing="false" onAction="#playFourRow" text="FourRow" />
+      <Button fx:id="Tictactoe" defaultButton="true" layoutX="227.0" layoutY="422.0" mnemonicParsing="false" onAction="#playTicTacToe" text="TicTacToe" />
+   </children>
+</AnchorPane>
