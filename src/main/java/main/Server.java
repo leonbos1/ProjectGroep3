@@ -17,7 +17,7 @@ public class Server{
     private Reversi reversi;
     public String username;
     public String game;
-
+    public String[] playerList;
 
     public Server(String ip, int port) throws IOException {
         this.sock = new Socket(ip, port);
@@ -26,7 +26,6 @@ public class Server{
         this.tictactoe = new TicTacToe(3,3);
         this.reversi = new Reversi(1);
         this.username = "ITV2C3";
-        this.game = game;
 
         boolean alive = true;
         thread = new Thread(() -> {
@@ -72,7 +71,7 @@ public class Server{
 
                     if (arr[1].equals("PLAYERLIST")) {
                         for (int i = 2; i < arr.length; i++) {
-                            System.out.println(arr[i]);
+                            playerList[i-2] = arr[i];
                         }
                     }
 
@@ -81,12 +80,26 @@ public class Server{
                         switch (arr[2]) {
                             case "MOVE":
                                 if (arr[3].equals("PLAYER:")) {
-                                    if (!arr[4].equals(getUsername())) {
-                                        int move = Integer.parseInt(arr[6]);
-                                        int row = move / 3; int col = move % 3;
-                                        tictactoe.makeMove(row, col);
-                                        tictactoe.getBoard().showBoard();
-                                        System.out.println();
+                                    if (game.equals("tictactoe")) {
+                                        if (!arr[4].equals(getUsername())) {
+                                            int move = Integer.parseInt(arr[6]);
+                                            int row = move / 3;
+                                            int col = move % 3;
+                                            tictactoe.makeMove(row, col);
+                                            tictactoe.getBoard().showBoard();
+                                            System.out.println();
+                                        }
+                                    }
+                                    else if (game.equals("reversi")) {
+                                        //nog aanpassen
+                                        if (!arr[4].equals(getUsername())) {
+                                            int move = Integer.parseInt(arr[6]);
+                                            int row = move / 3;
+                                            int col = move % 3;
+                                            tictactoe.makeMove(row, col);
+                                            tictactoe.getBoard().showBoard();
+                                            System.out.println();
+                                        }
                                     }
                                 }
                                 break;
@@ -101,31 +114,62 @@ public class Server{
 
                             case "YOURTURN":
                                 if (arr[3].equals("TURNMESSAGE:")) {
-                                    int[] movearray = tictactoe.aiMove(2);
-                                    int move = ((movearray[0] - 1) * 3) + ((movearray[1] - 1));
-                                    move(move);
-                                    tictactoe.getBoard().showBoard();
-                                    System.out.println();
+                                    if (game.equals("tictactoe")) {
+                                        int[] movearray = tictactoe.aiMove(2);
+                                        int move = ((movearray[0] - 1) * 3) + ((movearray[1] - 1));
+                                        move(move);
+                                        tictactoe.getBoard().showBoard();
+                                        System.out.println();
+                                    }
+
+                                    else if (game.equals("reversi")) {
+                                        // moet nog aanpassen
+                                        int[] movearray = tictactoe.aiMove(2);
+                                        int move = ((movearray[0] - 1) * 3) + ((movearray[1] - 1));
+                                        move(move);
+                                        tictactoe.getBoard().showBoard();
+                                        System.out.println();
+                                    }
                                 }
                                 break;
 
                             case "DRAW":
                                 System.out.println("Gelijkspel");
-                                tictactoe = new TicTacToe(3,3);
-                                //subscribe("tic-tac-toe");
-                                playerlist();
+                                if (game.equals("tictactoe")) {
+                                    tictactoe = new TicTacToe(3, 3);
+                                    playerlist();
+                                }
+                                else if (game.equals("reversi")) {
+                                    tictactoe = new TicTacToe(3, 3);
+                                    playerlist();
+                                }
+
                                 break;
 
                             case "WIN":
                                 System.out.println("Gewonnen");
-                                tictactoe = new TicTacToe(3,3);
-                                playerlist();
+                                if (game.equals("tictactoe")) {
+                                    tictactoe = new TicTacToe(3, 3);
+                                    playerlist();
+                                }
+                                else if (game.equals("reversi")) {
+                                    tictactoe = new TicTacToe(3, 3);
+                                    playerlist();
+                                }
+
                                 break;
 
                             case "LOSS":
                                 System.out.println("Verloren");
-                                tictactoe = new TicTacToe(3,3);
-                                playerlist();
+                                if (game.equals("tictactoe")) {
+                                    tictactoe = new TicTacToe(3, 3);
+                                    playerlist();
+                                }
+                                else if (game.equals("reversi")) {
+                                    tictactoe = new TicTacToe(3, 3);
+                                    playerlist();
+                                }
+
                                 break;
                         }
                     }
@@ -148,8 +192,10 @@ public class Server{
         send("subscribe " + game);
     }
 
-    public void playerlist() {
+    public String[] playerlist() throws InterruptedException {
         send("get playerlist");
+        Thread.sleep(500);
+        return playerList;
     }
 
     public void challenge(String username,String game) {
@@ -175,4 +221,6 @@ public class Server{
     }
 
     public String getUsername() {return this.username;}
+
+    public void setGame(String game) {this.game = game;}
 }
