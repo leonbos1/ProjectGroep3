@@ -8,24 +8,21 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane focusTraversable="true" opacity="0.57" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.main.GUI">
+<AnchorPane focusTraversable="true" opacity="0.57" prefHeight="400.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.main.GUI">
    <children>
-      <Label layoutX="278.0" layoutY="125.0" text="Welkom" wrapText="true" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfc8d0" height="200.0" layoutX="118.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="364.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="118.0" />
-      <Label layoutX="256.0" layoutY="112.0" text="Welkom!">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6454f7" height="406.0" layoutX="-1.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="225.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="451.0" />
+      <Label layoutX="71.0" layoutY="54.0" style="-fx-text-fill: white;" text="Welkom!">
          <font>
             <Font name="Bauhaus 93" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="userName" layoutX="225.0" layoutY="156.0" promptText="Username" />
-      <TextField fx:id="hostIP" layoutX="225.0" layoutY="188.0" prefHeight="25.0" prefWidth="95.0" promptText="Server IP" />
-      <TextField fx:id="portNumber" layoutX="322.0" layoutY="188.0" prefHeight="25.0" prefWidth="53.0" promptText="Port" />
-      <Button fx:id="connectButton" defaultButton="true" layoutX="227.0" layoutY="222.0" mnemonicParsing="false" onAction="#guiServerHub" text="Verbind" />
-      <Button fx:id="playOffline" defaultButton="true" layoutX="287.0" layoutY="222.0" mnemonicParsing="false" prefHeight="25.0" onAction="#offlineMenu" prefWidth="87.0" text="Offline spelen">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Button>
+      <TextField fx:id="userName" alignment="CENTER" layoutX="366.0" layoutY="128.0" promptText="Username" style="-fx-background-color: transperent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: #6454F7;" />
+      <TextField fx:id="hostIP" alignment="CENTER" layoutX="366.0" layoutY="178.0" prefHeight="26.0" prefWidth="160.0" promptText="Server IP" style="-fx-background-color: transperent; -fx-border-color: #6454F7; -fx-border-width: 0px 0px 1px 0px;" />
+      <TextField fx:id="portNumber" alignment="CENTER" layoutX="366.0" layoutY="229.0" prefHeight="26.0" prefWidth="160.0" promptText="Port" style="-fx-background-color: transperent; -fx-border-color: #6454F7; -fx-border-width: 0px 0px 1px 0px;" />
+      <Button fx:id="connectButton" defaultButton="true" layoutX="384.0" layoutY="295.0" mnemonicParsing="false" onAction="#guiServerHub" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: #6454F7; -fx-background-radius: 100; -fx-text-fill: white;" text="Online" />
+      <Button fx:id="playOffline" defaultButton="true" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" onAction="#offlineMenu" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: #2f2f2fa3; -fx-background-radius: 100; -fx-text-fill: white;" text="Offline" />
+      <TextField alignment="CENTER" layoutX="32.0" layoutY="129.0" style="-fx-background-color: transperent; -fx-text-fill: white;" text="Je kan kiezen of je offline  " />
+      <TextField alignment="CENTER" layoutX="32.0" layoutY="155.0" style="-fx-background-color: transperent; -fx-text-fill: white;" text="of online wilt gaan spelen." />
    </children>
    <effect>
       <ColorAdjust />
