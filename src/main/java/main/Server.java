@@ -24,7 +24,6 @@ public class Server{
         this.out = new PrintStream(sock.getOutputStream());
         this.in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         this.tictactoe = new TicTacToe(3,3);
-        this.reversi = new Reversi(1);
         this.username = "ITV2C3";
 
         boolean alive = true;
@@ -70,9 +69,9 @@ public class Server{
                 if (arr[0].equals("SVR")) {
 
                     if (arr[1].equals("PLAYERLIST")) {
-                        for (int i = 2; i < arr.length; i++) {
-                            playerList[i-2] = arr[i];
-                        }
+                        //for (int i = 2; i < arr.length; i++) {
+                        //    playerList[i-2] = arr[i];
+                        //}
                     }
 
 
@@ -94,10 +93,10 @@ public class Server{
                                         //nog aanpassen
                                         if (!arr[4].equals(getUsername())) {
                                             int move = Integer.parseInt(arr[6]);
-                                            int row = move / 3;
-                                            int col = move % 3;
-                                            tictactoe.makeMove(row, col);
-                                            tictactoe.getBoard().showBoard();
+                                            int row = move / 8;
+                                            int col = move % 8;
+                                            reversi.makeMove(Reversi.getOpponent(reversi.getPlayer()), row, col);
+                                            reversi.getBoard().showBoard();
                                             System.out.println();
                                         }
                                     }
@@ -105,12 +104,20 @@ public class Server{
                                 break;
 
                             case "MATCH":
-                                System.out.println("Je speelt tegen: "+ arr[8]);
+                                // wij mogen de eerste zet doen: player 1 begint altijd bij ons bord
+                                if (arr[4].equals(getUsername())) {reversi = new Reversi(2); System.out.println("ik ben nummer 2");}
+
+                                // tegenstander begint
+                                else {reversi = new Reversi(1); System.out.println("ik ben nummer1");}
+
+
+                                break;
 
                             case "CHALLENGE":
-                                //if (arr[3].equals("CHALLENGER:")) {
-                                //    send("challenge accept " + arr[6]);
-                                //}
+                                if (arr[3].equals("CHALLENGER:")) {
+                                    send("challenge accept " + arr[6]);
+                                    setGame(arr[8].toLowerCase());
+                                }
 
                             case "YOURTURN":
                                 if (arr[3].equals("TURNMESSAGE:")) {
@@ -123,11 +130,11 @@ public class Server{
                                     }
 
                                     else if (game.equals("reversi")) {
-                                        // moet nog aanpassen
-                                        int[] movearray = tictactoe.aiMove(2);
-                                        int move = ((movearray[0] - 1) * 3) + ((movearray[1] - 1));
+                                        int[] movearray = reversi.AIMove(reversi.getPlayer());
+                                        int move = ((movearray[0] - 1) * 8 ) + ((movearray[1] - 1) );
+                                        System.out.println(move);
                                         move(move);
-                                        tictactoe.getBoard().showBoard();
+                                        reversi.getBoard().showBoard();
                                         System.out.println();
                                     }
                                 }
@@ -137,11 +144,6 @@ public class Server{
                                 System.out.println("Gelijkspel");
                                 if (game.equals("tictactoe")) {
                                     tictactoe = new TicTacToe(3, 3);
-                                    playerlist();
-                                }
-                                else if (game.equals("reversi")) {
-                                    tictactoe = new TicTacToe(3, 3);
-                                    playerlist();
                                 }
 
                                 break;
@@ -150,11 +152,6 @@ public class Server{
                                 System.out.println("Gewonnen");
                                 if (game.equals("tictactoe")) {
                                     tictactoe = new TicTacToe(3, 3);
-                                    playerlist();
-                                }
-                                else if (game.equals("reversi")) {
-                                    tictactoe = new TicTacToe(3, 3);
-                                    playerlist();
                                 }
 
                                 break;
@@ -163,11 +160,6 @@ public class Server{
                                 System.out.println("Verloren");
                                 if (game.equals("tictactoe")) {
                                     tictactoe = new TicTacToe(3, 3);
-                                    playerlist();
-                                }
-                                else if (game.equals("reversi")) {
-                                    tictactoe = new TicTacToe(3, 3);
-                                    playerlist();
                                 }
 
                                 break;
@@ -190,6 +182,7 @@ public class Server{
 
     public void subscribe(String game) {
         send("subscribe " + game);
+        setGame(game);
     }
 
     public String[] playerlist() throws InterruptedException {
@@ -200,6 +193,7 @@ public class Server{
 
     public void challenge(String username,String game) {
         send("challenge "+ username+" "+game);
+        setGame(game);
     }
 
     public void move(int move) {
