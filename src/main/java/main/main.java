@@ -16,9 +16,9 @@ class main{
     //wit is 2
 
     public static void main(String[] args) {
-        //GUI gui = new GUI();
-        //GUI.main(args);
-        cmdReversi();
+        GUI gui = new GUI();
+        GUI.main(args);
+        //cmdReversi();
         /*
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");

@@ -18,6 +18,7 @@ import src.main.java.main.Server;
 import src.main.java.tictactoe.TicTacToe;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class GUI extends Application {
     private Server server;
@@ -39,6 +40,7 @@ public class GUI extends Application {
 
     @FXML
     private Button offlineReversi;
+
 
     public static void main(String[] args){
         System.out.println(1);
