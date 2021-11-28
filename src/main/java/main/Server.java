@@ -116,9 +116,9 @@ public class Server{
 
                             case "CHALLENGE":
                                 if (arr[3].equals("CHALLENGER:")) {
-                                    GUI.challengeAlert(arr[4], arr[8]);
+                                    GUI.challengeAlert(arr[4], arr[8], arr[6], sock);
                                     //send("challenge accept " + arr[6]);
-                                    //setGame(arr[8].toLowerCase());
+                                    setGame(arr[8].toLowerCase());
                                 }
 
                             case "YOURTURN":

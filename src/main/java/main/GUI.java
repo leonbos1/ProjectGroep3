@@ -16,6 +16,9 @@ import src.main.java.main.Server;
 import src.main.java.tictactoe.TicTacToe;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ResourceBundle;
 
 public class GUI extends Application {
@@ -99,7 +102,7 @@ public class GUI extends Application {
     }
 
 
-    public static void challengeAlert(String name, String game) {
+    public static void challengeAlert(String name, String game, String challengenumber, Socket server) {
         Platform.runLater(
         () -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -108,7 +111,15 @@ public class GUI extends Application {
             alert.setContentText(String.format("%s wil %s met je spelen", name, game));
             alert.showAndWait().ifPresent((btnType) -> {
                 if (btnType == ButtonType.OK) {
-                    System.out.println("challenge accepted");
+                    OutputStream output = null;
+                    try {
+                        output = server.getOutputStream();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    PrintWriter writer = new PrintWriter(output, true);
+                    writer.println("challenge accept "+challengenumber);
+
                 } else if (btnType == ButtonType.CANCEL) {
 
                 }
