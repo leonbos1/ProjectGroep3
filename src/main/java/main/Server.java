@@ -1,5 +1,6 @@
 package src.main.java.main;
 
+import javafx.scene.control.Alert;
 import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.TicTacToe;
 import src.main.java.main.Board;
@@ -115,8 +116,9 @@ public class Server{
 
                             case "CHALLENGE":
                                 if (arr[3].equals("CHALLENGER:")) {
-                                    send("challenge accept " + arr[6]);
-                                    setGame(arr[8].toLowerCase());
+                                    GUI.challengeAlert(arr[4], arr[8]);
+                                    //send("challenge accept " + arr[6]);
+                                    //setGame(arr[8].toLowerCase());
                                 }
 
                             case "YOURTURN":

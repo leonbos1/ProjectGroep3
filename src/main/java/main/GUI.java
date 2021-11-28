@@ -1,15 +1,13 @@
 package src.main.java.main;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import src.main.java.UI.FourRowUI;
 import src.main.java.UI.ReversiUI;
@@ -20,7 +18,7 @@ import src.main.java.tictactoe.TicTacToe;
 import java.io.IOException;
 
 public class GUI extends Application {
-    private Server server;
+    public Server server;
 
     @FXML
     private Button connectButton;
@@ -79,8 +77,9 @@ public class GUI extends Application {
         try {
             String ip = hostIP.getText();
             Integer port = Integer.parseInt(portNumber.getText());
-            server = new Server(ip, port);
+            server = new Server(ip ,port);
             server.username = userName.getText();
+            server.login();
             Parent root = FXMLLoader.load(getClass().getResource("serverHub.fxml"));
             Stage stage = (Stage) connectButton.getScene().getWindow();
 
@@ -95,9 +94,29 @@ public class GUI extends Application {
             alert.showAndWait();
         }
 
+    }
+
+
+    public static void challengeAlert(String name, String game) {
+        Platform.runLater(
+        () -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Incoming challenge");
+            alert.setHeaderText(null);
+            alert.setContentText(String.format("%s wil %s met je spelen", name, game));
+            alert.showAndWait().ifPresent((btnType) -> {
+                if (btnType == ButtonType.OK) {
+                    System.out.println("challenge accepted");
+                } else if (btnType == ButtonType.CANCEL) {
+
+                }
+            });
 
 
 
+
+    }
+        );
     }
 
     public void playreversi(ActionEvent event) {
