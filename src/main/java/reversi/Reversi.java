@@ -25,7 +25,7 @@ public class Reversi {
     }
 
 
-    private void makeMove(int player, int row, int col) {
+    public void makeMove(int player, int row, int col) {
         board.updateBoard(player, row, col);
         int opponent = getOpponent(player);
 
@@ -141,9 +141,9 @@ public class Reversi {
     public int[] AIMove(int player) {
 
         int[] result = ai.AIMove(player);
-
         makeMove(player, result[0],result[1]);
-
+        result[0] +=1;
+        result[1] +=1;
         return result;
     }
 
