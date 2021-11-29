@@ -44,6 +44,9 @@ public class GUI extends Application {
     @FXML
     private Button offlineReversi;
 
+    @FXML
+    private Button FourRow;
+
 
     public static void main(String[] args){
         System.out.println(1);
@@ -66,8 +69,9 @@ public class GUI extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("offlineHub.fxml"));
             Stage stage = (Stage) playOffline.getScene().getWindow();
-
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            stage.setScene(scene);
 
         } catch (Exception e){
             e.printStackTrace();
@@ -82,6 +86,14 @@ public class GUI extends Application {
     public void setServer(Server server) {this.server = server;}
 
     public Server getServer() {return this.server;}
+
+    @FXML
+    void mainMenu(ActionEvent event) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        Stage stage = (Stage) FourRow.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
 
     @FXML
     void guiServerHub(ActionEvent event) throws Exception {

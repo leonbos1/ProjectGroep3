@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.Button?>
 
-<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.main.GUI">
+<AnchorPane id="#backGround" prefHeight="331.0" prefWidth="235.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.main.GUI">
    <children>
+      <Button fx:id="Reversi" layoutX="38.0" layoutY="57.0" mnemonicParsing="false" onAction="#playreversi" prefHeight="211.0" prefWidth="208.0" styleClass="reversi" stylesheets="@style.css" text="Reversi">
+         <font>
+            <Font name="Bookman Old Style" size="30.0" />
+         </font>
+      </Button>
       <Label layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="90.0" text="Welkom">
          <font>
             <Font name="Bauhaus 93" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="Reversi" defaultButton="true" layoutX="227.0" layoutY="222.0" mnemonicParsing="false" onAction="#playreversi" text="Reversi" />
-      <Button fx:id="FourRow" defaultButton="true" layoutX="227.0" layoutY="322.0" mnemonicParsing="false" onAction="#playFourRow" text="FourRow" />
-      <Button fx:id="Tictactoe" defaultButton="true" layoutX="227.0" layoutY="422.0" mnemonicParsing="false" onAction="#playTicTacToe" text="TicTacToe" />
+      <Button fx:id="FourRow" layoutX="38.0" layoutY="116.0" mnemonicParsing="false" onAction="#playFourRow" styleClass="fourrow" stylesheets="@style.css" text="FourRow" />
+      <Button fx:id="Tictactoe" layoutX="38.0" layoutY="177.0" mnemonicParsing="false" onAction="#playTicTacToe" styleClass="tictactoe" stylesheets="@style.css" text="TicTacToe" />
+      <Button layoutX="124.0" layoutY="291.0" mnemonicParsing="false" onAction="#mainMenu" styleClass="playOffline" stylesheets="@style.css" text="Speel online">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
