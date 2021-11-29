@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -23,6 +25,13 @@
       <Button fx:id="playOffline" defaultButton="true" layoutX="50.0" layoutY="295.0" mnemonicParsing="false" onAction="#offlineMenu" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: #2f2f2fa3; -fx-background-radius: 100; -fx-text-fill: white;" text="Offline" />
       <TextField alignment="CENTER" layoutX="32.0" layoutY="129.0" style="-fx-background-color: transperent; -fx-text-fill: white;" text="Je kan kiezen of je offline  " />
       <TextField alignment="CENTER" layoutX="32.0" layoutY="155.0" style="-fx-background-color: transperent; -fx-text-fill: white;" text="of online wilt gaan spelen." />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="346.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fitHeight="66.0" fitWidth="61.0" layoutX="416.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/src/media/icons8-lock-480.png" />
+         </image>
+      </ImageView>
    </children>
    <effect>
       <ColorAdjust />
