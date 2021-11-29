@@ -1,6 +1,12 @@
 package src.main.java.main;
 
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
+import src.main.java.UI.ReversiUI;
 import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.TicTacToe;
 import src.main.java.main.Board;
@@ -19,13 +25,16 @@ public class Server{
     public String username;
     public String game;
     public String[] playerList;
+    public GUI gui;
+    ReversiUI reversiUI = new ReversiUI();
 
-    public Server(String ip, int port) throws IOException {
+    public Server(String ip, int port, GUI gui) throws IOException {
         this.sock = new Socket(ip, port);
         this.out = new PrintStream(sock.getOutputStream());
         this.in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         this.tictactoe = new TicTacToe(3,3);
         this.username = "ITV2C3";
+        this.gui = gui;
 
         boolean alive = true;
         thread = new Thread(() -> {
@@ -99,6 +108,7 @@ public class Server{
                                             reversi.makeMove(Reversi.getOpponent(reversi.getPlayer()), row, col);
                                             reversi.getBoard().showBoard();
                                             System.out.println();
+                                            reversiUI.updateBoard();
                                         }
                                     }
                                 }
@@ -106,17 +116,35 @@ public class Server{
 
                             case "MATCH":
                                 // wij mogen de eerste zet doen: player 1 begint altijd bij ons bord
-                                if (arr[4].equals(getUsername())) {reversi = new Reversi(2); System.out.println("ik ben nummer 2");}
+                                if (arr[4].equals(getUsername())) {
+
+                                    reversi = new Reversi(2);
+
+                                    Platform.runLater(
+                                            () -> {
+                                                Stage stage = new Stage();
+
+                                                stage.setScene(new Scene(reversiUI.createContent(reversi, true)));
+                                                stage.show();
+                                            });
+                                }
 
                                 // tegenstander begint
-                                else {reversi = new Reversi(1); System.out.println("ik ben nummer1");}
+                                else {
+                                    reversi = new Reversi(1);
+                                    Platform.runLater(
+                                            () -> {
+                                                Stage stage = new Stage();
 
-
+                                                stage.setScene(new Scene(reversiUI.createContent(reversi, true)));
+                                                stage.show();
+                                                });
+                                }
                                 break;
 
                             case "CHALLENGE":
                                 if (arr[3].equals("CHALLENGER:")) {
-                                    GUI.challengeAlert(arr[4], arr[8], arr[6], sock);
+                                    gui.challengeAlert(arr[4], arr[8], arr[6]);
                                     //send("challenge accept " + arr[6]);
                                     setGame(arr[8].toLowerCase());
                                 }
@@ -138,6 +166,7 @@ public class Server{
                                         move(move);
                                         reversi.getBoard().showBoard();
                                         System.out.println();
+                                        reversiUI.updateBoard();
                                     }
                                 }
                                 break;

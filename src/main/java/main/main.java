@@ -17,7 +17,7 @@ class main{
 
     public static void main(String[] args) {
         GUI gui = new GUI();
-        GUI.main(args);
+        gui.main(args);
         //cmdReversi();
         /*
         Scanner scanner = new Scanner(System.in);
@@ -39,24 +39,6 @@ class main{
 
     }
 
-    public static void serverTicTacToe() throws IOException, InterruptedException {
-        String ip = "145.33.225.170";
-        int port = 7789;
-        Scanner scanner = new Scanner(System.in);
-        Server server = new Server(ip, port);
-
-        server.login();
-
-        server.playerlist();
-
-        //Thread.sleep(1000);
-        //System.out.println("Wie wil je uitdagen?");
-        //String opponent = scanner.nextLine();
-        //server.challenge(opponent, "tic-tac-toe");
-        //server.challenge("itv2c2", "tic-tac-toe");
-        server.subscribe("tic-tac-toe");
-
-    }
 
     public static void cmdTicTacToe() {
         while (true) {

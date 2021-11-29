@@ -26,28 +26,36 @@ import java.util.concurrent.atomic.AtomicInteger;
 //2 is O
 
 public class ReversiUI extends Application {
-    src.main.java.reversi.Reversi reversi = new src.main.java.reversi.Reversi(1);
-    CheckRulesReversi rules = new CheckRulesReversi(reversi.getBoard(), 1);
-    int Xsize = reversi.getBoard().getHeigth();
-    int Ysize = reversi.getBoard().getWidth();
-    int xWindowSize = 800;
-    int yWindowSize = 800;
-    int player = reversi.getPlayer();
+    Reversi reversi;
+    CheckRulesReversi rules;
+    int xWindowSize;
+    int yWindowSize;
+    int player;
+    boolean online;
     String game;
+    Tile[][] tileArray = new Tile[8][8];
 
-    Tile[][] tileArray = new Tile[Xsize][Ysize];
 
-    public Parent createContent() {
+    public Parent createContent(Reversi reversi, boolean online) {
+        this.online = online;
+        this.reversi = reversi;
+        this.rules = new CheckRulesReversi(reversi.getBoard(), reversi.getPlayer());
+        this.xWindowSize = 800;
+        this.yWindowSize = 800;
+        this.player = reversi.getPlayer();
+
+
+
 
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);
 
-        for (int i = 0; i < Xsize; i++) {
-            for (int j = 0; j < Ysize; j++) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 Tile tile = new Tile(i, j);
-                tile.setTranslateX(j * (yWindowSize / Ysize));
-                tile.setTranslateY(i * (xWindowSize / Xsize));
-                tileArray[i][j] = (tile);
+                tile.setTranslateX(j * (yWindowSize / 8));
+                tile.setTranslateY(i * (xWindowSize / 8));
+                tileArray[i][j] = tile;
 
                 if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
                     tileArray[i][j].drawX();
@@ -75,19 +83,19 @@ public class ReversiUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-        primaryStage.setScene(new Scene(createContent()));
+        primaryStage.setScene(new Scene(createContent(new Reversi(1), false)));
         primaryStage.show();
 
     }
 
-    private void updateBoard() {
+    public void updateBoard() {
+        reversi.getBoard().showBoard();
 
         Color black = Color.BLACK;
         Color green = Color.GREEN;
 
-        for (int i = 0; i < Xsize; i++) {
-            for (int j = 0; j < Ysize; j++) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
 
                 if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
                     tileArray[i][j].drawX();
@@ -111,7 +119,7 @@ public class ReversiUI extends Application {
         int row;
         int col;
 
-        private Rectangle border = new Rectangle(xWindowSize/Xsize,yWindowSize/Ysize);
+        private Rectangle border = new Rectangle(xWindowSize/8,yWindowSize/8);
         private Text text = new Text();
 
         private void setborder(Color color) {
@@ -154,22 +162,24 @@ public class ReversiUI extends Application {
             setAlignment(Pos.CENTER);
             getChildren().addAll(border, text);
 
-            setOnMouseClicked(event -> {
-                if (turn.get() == player) {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        if (rules.checkLegalMove(getRow(), getCol(), reversi.getPlayer())) {
-                            reversi.playerMove(getRow(), getCol());
-                            updateBoard();
-                            turn.set(changeTurn(turn.get()));
+            if (!online) {
+                setOnMouseClicked(event -> {
+                    if (turn.get() == player) {
+                        if (event.getButton() == MouseButton.PRIMARY) {
+                            if (rules.checkLegalMove(getRow(), getCol(), reversi.getPlayer())) {
+                                reversi.playerMove(getRow(), getCol());
+                                updateBoard();
+                                turn.set(changeTurn(turn.get()));
+                            }
                         }
                     }
-                }
-                if (turn.get() == src.main.java.reversi.Reversi.getOpponent(player)) {
-                    reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
-                    updateBoard();
-                    turn.set(changeTurn(turn.get()));
-                }
-            });
+                    if (turn.get() == src.main.java.reversi.Reversi.getOpponent(player)) {
+                        reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
+                        updateBoard();
+                        turn.set(changeTurn(turn.get()));
+                    }
+                });
+            }
         }
     }
     public static int changeTurn(int turn) {
