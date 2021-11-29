@@ -49,7 +49,6 @@ public class GUI extends Application {
 
 
     public static void main(String[] args){
-        System.out.println(1);
         launch(args);
     }
 
@@ -156,10 +155,11 @@ public class GUI extends Application {
 
     public void playTicTacToe(ActionEvent event) {
         TicTacToeUI ticTacToeui = new TicTacToeUI();
+        TicTacToe ticTacToe = new TicTacToe(3,3);
 
         Stage stage = new Stage();
 
-        stage.setScene(new Scene(ticTacToeui.createContent()));
+        stage.setScene(new Scene(ticTacToeui.createContent(ticTacToe,false)));
         stage.show();
     }
 

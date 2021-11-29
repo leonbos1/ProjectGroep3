@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import src.main.java.UI.ReversiUI;
+import src.main.java.UI.TicTacToeUI;
 import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.TicTacToe;
 import src.main.java.main.Board;
@@ -27,12 +28,12 @@ public class Server{
     public String[] playerList;
     public GUI gui;
     ReversiUI reversiUI = new ReversiUI();
+    TicTacToeUI ticTacToeUI = new TicTacToeUI();
 
     public Server(String ip, int port, GUI gui) throws IOException {
         this.sock = new Socket(ip, port);
         this.out = new PrintStream(sock.getOutputStream());
         this.in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        this.tictactoe = new TicTacToe(3,3);
         this.username = "ITV2C3";
         this.gui = gui;
 
@@ -97,10 +98,11 @@ public class Server{
                                             tictactoe.makeMove(row, col);
                                             tictactoe.getBoard().showBoard();
                                             System.out.println();
+                                            ticTacToeUI.updateBoard();
                                         }
                                     }
                                     else if (game.equals("reversi")) {
-                                        //nog aanpassen
+
                                         if (!arr[4].equals(getUsername())) {
                                             int move = Integer.parseInt(arr[6]);
                                             int row = move / 8;
@@ -117,20 +119,35 @@ public class Server{
                             case "MATCH":
                                 // wij mogen de eerste zet doen: player 1 begint altijd bij ons bord
                                 if (arr[4].equals(getUsername())) {
+                                    if (arr[6].equals("Reversi")) {
+                                        setGame("reversi");
+                                        reversi = new Reversi(2);
 
-                                    reversi = new Reversi(2);
+                                        Platform.runLater(
+                                                () -> {
+                                                    Stage stage = new Stage();
 
-                                    Platform.runLater(
-                                            () -> {
-                                                Stage stage = new Stage();
+                                                    stage.setScene(new Scene(reversiUI.createContent(reversi, true)));
+                                                    stage.show();
+                                                });
+                                    }
+                                    else if (arr[6].equals("Tic-tac-toe")) {
+                                        setGame("tictactoe");
+                                        tictactoe = new TicTacToe(3,3);
 
-                                                stage.setScene(new Scene(reversiUI.createContent(reversi, true)));
-                                                stage.show();
-                                            });
+                                        Platform.runLater(
+                                                () -> {
+                                                    Stage stage = new Stage();
+
+                                                    stage.setScene(new Scene(ticTacToeUI.createContent(tictactoe, true)));
+                                                    stage.show();
+                                                });
+                                    }
+
                                 }
 
                                 // tegenstander begint
-                                else {
+                                else if (game.equals("reversi")){
                                     reversi = new Reversi(1);
                                     Platform.runLater(
                                             () -> {
@@ -140,13 +157,29 @@ public class Server{
                                                 stage.show();
                                                 });
                                 }
+
+                                else if (game.equals("tictactoe")) {
+                                    tictactoe = new TicTacToe(3,3);
+                                    Platform.runLater(
+                                            () -> {
+                                                Stage stage = new Stage();
+
+                                                stage.setScene(new Scene(ticTacToeUI.createContent(tictactoe, true)));
+                                                stage.show();
+                                            });
+                                }
                                 break;
 
                             case "CHALLENGE":
                                 if (arr[3].equals("CHALLENGER:")) {
                                     gui.challengeAlert(arr[4], arr[8], arr[6]);
                                     //send("challenge accept " + arr[6]);
-                                    setGame(arr[8].toLowerCase());
+                                    if (arr[8].equals("Reversi")) {
+                                        setGame("reversi");
+                                    }
+                                    else if (arr[8].equals("tic-tac-toe")) {
+                                        setGame("tictactoe");
+                                    }
                                 }
 
                             case "YOURTURN":
@@ -157,6 +190,7 @@ public class Server{
                                         move(move);
                                         tictactoe.getBoard().showBoard();
                                         System.out.println();
+                                        ticTacToeUI.updateBoard();
                                     }
 
                                     else if (game.equals("reversi")) {

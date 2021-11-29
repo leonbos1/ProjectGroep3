@@ -22,18 +22,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 //2 is O
 
 public class TicTacToeUI extends Application {
-    TicTacToe ticTacToe = new TicTacToe(3,3);
+    TicTacToe ticTacToe;
 
-    int Xsize = ticTacToe.getBoard().getHeigth();
-    int Ysize = ticTacToe.getBoard().getWidth();
-    int xWindowSize = 800;
-    int yWindowSize = 800;
-    int player = ticTacToe.getPlayer();
+    int Xsize;
+    int Ysize;
+    int xWindowSize;
+    int yWindowSize;
+    int player;
+    boolean online;
+    Tile[][] tileArray = new Tile[8][8];
 
-
-    Tile[][] tileArray = new Tile[Xsize][Ysize];
-
-    public Parent createContent() {
+    public Parent createContent(TicTacToe ticTacToe, boolean online) {
+        this.online = online;
+        this.ticTacToe = ticTacToe;
+        Xsize = ticTacToe.getBoard().getHeigth();
+        Ysize = ticTacToe.getBoard().getWidth();
+        xWindowSize = 800;
+        yWindowSize = 800;
+        player = ticTacToe.getPlayer();
 
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);
@@ -66,12 +72,12 @@ public class TicTacToeUI extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        primaryStage.setScene(new Scene(createContent()));
+        primaryStage.setScene(new Scene(createContent(new TicTacToe(3,3), false)));
         primaryStage.show();
 
     }
 
-    private void updateBoard() {
+    public void updateBoard() {
 
 
         for (int i = 0; i < Xsize; i++) {
@@ -128,22 +134,24 @@ public class TicTacToeUI extends Application {
             setAlignment(Pos.CENTER);
             getChildren().addAll(border, text);
 
-            setOnMouseClicked(event -> {
-                if (turn.get() == player) {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        if (CheckRules.checkLegalMove(ticTacToe.getBoardArray(), getRow(), getCol())) {
-                            ticTacToe.makeMove(getRow(), getCol());
-                            updateBoard();
-                            turn.set(changeTurn(turn.get()));
+            if (!online) {
+                setOnMouseClicked(event -> {
+                    if (turn.get() == player) {
+                        if (event.getButton() == MouseButton.PRIMARY) {
+                            if (CheckRules.checkLegalMove(ticTacToe.getBoardArray(), getRow(), getCol())) {
+                                ticTacToe.makeMove(getRow(), getCol());
+                                updateBoard();
+                                turn.set(changeTurn(turn.get()));
+                            }
                         }
                     }
-                }
-                if (turn.get() == ticTacToe.getOpponent(player)) {
-                    ticTacToe.aiMove(ticTacToe.getOpponent(player));
-                    updateBoard();
-                    turn.set(changeTurn(turn.get()));
-                }
-            });
+                    if (turn.get() == ticTacToe.getOpponent(player)) {
+                        ticTacToe.aiMove(ticTacToe.getOpponent(player));
+                        updateBoard();
+                        turn.set(changeTurn(turn.get()));
+                    }
+                });
+            }
         }
     }
     public static int changeTurn(int turn) {
