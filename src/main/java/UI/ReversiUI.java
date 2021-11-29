@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -43,9 +45,6 @@ public class ReversiUI extends Application {
         this.xWindowSize = 800;
         this.yWindowSize = 800;
         this.player = reversi.getPlayer();
-
-
-
 
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);
@@ -88,6 +87,14 @@ public class ReversiUI extends Application {
 
     }
 
+    public void resetBoard() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                tileArray[i][j].clearText();
+            }
+        }
+    }
+
     public void updateBoard() {
         reversi.getBoard().showBoard();
 
@@ -102,6 +109,7 @@ public class ReversiUI extends Application {
                 } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
                     tileArray[i][j].drawO();
                 }
+                else {tileArray[i][j].clearText();};
                 if (rules.checkLegalMove(i,j,player)) {
                     tileArray[i][j].setborder(green);
                 } else {
@@ -109,6 +117,39 @@ public class ReversiUI extends Application {
                 }
 
 
+            }
+        }
+
+        if (!online) {
+            if (reversi.gameOver()) {
+                int winner;
+                int playerScore = reversi.playerScore(player);
+                int aiScore = reversi.playerScore(Reversi.getOpponent(player));
+                int winnerChar;
+                if (playerScore > aiScore) {winner = player;}
+                else {winner = Reversi.getOpponent(player);}
+
+                Alert gameOverAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                gameOverAlert.setTitle("Game over");
+                gameOverAlert.setHeaderText(null);
+
+                if (winner == 1) {winnerChar = 'X';}
+                else {winnerChar = 'O';}
+
+                gameOverAlert.setContentText(String.format("%c heeft gewonnen!\nDe score is %d - %d\nWil je nog een keer spelen?", winnerChar, playerScore, aiScore));
+                gameOverAlert.showAndWait().ifPresent((btnType) -> {
+                    if (btnType == ButtonType.OK) {
+
+                        this.reversi = new Reversi(1);
+                        this.rules = new CheckRulesReversi(reversi.getBoard(), player);
+
+                        updateBoard();
+                        //createContent(reversi, false);
+
+                    } else if (btnType == ButtonType.CANCEL) {
+
+                    }
+                });
             }
         }
 
@@ -131,6 +172,7 @@ public class ReversiUI extends Application {
             }
         }
 
+        public void clearText() {text.setText("");}
 
         public void drawX() {
             text.setText("X");
@@ -164,7 +206,7 @@ public class ReversiUI extends Application {
 
             if (!online) {
                 setOnMouseClicked(event -> {
-                    if (turn.get() == player) {
+                    if (turn.get() == player && reversi.canPlay(player)) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             if (rules.checkLegalMove(getRow(), getCol(), reversi.getPlayer())) {
                                 reversi.playerMove(getRow(), getCol());
@@ -173,11 +215,12 @@ public class ReversiUI extends Application {
                             }
                         }
                     }
-                    if (turn.get() == src.main.java.reversi.Reversi.getOpponent(player)) {
+                    if (turn.get() == src.main.java.reversi.Reversi.getOpponent(player) && reversi.canPlay(Reversi.getOpponent(player))) {
                         reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
                         updateBoard();
                         turn.set(changeTurn(turn.get()));
                     }
+
                 });
             }
         }
