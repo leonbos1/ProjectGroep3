@@ -34,6 +34,7 @@ public class ReversiUI extends Application {
     int yWindowSize;
     int player;
     boolean online;
+    int turn;
     String game;
     Tile[][] tileArray = new Tile[8][8];
 
@@ -45,6 +46,7 @@ public class ReversiUI extends Application {
         this.xWindowSize = 800;
         this.yWindowSize = 800;
         this.player = reversi.getPlayer();
+        this.turn = player;
 
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);
@@ -135,8 +137,11 @@ public class ReversiUI extends Application {
 
                 if (winner == 1) {winnerChar = 'X';}
                 else {winnerChar = 'O';}
+                if (playerScore != aiScore) {
+                    gameOverAlert.setContentText(String.format("%c heeft gewonnen!\nDe score is %d - %d\nWil je nog een keer spelen?", winnerChar, playerScore, aiScore));
+                }
+                else {gameOverAlert.setContentText("Gelijkspel!!\nWil je nog een keer spelen?");}
 
-                gameOverAlert.setContentText(String.format("%c heeft gewonnen!\nDe score is %d - %d\nWil je nog een keer spelen?", winnerChar, playerScore, aiScore));
                 gameOverAlert.showAndWait().ifPresent((btnType) -> {
                     if (btnType == ButtonType.OK) {
 
@@ -191,7 +196,6 @@ public class ReversiUI extends Application {
         }
 
         public Tile(int row, int col) {
-            AtomicInteger turn = new AtomicInteger(1);
             this.row = row;
             this.col = col;
 
@@ -206,28 +210,38 @@ public class ReversiUI extends Application {
 
             if (!online) {
                 setOnMouseClicked(event -> {
-                    if (turn.get() == player && reversi.canPlay(player)) {
+                    if (turn == player && reversi.canPlay(player)) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             if (rules.checkLegalMove(getRow(), getCol(), reversi.getPlayer())) {
                                 reversi.playerMove(getRow(), getCol());
                                 updateBoard();
-                                turn.set(changeTurn(turn.get()));
+                                changeTurn();
                             }
                         }
                     }
-                    if (turn.get() == src.main.java.reversi.Reversi.getOpponent(player) && reversi.canPlay(Reversi.getOpponent(player))) {
-                        reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
-                        updateBoard();
-                        turn.set(changeTurn(turn.get()));
-                    }
+                    Aimove();
 
                 });
             }
         }
     }
-    public static int changeTurn(int turn) {
-        if (turn == 1) {return 2;}
-        else {return 1;}
+
+    private void Aimove() {
+        if (turn == Reversi.getOpponent(player) && reversi.canPlay(Reversi.getOpponent(player)) && !reversi.gameOver()) {
+            reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
+            updateBoard();
+            changeTurn();
+        }
+        if (!reversi.canPlay(player) && !reversi.gameOver()) {
+            reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
+            updateBoard();
+        }
+    }
+
+
+    public void changeTurn() {
+        if (this.turn == 1) {this.turn = 2;}
+        else {this.turn = 1;}
     }
 
 }

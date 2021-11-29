@@ -131,6 +131,7 @@ public class GUI extends Application {
                 if (btnType == ButtonType.OK) {
 
                     getServer().send("challenge accept " + challengenumber);
+                    getServer().setGame(game);
 
                 } else if (btnType == ButtonType.CANCEL) {
 
