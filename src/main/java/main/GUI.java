@@ -69,7 +69,7 @@ public class GUI extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("offlineHub.fxml"));
             Stage stage = (Stage) playOffline.getScene().getWindow();
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            //scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
             stage.setScene(scene);
 
         } catch (Exception e){
