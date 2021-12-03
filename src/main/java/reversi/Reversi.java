@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Reversi {
     private Random randomMove;
-    private Board board;
+    public Board board;
     private int player;
     ReversiAI ai;
     CheckRulesReversi rules;
@@ -140,10 +140,17 @@ public class Reversi {
 
     public int[] AIMove(int player) {
 
-        int[] result = ai.AIMove(player);
+        int[] result = ai.AIMove(this ,player, 3);
+
+        if (!rules.checkLegalMove(result[0],result[1],player)) {
+            System.out.println("Illegaal!!!!!!!!!!!!!!!!");
+        }
+
         makeMove(player, result[0],result[1]);
+
         result[0] +=1;
         result[1] +=1;
+
         return result;
     }
 
@@ -168,7 +175,7 @@ public class Reversi {
 
     public int playerScore(int player) {
         CheckRulesReversi rules = new CheckRulesReversi(getBoard(), player);
-        return rules.checkPlayerScore();
+        return rules.checkPlayerScore(player);
     }
 
     public Board getBoard() {
