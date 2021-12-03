@@ -18,9 +18,7 @@ public class CheckRulesFourRow {
 
         else if (col < 0) {return false;}
 
-        else if (isFull(col)) {return false;}
-
-        else {return true;}
+        else return !isFull(col);
     }
     public boolean isFull(int col) {
         for (int i = 0; i < 6; i++) {

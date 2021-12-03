@@ -1,9 +1,6 @@
 package src.main.java.FourRow;
 
 import src.main.java.main.Board;
-import src.main.java.reversi.CheckRulesReversi;
-import src.main.java.reversi.ReversiAI;
-import src.main.java.tictactoe.CheckRules;
 
 import java.util.Random;
 

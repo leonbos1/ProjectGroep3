@@ -27,7 +27,6 @@ public class TicTacToe {
         }
 
         else if (canWin(1)[0] != -1 ) {
-            int[][] tempboard = getBoardArray();
             int[] winCoordinate = canWin(1);
             board.updateBoard(ai, winCoordinate[0], winCoordinate[1]);
             return new int[]{winCoordinate[0]+1,winCoordinate[1]+1};
@@ -311,10 +310,6 @@ public class TicTacToe {
                     scores[row][col] = opponent_max_score;
                     board[row][col] = prev_move;
                 }
-            }
-        }
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[0].length; col++) {
             }
         }
 

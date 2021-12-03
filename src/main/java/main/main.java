@@ -1,6 +1,5 @@
 package src.main.java.main;
 
-import src.main.java.reversi.CheckRulesReversi;
 import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.CheckRules;
 import src.main.java.tictactoe.TicTacToe;
@@ -8,7 +7,6 @@ import src.main.java.tictactoe.TicTacToe;
 import java.lang.*;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.io.*;
 
 class main{
 
@@ -16,9 +14,9 @@ class main{
     //wit is 2
 
     public static void main(String[] args) {
-        GUI gui = new GUI();
-        gui.main(args);
-        //cmdReversi();
+        //GUI gui = new GUI();
+        //gui.main(args);
+        cmdReversi();
         /*
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wilt u verbinden met de server(0) of zelf tegen de AI spelen(1): ");
@@ -104,7 +102,7 @@ class main{
                     System.out.println("Gelijk spel!");
                 }
             }
-            if (!restart()) {
+            if (restart()) {
                 break;
             }
         }
@@ -172,20 +170,18 @@ class main{
                         System.out.print("Speler 1 wint!");
                         if (player == 1) {
                             System.out.println("Gefeliciteerd!");
-                            break;
                         } else {
                             System.out.println("Volgende keer beter.");
-                            break;
                         }
+                        break;
                     } else {
                         System.out.print("Speler 2 wint!");
                         if (player == 2) {
                             System.out.println("Gefeliciteerd!");
-                            break;
                         } else {
                             System.out.println("Volgende keer beter.");
-                            break;
                         }
+                        break;
                     }
                 }
                 if (turn == 1) {
@@ -194,7 +190,7 @@ class main{
                     turn = 1;
                 }
             }
-            if (!restart()) {
+            if (restart()) {
                 break;
             }
         }
@@ -216,11 +212,11 @@ class main{
             Scanner scanner = new Scanner(System.in);
             String next = scanner.nextLine();
             if (next.equals("y")) {
-                return true;
+                return false;
             }
             if (next.equals("n")) {
                 System.out.println("Tot ziens!");
-                return false;
+                return true;
             }
             System.out.println("Probeer dat opnieuw.");
         }

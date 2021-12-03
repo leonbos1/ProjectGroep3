@@ -1,7 +1,5 @@
 package src.main.java.main;
 
-import java.util.Scanner;
-
 public class Board {
     public int[][] board;
     public int width;

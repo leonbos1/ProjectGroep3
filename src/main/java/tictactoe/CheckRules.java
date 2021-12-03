@@ -13,10 +13,7 @@ public class CheckRules {
 
         if (row >= board.length || col >= board[0].length) {
             return false;
-        } else if (board[row][col] == 0) {
-            return true;
-        }
-        return false;
+        } else return board[row][col] == 0;
     }
 
     /**

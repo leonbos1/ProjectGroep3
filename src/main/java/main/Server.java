@@ -37,9 +37,8 @@ public class Server{
         this.username = "ITV2C3";
         this.gui = gui;
 
-        boolean alive = true;
         thread = new Thread(() -> {
-            while (alive) receive();
+            while (true) receive();
         }, "ServerlisternerThread");
         thread.start();
     }
