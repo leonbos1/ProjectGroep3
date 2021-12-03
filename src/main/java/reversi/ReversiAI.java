@@ -1,5 +1,6 @@
 package src.main.java.reversi;
 import src.main.java.main.Board;
+import java.util.ArrayList;
 import src.main.java.tictactoe.CheckRules;
 
 import java.util.Random;
@@ -9,14 +10,14 @@ import java.util.Random;
 public class ReversiAI {
 
     private static final int[][] pointsBoard = new int[][] {
-        {200 , -100, 100, 50 , 50 , 100, -100,  200},
+        {500 , -100, 100, 50 , 50 , 100, -100, 500},
         {-100, -200, -50, -50, -50, -50, -200, -100},
-        {100 , -50 , 100, 0  , 0  , 100, -50 ,  100},
-        {50  , -50 , 0  , 0  , 0  , 0  , -50 ,  50},
-        {50  , -50 , 0  , 0  , 0  , 0  , -200, -100},
-        {100 , -50 , 100, 0  , 0  , 100, -50 , -100},
+        {100 , -50 , 100, 0  , 0  , 100, -50 , 100},
+        {50  , -50 , 0  , 0  , 0  , 0  , -50 , 50},
+        {50  , -50 , 0  , 0  , 0  , 0  , -50 , 50},
+        {100 , -50 , 100, 0  , 0  , 100, -50 , 100},
         {-100, -200, -50, -50, -50, -50, -200, -100},
-        {200 , -100, 100, 50 , 50 , 100, -100, 200}
+        {500 , -100, 100, 50 , 50 , 100, -100, 500}
     };
 
     Board board;
@@ -54,19 +55,18 @@ public class ReversiAI {
             }
         }
 
-        int[][] points = pointsForEachMove(reversiCopy, player, depth);
+        int[][] points = pointsForEachMove(reversiCopy, player, depth, player);
 
-        int maxscore = -10000;
-        int maxRow = 0;
-        int maxCol = 0;
+        ArrayList<int[]> moves = reversi.possibleMoves(player);
+        int maxRow = moves.get(0)[0];
+        int maxCol = moves.get(0)[1];
+        int maxscore = points[maxRow][maxCol];
 
-        for (int row = 0; row <= 7; row++) {
-            for (int col = 0; col <= 7; col++) {
-                if (maxscore < points[row][col]) {
-                    maxscore = points[row][col];
-                    maxRow = row;
-                    maxCol = col;
-                }
+        for (int[] i: moves) {
+            if (maxscore < points[i[0]][i[1]]) {
+                maxscore = points[i[0]][i[1]];
+                maxRow = i[0];
+                maxCol = i[1];
             }
         }
         System.out.println("een zet");
@@ -74,12 +74,46 @@ public class ReversiAI {
 
     }
 
-    public int [][] pointsForEachMove(Reversi reversi, int player, int depth) {
+    public int [][] pointsForEachMove(Reversi reversi, int player, int depth, int playerTurn) {
         int[][] points = new int[8][8];
         int maxScore = -10000;
 
         rules = new CheckRulesReversi(reversi.board, player);
 
+        if (depth == 0) {
+            return points;
+        }
+
+        ArrayList<int[]> moves = reversi.possibleMoves(player);
+        //int[] scores = new int[moves.size()];
+        for (int i = 0; i < moves.size(); i++) {
+            int[] move = moves.get(i);
+            Reversi tryGame = new Reversi(reversi.getPlayer());
+            tryGame.setBoardArray(reversi.getBoardArray());
+            tryGame.makeMove(playerTurn, move[0], move[1]);
+
+            int[][] nextMove = pointsForEachMove(tryGame, player, depth-1, Reversi.getOpponent(playerTurn));
+            int max = -100000;
+            for (int[] arr : nextMove) {
+                for (int val : arr) {
+                    if (val != 0) {
+                        if (max < val) {
+                            max = val;
+                        }
+                    }
+                }
+            }
+            if (max == -100000) {
+                max = 0;
+            }
+
+            if (playerTurn == player) {
+                points[move[0]][move[1]] = max + pointsBoard[move[0]][move[1]];
+            } else {
+                points[move[0]][move[1]] = max + (pointsBoard[move[0]][move[1]]*-1);
+            }
+        }
+        /*
         for (int row = 0; row <= 7; row++) {
             for (int col = 0; col <= 7; col++) {
                 if (!rules.checkLegalMove(row,col, player)) {
@@ -132,6 +166,17 @@ public class ReversiAI {
             }
         }
 
+         */
+        System.out.println(depth);
+        for (int row = 0; row < 8; row++)
+        {
+            for (int col = 0; col < 8; col++)
+            {
+                System.out.printf("%5d", points[row][col]);
+            }
+            System.out.println();
+        }
+        System.out.println();
         return points;
     }
 

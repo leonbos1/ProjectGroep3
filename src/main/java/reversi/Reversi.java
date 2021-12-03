@@ -2,7 +2,9 @@ package src.main.java.reversi;
 
 import src.main.java.main.Board;
 
+import java.util.List;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Reversi {
     private Random randomMove;
@@ -140,7 +142,7 @@ public class Reversi {
 
     public int[] AIMove(int player) {
 
-        int[] result = ai.AIMove(this ,player, 3);
+        int[] result = ai.AIMove(this ,player, 60);
 
         if (!rules.checkLegalMove(result[0],result[1],player)) {
             System.out.println("Illegaal!!!!!!!!!!!!!!!!");
@@ -154,6 +156,19 @@ public class Reversi {
         return result;
     }
 
+    public ArrayList<int[]> possibleMoves(int player) {
+        ArrayList<int[]> moves = new ArrayList<int[]>();
+        for (int row = 0; row <= 7; row++) {
+            for (int col = 0; col <= 7; col++) {
+                if (rules.checkLegalMove(row, col, player)) {
+                    int[] move = {row, col};
+                    moves.add(move);
+                }
+            }
+        }
+        return moves;
+    }
+
     public int[] randomAIMove(int player) {
         int[] result = ai.RandomAIMove();
 
@@ -161,7 +176,6 @@ public class Reversi {
 
         return result;
     }
-
 
     public boolean canPlay(int player) {
         CheckRulesReversi rules = new CheckRulesReversi(getBoard(), player);
