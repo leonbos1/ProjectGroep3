@@ -59,9 +59,8 @@ public class GUI extends Application {
         stage.setScene(new Scene(root));
         stage.show();
 
-
-
     }
+
 
     @FXML
     void offlineMenu(ActionEvent event) throws Exception {
