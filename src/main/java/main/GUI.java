@@ -2,6 +2,8 @@ package src.main.java.main;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,15 +18,13 @@ import src.main.java.main.Server;
 import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.TicTacToe;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class GUI extends Application {
     public Server server;
+    public String[] playerlist;
 
     @FXML
     private Button connectButton;
@@ -46,6 +46,13 @@ public class GUI extends Application {
 
     @FXML
     private Button FourRow;
+
+    @FXML
+    private Button hanzeServer;
+
+
+
+
 
 
     public static void main(String[] args){
@@ -93,30 +100,96 @@ public class GUI extends Application {
         stage.setScene(scene);
     }
 
-    @FXML
-    void guiServerHub(ActionEvent event) throws Exception {
-        try {
-            String ip = hostIP.getText();
-            Integer port = Integer.parseInt(portNumber.getText());
-            this.server = new Server(ip ,port, this);
-            server.username = userName.getText();
-            server.login();
-            Parent root = FXMLLoader.load(getClass().getResource("serverHub.fxml"));
-            Stage stage = (Stage) connectButton.getScene().getWindow();
 
-            stage.setScene(new Scene(root));
+    public class guiServerHub{
+        private final Stage stage;
+        private final Server server;
+        private final Scene scene;
 
-        } catch (Exception e){
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error:");
-            alert.setHeaderText(null);
-            alert.setContentText(e.toString());
-            alert.showAndWait();
+        public guiServerHub(Stage stage, Server server, Scene scene){
+            this.stage = stage;
+            this.server = server;
+            this.scene = scene;
+
         }
+        @FXML
+        private ListView listView;
+
+        public void initialize(){
+            try {
+                ObservableList players = FXCollections.observableArrayList();
+                playerlist = server.playerlist();
+                for (int i = 0; i < (playerlist.length - 2); i++) {
+                    players.add(playerlist[i]);
+                    System.out.println(players);
+                }
+                listView = new ListView();
+                listView.setItems(players);
+                stage.setScene(scene);
+
+            } catch (Exception e){
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error:");
+                alert.setHeaderText(null);
+                alert.setContentText(e.toString());
+                alert.showAndWait();
+            }
+        }
+
+
+//        try {
+//            String ip = hostIP.getText();
+//            Integer port = Integer.parseInt(portNumber.getText());
+//            this.server = new Server(ip ,port, this);
+//            server.username = userName.getText();
+//            server.login();
+//            playerlist = server.playerlist();
+//            System.out.println(Arrays.toString(playerlist));
+//
+//
+//
+//            Parent root = FXMLLoader.load(getClass().getResource("serverHub.fxml"));
+//            Stage stage = (Stage) connectButton.getScene().getWindow();
+//            stage.setScene(new Scene(root));
+//
+//        } catch (Exception e){
+//            e.printStackTrace();
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error:");
+//            alert.setHeaderText(null);
+//            alert.setContentText(e.toString());
+//            alert.showAndWait();
+//        }
 
     }
 
+    public void guiServerHub(ActionEvent event) throws IOException{
+        String ip = hostIP.getText();
+        Integer port = Integer.parseInt(portNumber.getText());
+        this.server = new Server(ip ,port, this);
+        server.username = userName.getText();
+        server.login();
+        Stage stage = (Stage) connectButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("serverHub.fxml"));
+        Scene scene = new Scene(root);
+        guiServerHub hub = new guiServerHub(stage, server, scene);
+        hub.initialize();
+
+    }
+
+    public void guiServerHubHanze(ActionEvent event) throws IOException{
+        String ip = "145.33.225.170";
+        Integer port = 7789;
+        this.server = new Server(ip ,port, this);
+        server.login();
+        Stage stage = (Stage) connectButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("serverHub.fxml"));
+        Scene scene = new Scene(root);
+        guiServerHub hub = new guiServerHub(stage, server, scene);
+        hub.initialize();
+
+    }
 
 
     public void challengeAlert(String name, String game, String challengenumber) {
