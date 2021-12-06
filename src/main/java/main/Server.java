@@ -74,14 +74,15 @@ public class Server{
                 line = line.replace("\"","");
                 line = line.replace(",", "");
                 String[] arr = line.split(" ");
+                playerList = new String[arr.length];
 
 
                 if (arr[0].equals("SVR")) {
 
                     if (arr[1].equals("PLAYERLIST")) {
-                        //for (int i = 2; i < arr.length; i++) {
-                        //    playerList[i-2] = arr[i];
-                        //}
+                        for (int i = 2; i < arr.length; i++) {
+                            playerList[i-2] = arr[i];
+                        }
                     }
 
 
