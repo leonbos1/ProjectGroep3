@@ -1,5 +1,9 @@
 package src.main.java.main;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import src.main.java.UI.FourRowUI;
 import src.main.java.UI.ReversiUI;
 import src.main.java.UI.TicTacToeUI;
@@ -58,6 +63,18 @@ public class GUI extends Application {
         stage.setTitle("Hanze E-Games");
         stage.setScene(new Scene(root));
         stage.show();
+
+        /*//Create new TimeLine animation
+        Timeline timeline = new Timeline();
+        //Animate Y property
+        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        //After completing animation, remove first scene
+        timeline.setOnFinished(t -> {
+            //parentContainer.getChildren().remove(anchorRoot);
+        });
+        timeline.play();*/
 
     }
 
