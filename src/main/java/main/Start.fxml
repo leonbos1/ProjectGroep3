@@ -23,6 +23,6 @@
             <Image url="@/src/media/lock.png" />
          </image>
       </ImageView>
-      <Button fx:id="hanzeServer" defaultButton="true" layoutX="277.0" layoutY="372.0" mnemonicParsing="false" onAction="#guiServerHubHanze" opacity="0.63" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: #FF6700; -fx-background-radius: 100; -fx-text-fill: white;" text="Hanze Server" />
+      <Button fx:id="hanzeServer" defaultButton="true" layoutX="207.0" layoutY="372.0" mnemonicParsing="false" onAction="#guiServerHubHanze" opacity="0.63" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: #FF6700; -fx-background-radius: 100; -fx-text-fill: white;" text="Hanze Server" />
    </children>
 </AnchorPane>
