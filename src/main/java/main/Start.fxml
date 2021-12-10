@@ -6,23 +6,23 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane focusTraversable="true" prefHeight="420.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.main.GUI">
+<AnchorPane focusTraversable="true" prefHeight="400.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.main.GUI">
    <children>
-      <ImageView fitHeight="420.0" fitWidth="675.0" pickOnBounds="true">
+      <ImageView fitHeight="400.0" fitWidth="675.0" pickOnBounds="true">
          <image>
             <Image url="@/src/media/Back.JPEG" />
          </image>
       </ImageView>
-      <TextField fx:id="userName" alignment="CENTER" layoutX="258.0" layoutY="131.0" promptText="Username" style="-fx-background-color: transperent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: white; -fx-text-fill: white; -fx-prompt-text-fill: white;" />
-      <TextField fx:id="hostIP" alignment="CENTER" layoutX="258.0" layoutY="181.0" prefHeight="26.0" prefWidth="160.0" promptText="Server IP" style="-fx-background-color: transperent; -fx-border-color: white; -fx-border-width: 0px 0px 1px 0px; -fx-prompt-text-fill: white; -fx-text-fill: white;" />
-      <TextField fx:id="portNumber" alignment="CENTER" layoutX="258.0" layoutY="232.0" prefHeight="26.0" prefWidth="160.0" promptText="Port" style="-fx-background-color: transperent; -fx-border-color: white; -fx-border-width: 0px 0px 1px 0px; -fx-prompt-text-fill: white; -fx-text-fill: white;" />
-      <Button fx:id="connectButton" defaultButton="true" layoutX="277.0" layoutY="288.0" mnemonicParsing="false" onAction="#guiServerHub" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: #2f2f2f4a; -fx-background-radius: 100; -fx-text-fill: white;" text="Online" />
-      <Button fx:id="playOffline" defaultButton="true" layoutX="276.0" layoutY="331.0" mnemonicParsing="false" onAction="#offlineMenu" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: #2f2f2f4a; -fx-background-radius: 100; -fx-text-fill: white;" text="Offline" />
+      <TextField fx:id="userName" alignment="CENTER" layoutX="258.0" layoutY="123.0" promptText="Username" style="-fx-background-color: transperent; -fx-border-width: 0px 0px 1px 0px; -fx-border-color: white; -fx-text-fill: white; -fx-prompt-text-fill: white;" />
+      <TextField fx:id="hostIP" alignment="CENTER" layoutX="258.0" layoutY="173.0" prefHeight="26.0" prefWidth="160.0" promptText="Server IP" style="-fx-background-color: transperent; -fx-border-color: white; -fx-border-width: 0px 0px 1px 0px; -fx-prompt-text-fill: white; -fx-text-fill: white;" />
+      <TextField fx:id="portNumber" alignment="CENTER" layoutX="258.0" layoutY="224.0" prefHeight="26.0" prefWidth="160.0" promptText="Port" style="-fx-background-color: transperent; -fx-border-color: white; -fx-border-width: 0px 0px 1px 0px; -fx-prompt-text-fill: white; -fx-text-fill: white;" />
+      <Button fx:id="connectButton" defaultButton="true" layoutX="278.0" layoutY="281.0" mnemonicParsing="false" onAction="#guiServerHub" prefHeight="27.0" prefWidth="123.0" style="-fx-background-color: #2f2f2f4a; -fx-background-radius: 100; -fx-text-fill: white;" text="Online" />
+      <Button fx:id="playOffline" defaultButton="true" layoutX="278.0" layoutY="313.0" mnemonicParsing="false" onAction="#offlineMenu" prefHeight="27.0" prefWidth="123.0" style="-fx-background-color: #2f2f2f4a; -fx-background-radius: 100; -fx-text-fill: white;" text="Offline" />
       <ImageView fitHeight="70.0" fitWidth="79.0" layoutX="303.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/src/media/lock.png" />
          </image>
       </ImageView>
-      <Button fx:id="hanzeServer" defaultButton="true" layoutX="207.0" layoutY="372.0" mnemonicParsing="false" onAction="#guiServerHubHanze" opacity="0.63" prefHeight="34.0" prefWidth="123.0" style="-fx-background-color: #FF6700; -fx-background-radius: 100; -fx-text-fill: white;" text="Hanze Server" />
+      <Button fx:id="hanzeServer" defaultButton="true" layoutX="278.0" layoutY="346.0" mnemonicParsing="false" onAction="#guiServerHubHanze" opacity="0.63" prefHeight="27.0" prefWidth="123.0" style="-fx-background-color: #FF6700; -fx-background-radius: 100; -fx-text-fill: white;" text="Hanze Server" />
    </children>
 </AnchorPane>
