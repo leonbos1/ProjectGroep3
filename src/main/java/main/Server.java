@@ -14,6 +14,8 @@ import src.main.java.main.Board;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Server{
@@ -25,7 +27,7 @@ public class Server{
     private Reversi reversi;
     public String username;
     public String game;
-    public String[] playerList;
+    public ArrayList<String> playerList;
     public GUI gui;
     ReversiUI reversiUI = new ReversiUI();
     TicTacToeUI ticTacToeUI = new TicTacToeUI();
@@ -67,6 +69,7 @@ public class Server{
             while((line = reader.readLine()) != null){
                 System.out.println(line);
 
+
                 line = line.replace("[", "");
                 line = line.replace("]","");
                 line = line.replace("{", "");
@@ -74,16 +77,26 @@ public class Server{
                 line = line.replace("\"","");
                 line = line.replace(",", "");
                 String[] arr = line.split(" ");
-                playerList = new String[arr.length];
+
+
+
 
 
                 if (arr[0].equals("SVR")) {
 
                     if (arr[1].equals("PLAYERLIST")) {
-                        for (int i = 2; i < arr.length; i++) {
-                            playerList[i-2] = arr[i];
+                        playerList = new ArrayList<String>();
+
+                        for (int i = 0; i < arr.length; i++) {
+                            if (arr[i].equals("SVR") || arr[i].equals("PLAYERLIST") || arr[i].equals(username)) {
+                            } else {
+                                playerList.add(arr[i]);
+                            }
                         }
-                    }
+
+                        gui.serverHubController.setPlayerlist(playerList);
+                        }
+
 
 
                     if (arr[1].equals("GAME")) {
@@ -250,10 +263,14 @@ public class Server{
         setGame(game);
     }
 
-    public String[] playerlist() throws InterruptedException {
+    public ArrayList<String> playerlist() throws InterruptedException {
         send("get playerlist");
         Thread.sleep(500);
         return playerList;
+    }
+
+    public void updatePlayerlist() {
+        send("get playerlist");
     }
 
     public void challenge(String username,String game) {
