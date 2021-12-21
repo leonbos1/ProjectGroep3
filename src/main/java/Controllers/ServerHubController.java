@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class ServerHubController extends GUI {
 
-    public Button resfreshButton;
+    public Button refreshButton;
     public ListView listView;
     public Button challengeButton;
     private ArrayList<String> playerlist;

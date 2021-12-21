@@ -11,6 +11,6 @@
       </font>
    </Label>
    <ListView fx:id="listView" layoutX="5.0" layoutY="44.0" prefHeight="332.0" prefWidth="158.0" />
-   <Button fx:id="resfreshButton" defaultButton="true" layoutX="5.0" layoutY="380.0" onAction="#refreshPlayers" prefHeight="25.0" prefWidth="73.0" text="Resfresh" />
+   <Button fx:id="refreshButton" defaultButton="true" layoutX="5.0" layoutY="380.0" onAction="#refreshPlayers" prefHeight="25.0" prefWidth="73.0" text="Refresh" />
    <Button fx:id="challengeButton" defaultButton="true" layoutX="87.0" layoutY="380.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Challenge" />
 </AnchorPane>
