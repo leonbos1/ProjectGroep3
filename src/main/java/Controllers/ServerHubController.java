@@ -1,42 +1,58 @@
 package src.main.java.Controllers;
 
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import src.main.java.main.GUI;
+import src.main.java.main.Server;
 
-public class ServerHubController {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class ServerHubController extends GUI {
 
     public Button resfreshButton;
     public ListView listView;
-    public Label welkomlabel;
     public Button challengeButton;
+    private ArrayList<String> playerlist;
+    Server server;
 
-    public void refreshPlayers() {
-        ObservableList<String> players = FXCollections.observableArrayList (
-                "Player1", "Player2", "Player3", "Player4", "Player5", "Player6");
+    public void refreshPlayers() throws InterruptedException {
+        server.updatePlayerlist();
 
+        ObservableList<String> players = FXCollections.observableArrayList ();
 
-        listView.getItems().addAll(players);
+        players.setAll(playerlist);
+
+        System.out.println(playerlist);
+
+        listView.setItems(players);
 
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         challengeButton.setOnAction(event -> challengeClicked());
 
+
+
     }
 
     private void challengeClicked() {
-        String Player = "";
 
         ObservableList<String> players;
         players = listView.getSelectionModel().getSelectedItems();
 
         for (String p: players) {
-            System.out.println(p);
+            server.challenge(p, "reversi");
         }
     }
 
+    public void setServer(Server server) {
+        this.server = server;
+    }
+
+    public void setPlayerlist(ArrayList<String> playerlist) {
+        this.playerlist = playerlist;
+    }
 }

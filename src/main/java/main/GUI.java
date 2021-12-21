@@ -1,5 +1,6 @@
 package src.main.java.main;
 
+import com.sun.tools.javac.Main;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import src.main.java.Controllers.ServerHubController;
 import src.main.java.UI.FourRowUI;
 import src.main.java.UI.ReversiUI;
 import src.main.java.UI.TicTacToeUI;
@@ -18,10 +20,12 @@ import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.TicTacToe;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class GUI extends Application {
-    public Server server;
-    public String[] playerlist;
+    Server server;
+    public ArrayList<String> playerlist;
+    ServerHubController serverHubController;
 
     @FXML
     private Label welkomlabel;
@@ -153,22 +157,33 @@ public class GUI extends Application {
 
     }
 
-    public void guiServerHubHanze(ActionEvent event) throws IOException{
+    public void guiServerHubHanze(ActionEvent event) throws IOException, InterruptedException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("serverHub.fxml"));
+
+        Parent root = loader.load();
+
+        serverHubController = loader.getController();
+
+
         String ip = "145.33.225.170";
         int port = 7789;
-        this.server = new Server(ip ,port, this);
+        this.server = new Server(ip, port, this);
         server.login();
 
+        playerlist = server.playerlist();
 
+        serverHubController.setPlayerlist(playerlist);
 
+        Platform.runLater(
+                () -> {
+                    serverHubController.setServer(server);
+                });
 
         Stage stage = (Stage) connectButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("serverHub.fxml"));
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        //guiServerHub hub = new guiServerHub(stage, server, scene, listView);
-        //hub.initialize();
 
     }
 
