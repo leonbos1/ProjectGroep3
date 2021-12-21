@@ -182,7 +182,8 @@ public class ReversiUI extends Application {
         }
 
         public void clearText() {
-            text.setText("");
+            imageView2.setVisible(false);
+            imageView1.setVisible(false);;
         }
 
         public void drawX() {
