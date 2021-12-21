@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -101,14 +103,17 @@ public class TicTacToeUI extends Application {
 
         private Rectangle border = new Rectangle(xWindowSize/Xsize,yWindowSize/Ysize);
         private Text text = new Text();
-
-
+        private Glow glow = new Glow(3.0);
 
         public void drawX() {
+            text.setEffect(glow);
+            text.setFill(Color.RED);
             text.setText("X");
         }
 
         public void drawO() {
+            text.setEffect(glow);
+            text.setFill(Color.BLUE);
             text.setText("O");
         }
 
@@ -125,10 +130,10 @@ public class TicTacToeUI extends Application {
             this.row = row;
             this.col = col;
 
-            text.setFont(Font.font(100));
+            text.setFont(Font.font(200));
 
-            border.setStrokeWidth(1);
-            border.setFill(null);
+            border.setStrokeWidth(2);
+            border.setFill(Color.DARKSEAGREEN);
             border.setStroke(Color.BLACK);
 
             setAlignment(Pos.CENTER);

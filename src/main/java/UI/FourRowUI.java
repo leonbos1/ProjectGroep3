@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -15,7 +16,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import src.main.java.FourRow.CheckRulesFourRow;
 import src.main.java.FourRow.FourRow;
+import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 
+import javax.swing.*;
+import javax.swing.text.html.ImageView;
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -32,7 +38,6 @@ public class FourRowUI extends Application {
     int player = fourrow.getPlayer();
     CheckRulesFourRow rules = new CheckRulesFourRow(fourrow.getBoard(), player);
 
-
     Tile[][] tileArray = new Tile[Xsize][Ysize];
 
     public Parent createContent() {
@@ -44,14 +49,14 @@ public class FourRowUI extends Application {
             for (int j = 0; j < Ysize; j++) {
                 Tile tile = new Tile(i, j);
 
-                tile.setTranslateX(j * (100));
-                tile.setTranslateY(i * (100));
+                tile.setTranslateX(j * (115));
+                tile.setTranslateY(i * (85));
                 tileArray[i][j] = (tile);
 
                 if (fourrow.getBoardArray()[i][j] == fourrow.getPlayer()) {
-                    tileArray[i][j].drawX();
+                    tileArray[i][j].drawStone1();
                 } else if (fourrow.getBoardArray()[i][j] == FourRow.getOpponent(fourrow.getPlayer())) {
-                    tileArray[i][j].drawO();
+                    tileArray[i][j].drawStone2();
                 }
                 root.getChildren().add(tile);
             }
@@ -80,9 +85,9 @@ public class FourRowUI extends Application {
             for (int j = 0; j < Ysize; j++) {
 
                 if (fourrow.getBoardArray()[i][j] == fourrow.getPlayer()) {
-                    tileArray[i][j].drawX();
+                    tileArray[i][j].drawStone1();
                 } else if (fourrow.getBoardArray()[i][j] == FourRow.getOpponent(fourrow.getPlayer())) {
-                    tileArray[i][j].drawO();
+                    tileArray[i][j].drawStone2();
                 }
 
             }
@@ -97,15 +102,16 @@ public class FourRowUI extends Application {
 
         private Rectangle border = new Rectangle(xWindowSize/Xsize,yWindowSize/Ysize);
         private Text text = new Text();
+        public javafx.scene.image.ImageView imageView1;
+        public javafx.scene.image.ImageView imageView2;
 
 
-
-        public void drawX() {
-            text.setText("X");
+        public void drawStone1() {
+            imageView1.setVisible(true);
         }
 
-        public void drawO() {
-            text.setText("O");
+        public void drawStone2() {
+            imageView2.setVisible(true);
         }
 
         public int getRow() {
@@ -121,14 +127,29 @@ public class FourRowUI extends Application {
             this.row = row;
             this.col = col;
 
+            Image image = new Image("src/media/stone.png");
+            imageView1 = new javafx.scene.image.ImageView();
+            imageView1.setFitHeight(70);
+            imageView1.setFitWidth(70);
+            imageView1.setImage(image);
+            imageView1.setVisible(false);
+
+            Image image2 = new Image("src/media/stone2.png");
+            imageView2 = new javafx.scene.image.ImageView();
+            imageView2.setFitHeight(70);
+            imageView2.setFitWidth(70);
+            imageView2.setImage(image2);
+            imageView2.setVisible(false);
+
+
             text.setFont(Font.font(72));
 
-            border.setStrokeWidth(1);
-            border.setFill(null);
+            border.setStrokeWidth(2);
+            border.setFill(Color.GREEN);
             border.setStroke(Color.BLACK);
 
             setAlignment(Pos.CENTER);
-            getChildren().addAll(border, text);
+            getChildren().addAll(border, text, imageView1, imageView2);
 
             setOnMouseClicked(event -> {
                 if (turn.get() == player) {

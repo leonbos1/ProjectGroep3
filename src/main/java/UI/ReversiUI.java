@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -64,7 +66,7 @@ public class ReversiUI extends Application {
                     tileArray[i][j].drawO();
                 }
                 if (rules.checkLegalMove(i, j, player)) {
-                    tileArray[i][j].setborder(Color.GREEN);
+                    tileArray[i][j].setborder(Color.BLUE);
                 } else {
                     tileArray[i][j].setborder(Color.BLACK);
                 }
@@ -101,7 +103,7 @@ public class ReversiUI extends Application {
         reversi.getBoard().showBoard();
 
         Color black = Color.BLACK;
-        Color green = Color.GREEN;
+        Color blue = Color.BLUE;
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -113,7 +115,7 @@ public class ReversiUI extends Application {
                 }
                 else {tileArray[i][j].clearText();};
                 if (rules.checkLegalMove(i,j,player)) {
-                    tileArray[i][j].setborder(green);
+                    tileArray[i][j].setborder(blue);
                 } else {
                     tileArray[i][j].setborder(black);
                 }
@@ -167,24 +169,30 @@ public class ReversiUI extends Application {
 
         private Rectangle border = new Rectangle(xWindowSize/8,yWindowSize/8);
         private Text text = new Text();
+        public javafx.scene.image.ImageView imageView1;
+        public javafx.scene.image.ImageView imageView2;
 
         private void setborder(Color color) {
             border.setStroke(color);
-            if (color == Color.GREEN) {
-                border.setStrokeWidth(3);
+            if (color == Color.BLUE) {
+                border.setStrokeWidth(4);
             } else {
-                border.setStrokeWidth(1);
+                border.setStrokeWidth(2);
             }
         }
 
-        public void clearText() {text.setText("");}
+        public void clearText() {
+            text.setText("");
+        }
 
         public void drawX() {
-            text.setText("X");
+            imageView1.setVisible(true);
+            imageView2.setVisible(false);
         }
 
         public void drawO() {
-            text.setText("O");
+            imageView2.setVisible(true);
+            imageView1.setVisible(false);
         }
 
         public int getRow() {
@@ -199,14 +207,28 @@ public class ReversiUI extends Application {
             this.row = row;
             this.col = col;
 
+            javafx.scene.image.Image image = new javafx.scene.image.Image("src/media/x.png");
+            imageView1 = new javafx.scene.image.ImageView();
+            imageView1.setFitHeight(70);
+            imageView1.setFitWidth(70);
+            imageView1.setImage(image);
+            imageView1.setVisible(false);
+
+            javafx.scene.image.Image image2 = new Image("src/media/o.png");
+            imageView2 = new javafx.scene.image.ImageView();
+            imageView2.setFitHeight(70);
+            imageView2.setFitWidth(70);
+            imageView2.setImage(image2);
+            imageView2.setVisible(false);
+
             text.setFont(Font.font(72));
 
             border.setStrokeWidth(1);
-            border.setFill(null);
+            border.setFill(Color.YELLOW);
             border.setStroke(Color.BLACK);
 
             setAlignment(Pos.CENTER);
-            getChildren().addAll(border, text);
+            getChildren().addAll(border, text, imageView1, imageView2);
 
             if (!online) {
                 setOnMouseClicked(event -> {
