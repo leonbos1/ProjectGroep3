@@ -60,6 +60,12 @@ public class GUI extends Application {
     @FXML
     private ListView<String> listView;
 
+    @FXML
+    private Button ReversiAI;
+
+    @FXML
+    private Button ReversiMulti;
+
 
     public static void main(String[] args){
         launch(args);
@@ -211,12 +217,49 @@ public class GUI extends Application {
         );
     }
 
-    public void playreversi(ActionEvent event) {
+    public  void startreversi(ActionEvent event) throws Exception {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("reversiConfig.fxml"));
+        stage.setTitle("Reversi");
+        stage.setScene(new Scene(root));
+        stage.show();
+        /*
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("reversiConfig.fxml"));
+            Stage stage = (Stage) Reversi.getScene().getWindow();
+            Scene scene = new Scene(root);
+            //scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            stage.setScene(scene);
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error:");
+            alert.setHeaderText(null);
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
+        */
+    }
+
+    public void playreversiMulti(ActionEvent event) {
+        Stage stage = (Stage) ReversiAI.getScene().getWindow();
+        stage.close();
+        playreversi(true);
+    }
+
+    public void playreversiAI(ActionEvent event) {
+        Stage stage = (Stage) ReversiMulti.getScene().getWindow();
+        stage.close();
+        playreversi(false);
+    }
+
+    public void playreversi(boolean multiplayer) {
         ReversiUI reversiUI = new ReversiUI();
         Reversi reversi = new Reversi(1);
         Stage stage = new Stage();
 
-        stage.setScene(new Scene(reversiUI.createContent(reversi, false)));
+        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer)));
         stage.show();
     }
 

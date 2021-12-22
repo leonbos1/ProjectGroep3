@@ -39,9 +39,10 @@ public class ReversiUI extends Application {
     int turn;
     String game;
     Tile[][] tileArray = new Tile[8][8];
+    boolean multiplayer;
 
 
-    public Parent createContent(Reversi reversi, boolean online) {
+    public Parent createContent(Reversi reversi, boolean online, boolean multiplayer) {
         this.online = online;
         this.reversi = reversi;
         this.rules = new CheckRulesReversi(reversi.getBoard(), reversi.getPlayer());
@@ -49,6 +50,7 @@ public class ReversiUI extends Application {
         this.yWindowSize = 800;
         this.player = reversi.getPlayer();
         this.turn = player;
+        this.multiplayer = multiplayer;
 
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);
@@ -86,7 +88,7 @@ public class ReversiUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setScene(new Scene(createContent(new Reversi(1), false)));
+        primaryStage.setScene(new Scene(createContent(new Reversi(1), false, false)));
         primaryStage.show();
 
     }
@@ -108,9 +110,9 @@ public class ReversiUI extends Application {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
 
-                if (reversi.getBoardArray()[i][j] == reversi.getPlayer()) {
+                if (reversi.getBoardArray()[i][j] == 1) {
                     tileArray[i][j].drawX();
-                } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
+                } else if (reversi.getBoardArray()[i][j] == 2) {
                     tileArray[i][j].drawO();
                 }
                 else {tileArray[i][j].clearText();};
@@ -239,11 +241,16 @@ public class ReversiUI extends Application {
                                 reversi.playerMove(getRow(), getCol());
                                 updateBoard();
                                 changeTurn();
+                                if (multiplayer) {
+                                    player = Reversi.getOpponent(player);
+                                    reversi.setPlayer(player);
+                                    updateBoard();
+                                } else {
+                                    Aimove();
+                                }
                             }
                         }
                     }
-                    Aimove();
-
                 });
             }
         }
