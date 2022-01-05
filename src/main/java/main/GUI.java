@@ -155,17 +155,36 @@ public class GUI extends Application {
         }
     }
 
-    public void guiServerHub(ActionEvent event) throws IOException{
+    public void guiServerHub(ActionEvent event) throws IOException, InterruptedException{
         String ip = hostIP.getText();
         int port = Integer.parseInt(portNumber.getText());
-        this.server = new Server(ip ,port, this);
-        server.username = userName.getText();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("serverHub.fxml"));
+
+        Parent root = loader.load();
+
+        serverHubController = loader.getController();
+
+
+        this.server = new Server(ip, port, this);
         server.login();
+
+        playerlist = server.playerlist();
+
+        serverHubController.setPlayerlist(playerlist);
+
+        Platform.runLater(
+                () -> {
+                    serverHubController.setServer(server);
+                });
+
+
+
         Stage stage = (Stage) connectButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("serverHub.fxml"));
         Scene scene = new Scene(root);
-        guiServerHub hub = new guiServerHub(stage, server, scene, listView);
-        hub.initialize();
+
+        stage.setScene(scene);
+
+
 
     }
 
