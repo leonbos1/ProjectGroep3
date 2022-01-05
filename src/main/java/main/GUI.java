@@ -66,6 +66,12 @@ public class GUI extends Application {
     @FXML
     private Button ReversiMulti;
 
+    @FXML
+    private Button SubscribeTicTacToe;
+
+    @FXML
+    private Button SubscribeReversi;
+
 
     public static void main(String[] args){
         launch(args);
@@ -186,6 +192,8 @@ public class GUI extends Application {
                     serverHubController.setServer(server);
                 });
 
+
+        
         Stage stage = (Stage) connectButton.getScene().getWindow();
         Scene scene = new Scene(root);
 

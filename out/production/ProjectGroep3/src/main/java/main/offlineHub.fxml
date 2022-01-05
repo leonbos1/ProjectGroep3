@@ -15,7 +15,7 @@
             <Image url="@/src/media/Back.JPEG" />
          </image>
       </ImageView>
-      <Button fx:id="Reversi" alignment="CENTER" contentDisplay="TOP" graphicTextGap="30.0" layoutX="272.0" layoutY="92.0" mnemonicParsing="false" onAction="#playreversi" prefHeight="217.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-color: #2f2f2f4a; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" styleClass="reversi" text="Reversi">
+      <Button fx:id="Reversi" alignment="CENTER" contentDisplay="TOP" graphicTextGap="30.0" layoutX="272.0" layoutY="92.0" mnemonicParsing="false" onAction="#startreversi" prefHeight="217.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-color: #2f2f2f4a; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" styleClass="reversi" text="Reversi">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
