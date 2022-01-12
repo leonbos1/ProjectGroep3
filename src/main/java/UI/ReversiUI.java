@@ -210,17 +210,17 @@ public class ReversiUI extends Application {
             this.row = row;
             this.col = col;
 
-            javafx.scene.image.Image image = new javafx.scene.image.Image("src/media/x.png");
+            javafx.scene.image.Image image = new javafx.scene.image.Image("src/media/Circle 1.png");
             imageView1 = new javafx.scene.image.ImageView();
-            imageView1.setFitHeight(70);
-            imageView1.setFitWidth(70);
+            imageView1.setFitHeight(80);
+            imageView1.setFitWidth(80);
             imageView1.setImage(image);
             imageView1.setVisible(false);
 
-            javafx.scene.image.Image image2 = new Image("src/media/o.png");
+            javafx.scene.image.Image image2 = new Image("src/media/Circle 2.png");
             imageView2 = new javafx.scene.image.ImageView();
-            imageView2.setFitHeight(70);
-            imageView2.setFitWidth(70);
+            imageView2.setFitHeight(80);
+            imageView2.setFitWidth(80);
             imageView2.setImage(image2);
             imageView2.setVisible(false);
 
