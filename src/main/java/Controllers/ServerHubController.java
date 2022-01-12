@@ -2,9 +2,8 @@ package src.main.java.Controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import src.main.java.main.GUI;
 import src.main.java.main.Server;
 
@@ -16,7 +15,11 @@ public class ServerHubController extends GUI {
     public Button refreshButton;
     public ListView listView;
     public Button challengeButton;
+    public Button SubscribeTicTacToe;
+    public Button SubscribeReversi;
     private ArrayList<String> playerlist;
+    public ChoiceBox gameList;
+
     Server server;
 
     public void refreshPlayers() throws InterruptedException {
@@ -32,7 +35,15 @@ public class ServerHubController extends GUI {
 
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
+//        ObservableList<String> games =FXCollections.observableArrayList ("Reversi", "Tic Tac Toe");
+//        gameList.setItems(games);
+
+        gameList.getItems().add("Tictactoe");
+
         challengeButton.setOnAction(event -> challengeClicked());
+        SubscribeTicTacToe.setOnAction(event -> subscribeTicTacToe());
+        SubscribeReversi.setOnAction(event -> subscribeReversi());
+
 
 
 
@@ -46,6 +57,27 @@ public class ServerHubController extends GUI {
         for (String p: players) {
             server.challenge(p, "reversi");
         }
+    }
+
+
+    @FXML
+    private void subscribeTicTacToe(){
+        server.subscribe("tic-tac-toe");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Succes!");
+        alert.setHeaderText(null);
+        alert.setContentText("Succesvol aangemeld voor TicTacToe!");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void subscribeReversi(){
+        server.subscribe("Reversi");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Succes!");
+        alert.setHeaderText(null);
+        alert.setContentText("Succesvol aangemeld voor Reversi!");
+        alert.showAndWait();
     }
 
     public void setServer(Server server) {
