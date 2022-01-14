@@ -3,10 +3,17 @@ package src.main.java.Controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import src.main.java.main.GUI;
 import src.main.java.main.Server;
 
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,6 +26,11 @@ public class ServerHubController extends GUI {
     public Button SubscribeReversi;
     private ArrayList<String> playerlist;
     public ChoiceBox gameList;
+    Stage stage;
+    Parent root;
+
+    @FXML
+    Button backButton;
 
     Server server;
 
@@ -38,7 +50,7 @@ public class ServerHubController extends GUI {
 //        ObservableList<String> games =FXCollections.observableArrayList ("Reversi", "Tic Tac Toe");
 //        gameList.setItems(games);
 
-        gameList.getItems().add("Tictactoe");
+        //gameList.getItems().add("Tictactoe");
 
         challengeButton.setOnAction(event -> challengeClicked());
         SubscribeTicTacToe.setOnAction(event -> subscribeTicTacToe());
@@ -57,6 +69,15 @@ public class ServerHubController extends GUI {
         for (String p: players) {
             server.challenge(p, "reversi");
         }
+    }
+
+    @FXML
+    private void back() throws IOException {
+        stage = (Stage) backButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("Start.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 

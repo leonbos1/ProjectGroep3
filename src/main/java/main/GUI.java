@@ -79,7 +79,7 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Start.fxml"));
         stage.setTitle("Hanze E-Games");
         stage.setScene(new Scene(root));
         stage.show();
@@ -190,7 +190,7 @@ public class GUI extends Application {
 
     public void guiServerHubHanze(ActionEvent event) throws IOException, InterruptedException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("serverHub.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("serverHub.fxml"));
 
         Parent root = loader.load();
 

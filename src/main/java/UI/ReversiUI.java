@@ -7,23 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.control.Button;
 import src.main.java.reversi.CheckRulesReversi;
 import src.main.java.reversi.Reversi;
-
-import javax.swing.border.Border;
-import java.awt.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 //1 is X
@@ -210,14 +203,14 @@ public class ReversiUI extends Application {
             this.row = row;
             this.col = col;
 
-            javafx.scene.image.Image image = new javafx.scene.image.Image("src/media/Circle 1.png");
+            javafx.scene.image.Image image = new javafx.scene.image.Image("Circle 1.png");
             imageView1 = new javafx.scene.image.ImageView();
             imageView1.setFitHeight(80);
             imageView1.setFitWidth(80);
             imageView1.setImage(image);
             imageView1.setVisible(false);
 
-            javafx.scene.image.Image image2 = new Image("src/media/Circle 2.png");
+            javafx.scene.image.Image image2 = new Image("Circle 2.png");
             imageView2 = new javafx.scene.image.ImageView();
             imageView2.setFitHeight(80);
             imageView2.setFitWidth(80);
