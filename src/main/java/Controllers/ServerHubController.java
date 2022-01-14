@@ -73,6 +73,8 @@ public class ServerHubController extends GUI {
 
     @FXML
     private void back() throws IOException {
+        server.endConnection();
+        server = null;
         stage = (Stage) backButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getClassLoader().getResource("Start.fxml"));
         Scene scene = new Scene(root);

@@ -251,6 +251,7 @@ public class Server{
 
         } catch (Exception error) {
             System.out.println(error);
+            thread.stop();
         }
     }
 
