@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
@@ -14,6 +16,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import src.main.java.reversi.CheckRulesReversi;
+import src.main.java.reversi.Reversi;
 import src.main.java.tictactoe.CheckRules;
 import src.main.java.tictactoe.TicTacToe;
 
@@ -90,8 +94,36 @@ public class TicTacToeUI extends Application {
                 } else if (ticTacToe.getBoardArray()[i][j] == ticTacToe.getOpponent(ticTacToe.getPlayer())) {
                     tileArray[i][j].drawO();
                 }
+                else {tileArray[i][j].clearText();};
 
             }
+        }
+
+        if (CheckRules.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) || CheckRules.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) || CheckRules.checkBoardFull(ticTacToe.getBoardArray())) {
+
+            Alert gameOverAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            gameOverAlert.setTitle("Game over");
+            gameOverAlert.setHeaderText(null);
+
+            if (CheckRules.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength())) {
+                gameOverAlert.setContentText("Je hebt gewonnen!\nWil je nog een keer spelen?");
+            }
+            else if (CheckRules.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength())) {
+                gameOverAlert.setContentText("De ai heeft gewonnen!\nWil je nog een keer spelen?");
+            }
+            else {gameOverAlert.setContentText("Gelijkspel!!\nWil je nog een keer spelen?");}
+
+            gameOverAlert.showAndWait().ifPresent((btnType) -> {
+                if (btnType == ButtonType.OK) {
+
+                    this.ticTacToe = new TicTacToe(3,3);
+
+                    updateBoard();
+
+                } else if (btnType == ButtonType.CANCEL) {
+
+                }
+            });
         }
 
     }
@@ -115,6 +147,10 @@ public class TicTacToeUI extends Application {
             text.setEffect(glow);
             text.setFill(Color.BLUE);
             text.setText("O");
+        }
+
+        public void clearText() {
+            text.setText("");
         }
 
         public int getRow() {
@@ -141,7 +177,7 @@ public class TicTacToeUI extends Application {
 
             if (!online) {
                 setOnMouseClicked(event -> {
-                    if (turn.get() == player) {
+                    if (turn.get() == player && (!CheckRules.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) && (!CheckRules.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) && !(CheckRules.checkBoardFull(ticTacToe.getBoardArray()))))) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             if (CheckRules.checkLegalMove(ticTacToe.getBoardArray(), getRow(), getCol())) {
                                 ticTacToe.makeMove(getRow(), getCol());
@@ -150,7 +186,7 @@ public class TicTacToeUI extends Application {
                             }
                         }
                     }
-                    if (turn.get() == ticTacToe.getOpponent(player)) {
+                    if (turn.get() == ticTacToe.getOpponent(player) && (!CheckRules.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) && (!CheckRules.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) && !(CheckRules.checkBoardFull(ticTacToe.getBoardArray()))))) {
                         ticTacToe.aiMove(ticTacToe.getOpponent(player));
                         updateBoard();
                         turn.set(changeTurn(turn.get()));
