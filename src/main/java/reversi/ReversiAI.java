@@ -1,7 +1,6 @@
 package src.main.java.reversi;
 import src.main.java.main.Board;
 import java.util.ArrayList;
-import src.main.java.tictactoe.CheckRules;
 
 import java.util.Random;
 
@@ -9,15 +8,20 @@ import java.util.Random;
 
 public class ReversiAI {
 
-    private static final int[][] pointsBoard = new int[][] {
-        {500 , -100, 100, 50 , 50 , 100, -100, 500},
-        {-100, -200, -50, -50, -50, -50, -200, -100},
-        {100 , -50 , 100, 0  , 0  , 100, -50 , 100},
-        {50  , -50 , 0  , 0  , 0  , 0  , -50 , 50},
-        {50  , -50 , 0  , 0  , 0  , 0  , -50 , 50},
-        {100 , -50 , 100, 0  , 0  , 100, -50 , 100},
-        {-100, -200, -50, -50, -50, -50, -200, -100},
-        {500 , -100, 100, 50 , 50 , 100, -100, 500}
+    long start;
+    long end;
+    int timeOutTimer;
+    int maxTreeDepth = 10;
+
+    private static final int[][] pointsBoard = new int[][]{
+            {500, -100, 100, 50, 50, 100, -100, 500},
+            {-100, -200, -50, -50, -50, -50, -200, -100},
+            {100, -50, 100, 0, 0, 100, -50, 100},
+            {50, -50, 0, 0, 0, 0, -50, 50},
+            {50, -50, 0, 0, 0, 0, -50, 50},
+            {100, -50, 100, 0, 0, 100, -50, 100},
+            {-100, -200, -50, -50, -50, -50, -200, -100},
+            {500, -100, 100, 50, 50, 100, -100, 500}
     };
 
     Board board;
@@ -62,7 +66,7 @@ public class ReversiAI {
         int maxCol = moves.get(0)[1];
         int maxscore = points[maxRow][maxCol];
 
-        for (int[] i: moves) {
+        for (int[] i : moves) {
             if (maxscore < points[i[0]][i[1]]) {
                 maxscore = points[i[0]][i[1]];
                 maxRow = i[0];
@@ -70,11 +74,11 @@ public class ReversiAI {
             }
         }
         System.out.println("een zet");
-        return new int[]{maxRow,maxCol};
+        return new int[]{maxRow, maxCol};
 
     }
 
-    public int [][] pointsForEachMove(Reversi reversi, int player, int depth, int playerTurn) {
+    public int[][] pointsForEachMove(Reversi reversi, int player, int depth, int playerTurn) {
         int[][] points = new int[8][8];
         int maxScore = -10000;
 
@@ -92,7 +96,7 @@ public class ReversiAI {
             tryGame.setBoardArray(reversi.getBoardArray());
             tryGame.makeMove(playerTurn, move[0], move[1]);
 
-            int[][] nextMove = pointsForEachMove(tryGame, player, depth-1, Reversi.getOpponent(playerTurn));
+            int[][] nextMove = pointsForEachMove(tryGame, player, depth - 1, Reversi.getOpponent(playerTurn));
             int max = -100000;
             for (int[] arr : nextMove) {
                 for (int val : arr) {
@@ -110,9 +114,13 @@ public class ReversiAI {
             if (playerTurn == player) {
                 points[move[0]][move[1]] = max + pointsBoard[move[0]][move[1]];
             } else {
-                points[move[0]][move[1]] = max + (pointsBoard[move[0]][move[1]]*-1);
+                points[move[0]][move[1]] = max + (pointsBoard[move[0]][move[1]] * -1);
             }
         }
+        return points;
+
+    }
+
         /*
         for (int row = 0; row <= 7; row++) {
             for (int col = 0; col <= 7; col++) {
@@ -167,6 +175,100 @@ public class ReversiAI {
         }
 
          */
+
+
+    int heuristic(Reversi board, int playerTurn) {
+        char opponent = 'O';
+        if (playerTurn == 'O') {
+            opponent = 'X';
+        }
+        //int ourScore ==
+        //int opponentScore ==
+        //return (ourScore - opponentScore);
+        return 1;
+    }
+
+    Reversi copyBoard(Reversi board) {
+        Reversi tryGame = new Reversi(board.getPlayer());
+        tryGame.setBoardArray(board.getBoardArray());
+
+        return tryGame;
+    }
+
+    void minimaxDecision(Reversi board, int playerTurn) {
+        start = System.currentTimeMillis();
+        end = start + (9 * 1000L);
+        int[] bestMove = {0, 0};
+        int[] moves = board.possibleMoves(player);
+
+        if (moves.length == 0) {
+            int x = -1;
+            int y = -2;
+        } else {
+            int bestMoveValue = -99999;
+
+            for (int[] move : moves) {
+                Reversi tempBoard = copyBoard(board);
+                tempBoard.makeMove(playerTurn, move[0], move[1]);
+                int value = minimaxValue(tempBoard, playerTurn, rules.getOpponent(playerTurn), 1);
+
+                if (value > bestMoveValue) {
+                    bestMoveValue = value;
+                    bestMove = move;
+                }
+            }
+        }
+    }
+
+    int minimaxValue(Reversi board, int originalTurn, int currentTurn, int depth) {
+        if (System.currentTimeMillis() > end) {
+            return heuristic(board, originalTurn);
+        }
+        if (depth >= maxTreeDepth) {
+            return heuristic(board, originalTurn);
+        }
+
+        int bestMoveValue = 0;
+        int[] moves = board.possibleMoves(player);
+
+        if (moves.length == 0) {
+            return minimaxValue(board, originalTurn, currentTurn, depth + 1);
+        } else {
+            bestMoveValue = -99999;
+            if (originalTurn != currentTurn) {
+                bestMoveValue = 99999;
+            }
+
+            for (int[] move : moves) {
+                Reversi tempBoard = copyBoard(board);
+                makeMinimaxMove(tempBoard, move, currentTurn);
+                int value = minimaxValue(tempBoard, originalTurn, rules.getOpponent(currentTurn), depth + 1);
+
+                if (originalTurn == currentTurn) {
+                    if (value > bestMoveValue) {
+                        bestMoveValue = value;
+                    } else {
+                        if (value < bestMoveValue) {
+                            bestMoveValue = value;
+                        }
+                    }
+                }
+            }
+        }
+        return bestMoveValue;
+    }
+
+
+
+        public void makeMinimaxMove(Reversi board, int[] move, int playerTurn) {
+            int col = move[0];
+            int row = move[1];
+            board.makeMove(playerTurn, row, col);
+        }
+
+
+
+/*
         System.out.println(depth);
         for (int row = 0; row < 8; row++)
         {
@@ -178,6 +280,6 @@ public class ReversiAI {
         }
         System.out.println();
         return points;
-    }
+*/
 
 }
