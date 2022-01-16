@@ -89,7 +89,7 @@ public class GUI extends Application {
     @FXML
     void offlineMenu(ActionEvent event) throws Exception {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("offlineHub.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("offlineHub.fxml"));
             Stage stage = (Stage) playOffline.getScene().getWindow();
             Scene scene = new Scene(root);
             //scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
@@ -111,7 +111,7 @@ public class GUI extends Application {
 
     @FXML
     void mainMenu(ActionEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Start.fxml"));
         Stage stage = (Stage) FourRow.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -158,7 +158,7 @@ public class GUI extends Application {
     public void guiServerHub(ActionEvent event) throws IOException, InterruptedException{
         String ip = hostIP.getText();
         int port = Integer.parseInt(portNumber.getText());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("serverHub.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("serverHub.fxml"));
 
         Parent root = loader.load();
 
@@ -206,17 +206,13 @@ public class GUI extends Application {
 
         serverHubController.setPlayerlist(playerlist);
 
-        Platform.runLater(
-                () -> {
-                    serverHubController.setServer(server);
-                });
-
+        Platform.runLater(() -> serverHubController.setServer(server));
 
         
         Stage stage = (Stage) connectButton.getScene().getWindow();
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
+        serverHubController.firstPlayers();
 
     }
 
@@ -246,7 +242,7 @@ public class GUI extends Application {
 
     public  void startreversi(ActionEvent event) throws Exception {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("reversiConfig.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("reversiConfig.fxml"));
         stage.setTitle("Reversi");
         stage.setScene(new Scene(root));
         stage.show();

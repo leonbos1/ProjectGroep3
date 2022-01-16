@@ -7,15 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import src.main.java.main.GUI;
 import src.main.java.main.Server;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ServerHubController extends GUI {
 
@@ -25,14 +23,41 @@ public class ServerHubController extends GUI {
     public Button SubscribeTicTacToe;
     public Button SubscribeReversi;
     private ArrayList<String> playerlist;
+    ObservableList<String> players;
     public ChoiceBox gameList;
     Stage stage;
     Parent root;
+    Thread autoRefresh;
 
     @FXML
     Button backButton;
 
     Server server;
+
+    @FXML
+    public void initialize() {
+        AtomicBoolean running = new AtomicBoolean(true);
+        autoRefresh = new Thread(() -> {
+            while (running.get()) {
+                try {
+                    Thread.sleep(1000);
+                    refreshPlayers();
+                } catch (InterruptedException e) {
+                    running.set(false);
+                }
+            }
+        }, "autoRefresh");
+        autoRefresh.start();
+    }
+
+    public void firstPlayers() {
+        ObservableList<String> players = FXCollections.observableArrayList ();
+        players.setAll(playerlist);
+        System.out.println(playerlist);
+        listView.setItems(players);
+        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        challengeButton.setOnAction(event -> challengeClicked());
+    }
 
     public void refreshPlayers() throws InterruptedException {
         server.updatePlayerlist();
@@ -49,21 +74,16 @@ public class ServerHubController extends GUI {
 
 //        ObservableList<String> games =FXCollections.observableArrayList ("Reversi", "Tic Tac Toe");
 //        gameList.setItems(games);
+//        gameList.getItems().add("Tictactoe");
 
-        //gameList.getItems().add("Tictactoe");
+        //challengeButton.setOnAction(event -> challengeClicked());
+        //SubscribeTicTacToe.setOnAction(event -> subscribeTicTacToe());
 
-        challengeButton.setOnAction(event -> challengeClicked());
-        SubscribeTicTacToe.setOnAction(event -> subscribeTicTacToe());
         SubscribeReversi.setOnAction(event -> subscribeReversi());
-
-
-
-
     }
 
     private void challengeClicked() {
 
-        ObservableList<String> players;
         players = listView.getSelectionModel().getSelectedItems();
 
         for (String p: players) {
@@ -74,7 +94,7 @@ public class ServerHubController extends GUI {
     @FXML
     private void back() throws IOException {
         server.endConnection();
-        server = null;
+        autoRefresh.stop();
         stage = (Stage) backButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getClassLoader().getResource("Start.fxml"));
         Scene scene = new Scene(root);
