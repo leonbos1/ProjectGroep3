@@ -1,7 +1,7 @@
 package src.main.java.main;
 
 import src.main.java.reversi.Reversi;
-import src.main.java.tictactoe.CheckRules;
+import src.main.java.tictactoe.CheckRulesTicTacToe;
 import src.main.java.tictactoe.TicTacToe;
 
 import java.lang.*;
@@ -83,10 +83,10 @@ class main{
                     }
                 }
 
-                if (CheckRules.checkWinner(game.getBoardArray(), 1, game.getBoardWinLength())) {
+                if (CheckRulesTicTacToe.checkWinner(game.getBoardArray(), 1, game.getBoardWinLength())) {
                     System.out.println("Jij wint!");
                 }
-                if (CheckRules.checkBoardFull(game.getBoardArray())) {
+                if (CheckRulesTicTacToe.checkBoardFull(game.getBoardArray())) {
                     System.out.println("Gelijk spel!");
                 }
 
@@ -95,10 +95,10 @@ class main{
                 System.out.println("\nDe ai kiest: " + Arrays.toString(aiArray));
 
                 game.getBoard().showBoard();
-                if (CheckRules.checkWinner(game.getBoardArray(), 2, game.getBoardWinLength())) {
+                if (CheckRulesTicTacToe.checkWinner(game.getBoardArray(), 2, game.getBoardWinLength())) {
                     System.out.println("De Ai heeft gewonnen :(");
                 }
-                if (CheckRules.checkBoardFull(game.getBoardArray())) {
+                if (CheckRulesTicTacToe.checkBoardFull(game.getBoardArray())) {
                     System.out.println("Gelijk spel!");
                 }
             }

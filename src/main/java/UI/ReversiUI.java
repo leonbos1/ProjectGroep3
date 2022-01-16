@@ -60,6 +60,9 @@ public class ReversiUI extends Application {
                 } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
                     tileArray[i][j].drawO();
                 }
+                else {
+                    tileArray[i][j].clearText();
+                }
                 if (rules.checkLegalMove(i, j, player)) {
                     tileArray[i][j].setborder(Color.BLUE);
                 } else {
@@ -103,19 +106,23 @@ public class ReversiUI extends Application {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
 
-                if (reversi.getBoardArray()[i][j] == 1) {
-                    tileArray[i][j].drawX();
-                } else if (reversi.getBoardArray()[i][j] == 2) {
-                    tileArray[i][j].drawO();
-                }
-                else {tileArray[i][j].clearText();};
-                if (rules.checkLegalMove(i,j,player)) {
+                if (tileArray[i][j] != null) {
+                    if (reversi.getBoardArray()[i][j] == 1) {
+                        tileArray[i][j].drawX();
+                    } else if (reversi.getBoardArray()[i][j] == 2) {
+                        tileArray[i][j].drawO();
+                    } else {
+                        tileArray[i][j].clearText();
+                    }
+
+
+                if (rules.checkLegalMove(i, j, player)) {
                     tileArray[i][j].setborder(blue);
                 } else {
                     tileArray[i][j].setborder(black);
                 }
 
-
+            }
             }
         }
 
@@ -146,7 +153,6 @@ public class ReversiUI extends Application {
                         this.rules = new CheckRulesReversi(reversi.getBoard(), player);
 
                         updateBoard();
-                        //createContent(reversi, false);
 
                     } else if (btnType == ButtonType.CANCEL) {
 

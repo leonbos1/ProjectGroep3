@@ -73,7 +73,7 @@ public class ReversiAI {
                 maxCol = i[1];
             }
         }
-        System.out.println("een zet");
+
         return new int[]{maxRow, maxCol};
 
     }
