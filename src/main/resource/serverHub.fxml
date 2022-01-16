@@ -17,7 +17,8 @@
 
    <ListView fx:id="listView" layoutX="35.0" layoutY="60.0" prefHeight="263.0" prefWidth="266.0" style="-fx-background-color: #2f2f2f4a; -fx-border-color: white; -fx-border-width: 2;" />
    <Button fx:id="backButton" defaultButton="true" layoutX="10.0" layoutY="10.0" onAction="#back" prefHeight="27.0" prefWidth="50.0" style="-fx-text-fill: white; -fx-background-color: #FF6700; -fx-background-radius: 100;" text="Back" />
-   <Button fx:id="challengeButton" defaultButton="true" layoutX="180.0" layoutY="350.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="123.0" style="-fx-text-fill: white; -fx-background-color: #FF6700; -fx-background-radius: 100;" text="Challenge" />
+   <Button fx:id="challengeTictactoeButton" onAction="#challengeTictactoeClicked" defaultButton="true" layoutX="35.0" layoutY="350.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="123.0" style="-fx-text-fill: white; -fx-background-color: #FF6700; -fx-background-radius: 100;" text="TicTacToe" />
+   <Button fx:id="challengeReversiButton" onAction="#challengeReversiClicked" defaultButton="true" layoutX="180.0" layoutY="350.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="123.0" style="-fx-text-fill: white; -fx-background-color: #FF6700; -fx-background-radius: 100;" text="Reversi" />
    <Label layoutX="374.0" layoutY="45.0" style="-fx-text-fill: white;" text="Subscribe:" />
    <Button fx:id="SubscribeTicTacToe" layoutX="367.0" layoutY="79.0" mnemonicParsing="false" onAction="#subscribeTicTacToe" prefHeight="27.0" prefWidth="123.0" style="-fx-text-fill: white; -fx-background-radius: 100; -fx-background-color: #FF6700;" text="TicTacToe" />
    <Button fx:id="SubscribeReversi" layoutX="499.0" layoutY="79.0" mnemonicParsing="false" onAction="#subscribeReversi" prefHeight="27.0" prefWidth="123.0" style="-fx-text-fill: white; -fx-background-radius: 100; -fx-background-color: #FF6700;" text="Reversi" />

@@ -17,11 +17,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ServerHubController extends GUI {
 
-    public Button refreshButton;
     public ListView listView;
-    public Button challengeButton;
     public Button SubscribeTicTacToe;
     public Button SubscribeReversi;
+    public Button challengeReversiButton;
+    public Button challengeTictactoeButton;
     private ArrayList<String> playerlist;
     ObservableList<String> players;
     public ChoiceBox gameList;
@@ -56,7 +56,6 @@ public class ServerHubController extends GUI {
         System.out.println(playerlist);
         listView.setItems(players);
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        challengeButton.setOnAction(event -> challengeClicked());
     }
 
     public void refreshPlayers() throws InterruptedException {
@@ -75,14 +74,10 @@ public class ServerHubController extends GUI {
 //        ObservableList<String> games =FXCollections.observableArrayList ("Reversi", "Tic Tac Toe");
 //        gameList.setItems(games);
 //        gameList.getItems().add("Tictactoe");
-
-        //challengeButton.setOnAction(event -> challengeClicked());
-        //SubscribeTicTacToe.setOnAction(event -> subscribeTicTacToe());
-
-        SubscribeReversi.setOnAction(event -> subscribeReversi());
     }
 
-    private void challengeClicked() {
+    @FXML
+    private void challengeReversiClicked() {
 
         players = listView.getSelectionModel().getSelectedItems();
 
@@ -92,7 +87,17 @@ public class ServerHubController extends GUI {
     }
 
     @FXML
-    private void back() throws IOException {
+    private void challengeTictactoeClicked() {
+
+        players = listView.getSelectionModel().getSelectedItems();
+
+        for (String p: players) {
+            server.challenge(p, "tic-tac-toe");
+        }
+    }
+
+    @FXML
+    public void back() throws IOException {
         server.endConnection();
         autoRefresh.stop();
         stage = (Stage) backButton.getScene().getWindow();
