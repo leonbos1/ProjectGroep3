@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="#backGround" prefHeight="400.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.main.GUI">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="675.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/Back.JPEG" />
+         </image>
+      </ImageView>
+      <Button fx:id="Reversi" alignment="CENTER" contentDisplay="TOP" graphicTextGap="30.0" layoutX="272.0" layoutY="92.0" mnemonicParsing="false" onAction="#startreversi" prefHeight="217.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-color: #2f2f2f4a; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" styleClass="reversi" text="Reversi">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+         <graphic>
+            <ImageView fitHeight="99.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/reversi.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="50.0" layoutY="48.0" prefHeight="36.0" prefWidth="122.0" style="-fx-text-fill: white;" text="Games library">
+         <font>
+            <Font name="Bauhaus 93" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="FourRow" alignment="CENTER" contentDisplay="TOP" graphicTextGap="30.0" layoutX="494.0" layoutY="93.0" mnemonicParsing="false" onAction="#playFourRow" prefHeight="217.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-color: #2f2f2f4a; -fx-border-color: white; -fx-border-radius: 20; -fx-background-radius: 20;" styleClass="fourrow" text="FourRow">
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+         <graphic>
+            <ImageView fitHeight="99.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/fourrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Button>
+      <Button fx:id="Tictactoe" alignment="CENTER" contentDisplay="TOP" graphicTextGap="30.0" layoutX="50.0" layoutY="92.0" mnemonicParsing="false" onAction="#playTicTacToe" prefHeight="217.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-color: #2f2f2f4a; -fx-border-color: white; -fx-border-radius: 20; -fx-background-radius: 20;" styleClass="tictactoe" text="TicTacToe">
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+         <graphic>
+            <ImageView accessibleRole="BUTTON" fitHeight="105.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/tictactoe.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="579.0" layoutY="333.0" mnemonicParsing="false" onAction="#mainMenu" style="-fx-text-fill: white; -fx-background-color: transperent; -fx-border-color: white; -fx-border-radius: 100;" styleClass="playOffline" text="Back" />
+   </children>
+</AnchorPane>
