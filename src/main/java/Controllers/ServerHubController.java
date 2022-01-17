@@ -1,5 +1,6 @@
 package src.main.java.Controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -48,7 +49,15 @@ public class ServerHubController extends GUI {
             while (running.get()) {
                 try {
                     Thread.sleep(1000);
-                    refreshPlayers();
+                    Platform.runLater(
+                            () -> {
+                                try {
+                                    refreshPlayers();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
                 } catch (InterruptedException e) {
                     running.set(false);
                 }

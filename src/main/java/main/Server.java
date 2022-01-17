@@ -79,9 +79,6 @@ public class Server{
                 String[] arr = line.split(" ");
 
 
-
-
-
                 if (arr[0].equals("SVR")) {
 
                     if (arr[1].equals("PLAYERLIST")) {
@@ -220,6 +217,7 @@ public class Server{
 
                             case "DRAW":
                                 System.out.println("Gelijkspel");
+                                gui.endGameAlert("draw");
                                 if (game.equals("tictactoe")) {
                                     tictactoe = new TicTacToe(3, 3);
                                 }
@@ -228,6 +226,7 @@ public class Server{
 
                             case "WIN":
                                 System.out.println("Gewonnen");
+                                gui.endGameAlert("you");
                                 if (game.equals("tictactoe")) {
                                     tictactoe = new TicTacToe(3, 3);
                                 }
@@ -236,6 +235,7 @@ public class Server{
 
                             case "LOSS":
                                 System.out.println("Verloren");
+                                gui.endGameAlert("opponent");
                                 if (game.equals("tictactoe")) {
                                     tictactoe = new TicTacToe(3, 3);
                                 }

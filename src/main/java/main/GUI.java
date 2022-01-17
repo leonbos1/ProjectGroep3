@@ -216,6 +216,25 @@ public class GUI extends Application {
 
     }
 
+    public void endGameAlert(String winner) {
+        Platform.runLater(
+                () -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Game ended");
+                    alert.setHeaderText(null);
+                    if (winner.equals("opponent")) {
+                        alert.setContentText(String.format("Helaas, je hebt verloren."));
+                    }
+                    else if (winner.equals("you")) {
+                        alert.setContentText(String.format("YES!, je hebt gewonnen."));
+                    }
+                    else {
+                        alert.setContentText(String.format("Gelijkspel!"));
+                    }
+                    alert.showAndWait();
+
+                });
+    }
 
 
 
