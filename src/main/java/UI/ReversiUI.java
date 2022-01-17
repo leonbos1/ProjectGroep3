@@ -35,7 +35,7 @@ public class ReversiUI extends Application {
     boolean multiplayer;
 
 
-    public Parent createContent(Reversi reversi, boolean online, boolean multiplayer) {
+    public Parent createContent(Reversi reversi, boolean online, boolean multiplayer, boolean manualOnline) {
         this.online = online;
         this.reversi = reversi;
         this.rules = new CheckRulesReversi(reversi.getBoard(), reversi.getPlayer());
@@ -84,7 +84,7 @@ public class ReversiUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setScene(new Scene(createContent(new Reversi(1), false, false)));
+        primaryStage.setScene(new Scene(createContent(new Reversi(1), false, false, false)));
         primaryStage.show();
 
     }

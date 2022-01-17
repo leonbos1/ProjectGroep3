@@ -2,15 +2,18 @@ package src.main.java.Controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import src.main.java.main.GUI;
 import src.main.java.main.Server;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,9 +31,13 @@ public class ServerHubController extends GUI {
     Stage stage;
     Parent root;
     Thread autoRefresh;
+    String playType;
 
     @FXML
     Button backButton;
+
+    @FXML
+    ToggleButton toggleManual;
 
     Server server;
 
@@ -134,5 +141,23 @@ public class ServerHubController extends GUI {
 
     public void setPlayerlist(ArrayList<String> playerlist) {
         this.playerlist = playerlist;
+    }
+
+    public void toggleManual(ActionEvent event) {
+        Color red = Color.decode("#FF0000");
+        Color green = Color.decode("#00ff00");
+
+        if (toggleManual.getText().equals("AI")) {
+            this.playType = "manual";
+            toggleManual.setText("Manual");
+            toggleManual.setStyle("-fx-text-fill: white; -fx-background-radius: 100; -fx-background-color: #00FF00;");
+        }
+        else {
+            this.playType = "ai";
+            toggleManual.setText("AI");
+            toggleManual.setStyle("-fx-text-fill: white; -fx-background-radius: 100; -fx-background-color: #FF0000;");
+
+        }
+
     }
 }

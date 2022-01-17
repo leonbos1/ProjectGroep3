@@ -140,7 +140,7 @@ public class Server{
                                                 () -> {
                                                     Stage stage = new Stage();
 
-                                                    stage.setScene(new Scene(reversiUI.createContent(reversi, true, false)));
+                                                    stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, false)));
                                                     stage.show();
                                                 });
                                     }
@@ -166,7 +166,7 @@ public class Server{
                                             () -> {
                                                 Stage stage = new Stage();
 
-                                                stage.setScene(new Scene(reversiUI.createContent(reversi, true, false)));
+                                                stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, false)));
                                                 stage.show();
                                                 });
                                 }

@@ -282,7 +282,7 @@ public class GUI extends Application {
         Reversi reversi = new Reversi(1);
         Stage stage = new Stage();
 
-        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer)));
+        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer, false)));
         stage.show();
     }
 
