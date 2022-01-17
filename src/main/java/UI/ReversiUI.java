@@ -7,23 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.control.Button;
 import src.main.java.reversi.CheckRulesReversi;
 import src.main.java.reversi.Reversi;
-
-import javax.swing.border.Border;
-import java.awt.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 //1 is X
@@ -42,7 +35,7 @@ public class ReversiUI extends Application {
     boolean multiplayer;
 
 
-    public Parent createContent(Reversi reversi, boolean online, boolean multiplayer) {
+    public Parent createContent(Reversi reversi, boolean online, boolean multiplayer, boolean manualOnline) {
         this.online = online;
         this.reversi = reversi;
         this.rules = new CheckRulesReversi(reversi.getBoard(), reversi.getPlayer());
@@ -67,6 +60,9 @@ public class ReversiUI extends Application {
                 } else if (reversi.getBoardArray()[i][j] == rules.getOpponent(reversi.getPlayer())) {
                     tileArray[i][j].drawO();
                 }
+                else {
+                    tileArray[i][j].clearText();
+                }
                 if (rules.checkLegalMove(i, j, player)) {
                     tileArray[i][j].setborder(Color.BLUE);
                 } else {
@@ -88,7 +84,7 @@ public class ReversiUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setScene(new Scene(createContent(new Reversi(1), false, false)));
+        primaryStage.setScene(new Scene(createContent(new Reversi(1), false, false, false)));
         primaryStage.show();
 
     }
@@ -110,19 +106,23 @@ public class ReversiUI extends Application {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
 
-                if (reversi.getBoardArray()[i][j] == 1) {
-                    tileArray[i][j].drawX();
-                } else if (reversi.getBoardArray()[i][j] == 2) {
-                    tileArray[i][j].drawO();
-                }
-                else {tileArray[i][j].clearText();};
-                if (rules.checkLegalMove(i,j,player)) {
+                if (tileArray[i][j] != null) {
+                    if (reversi.getBoardArray()[i][j] == 1) {
+                        tileArray[i][j].drawX();
+                    } else if (reversi.getBoardArray()[i][j] == 2) {
+                        tileArray[i][j].drawO();
+                    } else {
+                        tileArray[i][j].clearText();
+                    }
+
+
+                if (rules.checkLegalMove(i, j, player)) {
                     tileArray[i][j].setborder(blue);
                 } else {
                     tileArray[i][j].setborder(black);
                 }
 
-
+            }
             }
         }
 
@@ -153,7 +153,6 @@ public class ReversiUI extends Application {
                         this.rules = new CheckRulesReversi(reversi.getBoard(), player);
 
                         updateBoard();
-                        //createContent(reversi, false);
 
                     } else if (btnType == ButtonType.CANCEL) {
 
@@ -210,14 +209,14 @@ public class ReversiUI extends Application {
             this.row = row;
             this.col = col;
 
-            javafx.scene.image.Image image = new javafx.scene.image.Image("src/media/Circle 1.png");
+            javafx.scene.image.Image image = new javafx.scene.image.Image("Circle 1.png");
             imageView1 = new javafx.scene.image.ImageView();
             imageView1.setFitHeight(80);
             imageView1.setFitWidth(80);
             imageView1.setImage(image);
             imageView1.setVisible(false);
 
-            javafx.scene.image.Image image2 = new Image("src/media/Circle 2.png");
+            javafx.scene.image.Image image2 = new Image("Circle 2.png");
             imageView2 = new javafx.scene.image.ImageView();
             imageView2.setFitHeight(80);
             imageView2.setFitWidth(80);

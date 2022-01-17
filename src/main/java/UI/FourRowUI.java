@@ -1,12 +1,10 @@
 package src.main.java.UI;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -16,12 +14,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import src.main.java.FourRow.CheckRulesFourRow;
 import src.main.java.FourRow.FourRow;
-import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 
-import javax.swing.*;
-import javax.swing.text.html.ImageView;
-import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -127,14 +121,14 @@ public class FourRowUI extends Application {
             this.row = row;
             this.col = col;
 
-            Image image = new Image("src/media/stone.png");
+            Image image = new Image("stone.png");
             imageView1 = new javafx.scene.image.ImageView();
             imageView1.setFitHeight(70);
             imageView1.setFitWidth(70);
             imageView1.setImage(image);
             imageView1.setVisible(false);
 
-            Image image2 = new Image("src/media/stone2.png");
+            Image image2 = new Image("stone2.png");
             imageView2 = new javafx.scene.image.ImageView();
             imageView2.setFitHeight(70);
             imageView2.setFitWidth(70);

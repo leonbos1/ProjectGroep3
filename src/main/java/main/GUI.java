@@ -79,7 +79,7 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Start.fxml"));
         stage.setTitle("Hanze E-Games");
         stage.setScene(new Scene(root));
         stage.show();
@@ -89,7 +89,7 @@ public class GUI extends Application {
     @FXML
     void offlineMenu(ActionEvent event) throws Exception {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("offlineHub.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("offlineHub.fxml"));
             Stage stage = (Stage) playOffline.getScene().getWindow();
             Scene scene = new Scene(root);
             //scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
@@ -111,7 +111,7 @@ public class GUI extends Application {
 
     @FXML
     void mainMenu(ActionEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Start.fxml"));
         Stage stage = (Stage) FourRow.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -158,7 +158,7 @@ public class GUI extends Application {
     public void guiServerHub(ActionEvent event) throws IOException, InterruptedException{
         String ip = hostIP.getText();
         int port = Integer.parseInt(portNumber.getText());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("serverHub.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("serverHub.fxml"));
 
         Parent root = loader.load();
 
@@ -190,7 +190,7 @@ public class GUI extends Application {
 
     public void guiServerHubHanze(ActionEvent event) throws IOException, InterruptedException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("serverHub.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("serverHub.fxml"));
 
         Parent root = loader.load();
 
@@ -206,20 +206,35 @@ public class GUI extends Application {
 
         serverHubController.setPlayerlist(playerlist);
 
-        Platform.runLater(
-                () -> {
-                    serverHubController.setServer(server);
-                });
-
+        Platform.runLater(() -> serverHubController.setServer(server));
 
         
         Stage stage = (Stage) connectButton.getScene().getWindow();
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
+        serverHubController.firstPlayers();
 
     }
 
+    public void endGameAlert(String winner) {
+        Platform.runLater(
+                () -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Game ended");
+                    alert.setHeaderText(null);
+                    if (winner.equals("opponent")) {
+                        alert.setContentText(String.format("Helaas, je hebt verloren."));
+                    }
+                    else if (winner.equals("you")) {
+                        alert.setContentText(String.format("YES!, je hebt gewonnen."));
+                    }
+                    else {
+                        alert.setContentText(String.format("Gelijkspel!"));
+                    }
+                    alert.showAndWait();
+
+                });
+    }
 
 
 
@@ -246,7 +261,7 @@ public class GUI extends Application {
 
     public  void startreversi(ActionEvent event) throws Exception {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("reversiConfig.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("reversiConfig.fxml"));
         stage.setTitle("Reversi");
         stage.setScene(new Scene(root));
         stage.show();
@@ -286,7 +301,7 @@ public class GUI extends Application {
         Reversi reversi = new Reversi(1);
         Stage stage = new Stage();
 
-        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer)));
+        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer, false)));
         stage.show();
     }
 
