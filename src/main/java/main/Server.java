@@ -79,6 +79,12 @@ public class Server{
                 String[] arr = line.split(" ");
 
 
+                if (arr[0].equals("ERR")) {
+                    if (arr[1].equals("duplicate")) {
+                        gui.loginError();
+                    }
+                }
+
                 if (arr[0].equals("SVR")) {
 
                     if (arr[1].equals("PLAYERLIST")) {

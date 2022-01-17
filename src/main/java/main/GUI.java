@@ -118,6 +118,8 @@ public class GUI extends Application {
     }
 
 
+
+
     public static class guiServerHub{
         private final Stage stage;
         private final Server server;
@@ -236,7 +238,33 @@ public class GUI extends Application {
                 });
     }
 
+    public void loginError() {
+        Platform.runLater(
+                () -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Login error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Deze naam bestaat al");
+                    alert.showAndWait().ifPresent(buttonType -> {
+                        if (buttonType == buttonType.OK) {
+                            try {
+                                serverHubController.back();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            try {
+                                serverHubController.back();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 
+                }
+        );
+    }
 
     public void challengeAlert(String name, String game, String challengenumber) {
         Platform.runLater(
