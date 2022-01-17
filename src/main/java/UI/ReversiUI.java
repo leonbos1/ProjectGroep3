@@ -239,13 +239,15 @@ public class ReversiUI extends Application {
                             if (rules.checkLegalMove(getRow(), getCol(), reversi.getPlayer())) {
                                 reversi.playerMove(getRow(), getCol());
                                 updateBoard();
-                                changeTurn();
-                                if (multiplayer) {
-                                    player = Reversi.getOpponent(player);
-                                    reversi.setPlayer(player);
-                                    updateBoard();
-                                } else {
-                                    Aimove();
+                                if (reversi.canPlay(Reversi.getOpponent(player))) {
+                                    changeTurn();
+                                    if (multiplayer) {
+                                        player = Reversi.getOpponent(player);
+                                        reversi.setPlayer(player);
+                                        updateBoard();
+                                    } else {
+                                        Aimove();
+                                    }
                                 }
                             }
                         }
@@ -261,7 +263,7 @@ public class ReversiUI extends Application {
             updateBoard();
             changeTurn();
         }
-        if (!reversi.canPlay(player) && !reversi.gameOver()) {
+        while (!reversi.canPlay(player) && !reversi.gameOver()) {
             reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
             updateBoard();
         }
