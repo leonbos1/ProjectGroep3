@@ -178,14 +178,10 @@ public class ReversiAI {
 
 
     int heuristic(Reversi board, int playerTurn) {
-        char opponent = 'O';
-        if (playerTurn == 'O') {
-            opponent = 'X';
-        }
-        //int ourScore ==
-        //int opponentScore ==
-        //return (ourScore - opponentScore);
-        return 1;
+
+        int ourScore = board.playerScore(playerTurn);
+        int opponentScore = board.playerScore(board.getOpponent(playerTurn));
+        return (ourScore - opponentScore);
     }
 
     Reversi copyBoard(Reversi board) {
@@ -195,23 +191,23 @@ public class ReversiAI {
         return tryGame;
     }
 
-    void minimaxDecision(Reversi board, int playerTurn) {
-        /*
+    public int[] minimaxDecision(Reversi board, int playerTurn) {
+
         start = System.currentTimeMillis();
         end = start + (9 * 1000L);
         int[] bestMove = {0, 0};
-        int[] moves = board.possibleMoves(player);
+        ArrayList<int[]> moves = board.possibleMoves(player);
 
-        if (moves.length == 0) {
+        if (moves.size() == 0) {
             int x = -1;
             int y = -2;
         } else {
             int bestMoveValue = -99999;
 
-            for (int move : moves) {
+            for (int[] move : moves) {
                 Reversi tempBoard = copyBoard(board);
                 tempBoard.makeMove(playerTurn, move[0], move[1]);
-                int value = minimaxValue(tempBoard, playerTurn, rules.getOpponent(playerTurn), 1);
+                int value = minimaxValue(tempBoard, playerTurn, board.getOpponent(playerTurn), 1);
 
                 if (value > bestMoveValue) {
                     bestMoveValue = value;
@@ -219,13 +215,13 @@ public class ReversiAI {
                 }
             }
         }
+        return bestMove;
 
-         */
     }
 
     int minimaxValue(Reversi board, int originalTurn, int currentTurn, int depth) {
 
-        /*
+
         if (System.currentTimeMillis() > end) {
             return heuristic(board, originalTurn);
         }
@@ -234,9 +230,9 @@ public class ReversiAI {
         }
 
         int bestMoveValue = 0;
-        int[] moves = board.possibleMoves(player);
+        ArrayList<int[]> moves = board.possibleMoves(player);
 
-        if (moves.length == 0) {
+        if (moves.size() == 0) {
             return minimaxValue(board, originalTurn, currentTurn, depth + 1);
         } else {
             bestMoveValue = -99999;
@@ -247,7 +243,7 @@ public class ReversiAI {
             for (int[] move : moves) {
                 Reversi tempBoard = copyBoard(board);
                 makeMinimaxMove(tempBoard, move, currentTurn);
-                int value = minimaxValue(tempBoard, originalTurn, rules.getOpponent(currentTurn), depth + 1);
+                int value = minimaxValue(tempBoard, originalTurn, board.getOpponent(currentTurn), depth + 1);
 
                 if (originalTurn == currentTurn) {
                     if (value > bestMoveValue) {
@@ -262,17 +258,23 @@ public class ReversiAI {
         }
         return bestMoveValue;
 
-         */
-        return 1;
     }
 
 
 
-        public void makeMinimaxMove(Reversi board, int[] move, int playerTurn) {
-            int col = move[0];
-            int row = move[1];
-            board.makeMove(playerTurn, row, col);
-        }
+    public void makeMinimaxMove(Reversi board, int[] move, int playerTurn) {
+        int col = move[0];
+        int row = move[1];
+        board.makeMove(playerTurn, row, col);
+        int[] moveToMake = {col, row};
+    }
+
+    //public int[] makeAIMove(Reversi reversi) {
+    //    minimaxDecision(reversi, player);
+
+    //}
+
+
 
 
 

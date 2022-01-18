@@ -140,7 +140,7 @@ public class Reversi {
         }
     }
 
-    public int[] AIMove(int player) {
+    public int[] AIMoveTry(int player) {
 
         int[] result = ai.AIMove(this ,player, 60);
 
@@ -153,6 +153,11 @@ public class Reversi {
         result[0] +=1;
         result[1] +=1;
 
+        return result;
+    }
+
+    public int[] AIMove(int player) {
+        int[] result = ai.minimaxDecision(this, player);
         return result;
     }
 

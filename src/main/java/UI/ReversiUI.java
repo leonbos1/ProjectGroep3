@@ -258,6 +258,7 @@ public class ReversiUI extends Application {
     }
 
     private void Aimove() {
+
         if (turn == Reversi.getOpponent(player) && reversi.canPlay(Reversi.getOpponent(player)) && !reversi.gameOver()) {
             reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
             updateBoard();
@@ -267,6 +268,8 @@ public class ReversiUI extends Application {
             reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
             updateBoard();
         }
+
+
     }
 
 
