@@ -1,6 +1,7 @@
 package src.main.java.UI;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,7 +34,9 @@ public class ReversiUI extends Application {
     String game;
     Tile[][] tileArray = new Tile[8][8];
     boolean multiplayer;
-
+    boolean manualOnline;
+    Thread aiThread;
+    private boolean running;
 
     public Parent createContent(Reversi reversi, boolean online, boolean multiplayer, boolean manualOnline) {
         this.online = online;
@@ -44,6 +47,21 @@ public class ReversiUI extends Application {
         this.player = reversi.getPlayer();
         this.turn = player;
         this.multiplayer = multiplayer;
+        running = true;
+
+        this.aiThread = new Thread(){
+            public void run() {
+                try {
+                    aiLoop();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        if (!online && !multiplayer && !manualOnline) {
+            aiThread.start();
+        }
 
         Pane root = new Pane();
         root.setPrefSize(xWindowSize,yWindowSize);
@@ -97,8 +115,79 @@ public class ReversiUI extends Application {
         }
     }
 
+    public void aiLoop() throws InterruptedException {
+        if (!online && !multiplayer && !manualOnline) {
+
+            while (running) {
+                Thread.sleep(300);
+                if (turn != player && !reversi.gameOver() && reversi.canPlay(Reversi.getOpponent(player))) {
+                    Aimove();
+                }
+                if (reversi.gameOver()) {
+                    Platform.runLater(
+                            () -> {
+                                endGameAlert();
+                            });
+                    running = false;
+                }
+            }
+        }
+    }
+
+    private void endGameAlert() {
+        int winner;
+        int playerScore = reversi.playerScore(player);
+        int aiScore = reversi.playerScore(Reversi.getOpponent(player));
+        int winnerChar;
+        if (playerScore > aiScore) {winner = player;}
+        else {winner = Reversi.getOpponent(player);}
+        aiThread.stop();
+        Alert gameOverAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        gameOverAlert.setTitle("Game over");
+        gameOverAlert.setHeaderText(null);
+
+        if (winner == 1) {winnerChar = 'X';}
+        else {winnerChar = 'O';}
+        if (playerScore != aiScore) {
+            gameOverAlert.setContentText(String.format("%c heeft gewonnen!\nDe score is %d - %d\nWil je nog een keer spelen?", winnerChar, playerScore, aiScore));
+        }
+        else {gameOverAlert.setContentText("Gelijkspel!!\nWil je nog een keer spelen?");}
+
+        gameOverAlert.showAndWait().ifPresent((btnType) -> {
+            if (btnType == ButtonType.OK) {
+
+                reversi = new Reversi(1);
+                rules = new CheckRulesReversi(reversi.getBoard(), reversi.getPlayer());
+                /*
+                try {
+                    aiLoop();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                 */
+                Platform.runLater(
+                        () -> {
+                            updateBoard();
+                            try {
+                                aiLoop();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                );
+
+            } else if (btnType == ButtonType.CANCEL) {
+
+                gameOverAlert.close();
+            }
+        });
+    }
+
+
     public void updateBoard() {
-        reversi.getBoard().showBoard();
+        //reversi.getBoard().showBoard();
 
         Color black = Color.BLACK;
         Color blue = Color.BLUE;
@@ -126,40 +215,16 @@ public class ReversiUI extends Application {
             }
         }
 
-        if (!online) {
+        /*if (!online) {
             if (reversi.gameOver()) {
-                int winner;
-                int playerScore = reversi.playerScore(player);
-                int aiScore = reversi.playerScore(Reversi.getOpponent(player));
-                int winnerChar;
-                if (playerScore > aiScore) {winner = player;}
-                else {winner = Reversi.getOpponent(player);}
-
-                Alert gameOverAlert = new Alert(Alert.AlertType.CONFIRMATION);
-                gameOverAlert.setTitle("Game over");
-                gameOverAlert.setHeaderText(null);
-
-                if (winner == 1) {winnerChar = 'X';}
-                else {winnerChar = 'O';}
-                if (playerScore != aiScore) {
-                    gameOverAlert.setContentText(String.format("%c heeft gewonnen!\nDe score is %d - %d\nWil je nog een keer spelen?", winnerChar, playerScore, aiScore));
-                }
-                else {gameOverAlert.setContentText("Gelijkspel!!\nWil je nog een keer spelen?");}
-
-                gameOverAlert.showAndWait().ifPresent((btnType) -> {
-                    if (btnType == ButtonType.OK) {
-
-                        this.reversi = new Reversi(1);
-                        this.rules = new CheckRulesReversi(reversi.getBoard(), player);
-
-                        updateBoard();
-
-                    } else if (btnType == ButtonType.CANCEL) {
-
+                Platform.runLater( () -> {
+                        endGameAlert();
                     }
-                });
+                );
             }
         }
+
+         */
 
     }
 
@@ -245,8 +310,6 @@ public class ReversiUI extends Application {
                                         player = Reversi.getOpponent(player);
                                         reversi.setPlayer(player);
                                         updateBoard();
-                                    } else {
-                                        Aimove();
                                     }
                                 }
                             }
@@ -260,12 +323,13 @@ public class ReversiUI extends Application {
     private void Aimove() {
 
         if (turn == Reversi.getOpponent(player) && reversi.canPlay(Reversi.getOpponent(player)) && !reversi.gameOver()) {
-            reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
+            reversi.AIMove(Reversi.getOpponent(player));
             updateBoard();
             changeTurn();
         }
         while (!reversi.canPlay(player) && !reversi.gameOver()) {
-            reversi.AIMove(src.main.java.reversi.Reversi.getOpponent(player));
+            System.out.println("ha leon kan geen zet doen");
+            reversi.AIMove(Reversi.getOpponent(player));
             updateBoard();
         }
 
