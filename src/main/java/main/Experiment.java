@@ -12,7 +12,7 @@ public class Experiment {
 
 
         int turn = 1;
-        int depth1 = 10;
+        int depth1 = 70;
         double wins1 = 0;
         double wins2 = 0;
 

@@ -193,7 +193,7 @@ public class ReversiAI {
     public int[] AIMove(Reversi reversi, int player, int depth) {
         CheckRulesReversi newRules = new CheckRulesReversi(reversi.getBoard(),player);
 
-        if (emptySpaces(reversi.getBoard()) <= maxTreeDepth) {
+        if (emptySpaces(reversi.getBoard()) <= depth) {
             int[] move = bestMove(reversi, depth, player);
             if (newRules.checkLegalMove(move[0], move[1], player)) {
                 return move;
