@@ -210,7 +210,7 @@ public class Server{
                                     }
 
                                     else if (game.equals("reversi")) {
-                                        int[] movearray = reversi.AIMove(reversi.getPlayer());
+                                        int[] movearray = reversi.AIMove(reversi.getPlayer(),5);
                                         int move = ((movearray[0] - 1) * 8 ) + ((movearray[1] - 1) );
                                         System.out.println(move);
                                         move(move);

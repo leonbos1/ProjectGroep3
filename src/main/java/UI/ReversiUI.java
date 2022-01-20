@@ -323,13 +323,13 @@ public class ReversiUI extends Application {
     private void Aimove() {
 
         if (turn == Reversi.getOpponent(player) && reversi.canPlay(Reversi.getOpponent(player)) && !reversi.gameOver()) {
-            reversi.AIMove(Reversi.getOpponent(player));
+            reversi.AIMove(Reversi.getOpponent(player),8);
             updateBoard();
             changeTurn();
         }
         while (!reversi.canPlay(player) && !reversi.gameOver()) {
             System.out.println("ha leon kan geen zet doen");
-            reversi.AIMove(Reversi.getOpponent(player));
+            reversi.AIMove(Reversi.getOpponent(player),8);
             updateBoard();
         }
 

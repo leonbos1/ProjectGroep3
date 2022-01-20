@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class ReversiAI {
 
-    int maxTreeDepth = 5;
+    int maxTreeDepth = 20;
 
     private static final int[][] pointsBoard = new int[][]{
             {500, -100, 100, 50, 50, 100, -100, 500},
@@ -191,11 +191,11 @@ public class ReversiAI {
         return pointsBoardMove(reversi,player);
     }
 
-    public int[] AIMove(Reversi reversi, int player) {
+    public int[] AIMove(Reversi reversi, int player, int depth) {
         CheckRulesReversi newRules = new CheckRulesReversi(reversi.getBoard(),player);
 
         if (emptySpaces(reversi.getBoard()) <= maxTreeDepth) {
-            int[] move = bestMove(reversi, maxTreeDepth, player);
+            int[] move = bestMove(reversi, depth, player);
             if (newRules.checkLegalMove(move[0], move[1], player)) {
                 return move;
             } else {
