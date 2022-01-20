@@ -12,7 +12,7 @@ public class Experiment {
 
 
         int turn = 1;
-        int depth1 = 70;
+        int depth1 = 5;
         double wins1 = 0;
         double wins2 = 0;
 
@@ -46,14 +46,14 @@ public class Experiment {
             }
 
             if (turn == 2 && reversi.canPlay(1) && !reversi.gameOver()) {
-                reversi.possibleMoves(2);
+                reversi.AIPointMove(reversi,2);
                 turn = 1;
                 moveCounter2++;
                 //reversi.getBoard().showBoard();
             }
 
             while (!reversi.canPlay(1) && !reversi.gameOver()) {
-                reversi.possibleMoves(2);
+                reversi.AIPointMove(reversi,2);
                 moveCounter2++;
                 //reversi.getBoard().showBoard();
             }
@@ -67,6 +67,9 @@ public class Experiment {
 
         if (reversi.playerScore(1) > reversi.playerScore(2)) {
             System.out.println("minimax wint");
+        }
+        else {
+            System.out.println("minimax verliest");
         }
 
 

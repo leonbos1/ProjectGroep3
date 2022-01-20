@@ -220,5 +220,14 @@ public class Reversi {
             return 1;
         }
     }
+
+    public int[] AIPointMove(Reversi reversi, int player) {
+        int[] result = ReversiAI.pointsBoardMove(reversi, player);
+
+        makeMove(player, result[0], result[1]);
+        result[0]++;
+        result[1]++;
+        return result;
+    }
 }
 
