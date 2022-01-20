@@ -131,7 +131,7 @@ public class ReversiAI {
         return bestScore;
     }
 
-    private static int emptySpaces(Board board) {
+    public static int emptySpaces(Board board) {
         int emptySpaces = 0;
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {

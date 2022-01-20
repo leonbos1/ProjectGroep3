@@ -72,6 +72,7 @@ public class Experiment {
             System.out.println("minimax verliest");
         }
 
+        System.out.printf("aantal gezette stenen: %s \n", 64-ReversiAI.emptySpaces(reversi.getBoard()));
 
         System.out.printf("avg duration 1: %s\n", totaltime1 / moveCounter1);
 
