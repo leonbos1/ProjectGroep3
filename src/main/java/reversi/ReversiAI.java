@@ -89,15 +89,14 @@ public class ReversiAI {
     }
 
     private static int MiniMax(Reversi reversi, int depth, boolean myTurn, int player, long startTime) {
-        System.out.println("minimax!!!!");
         Reversi reversiCopy = copyReversi(reversi);
         CheckRulesReversi newRules = new CheckRulesReversi(reversiCopy.getBoard(),reversiCopy.getPlayer());
 
-        if (System.currentTimeMillis() > (startTime + 9500) || isTerminalNode(reversiCopy, player) ) {
+        if (isTerminalNode(reversiCopy, player)  || depth == 0) {
             return evaluateBoard(reversiCopy, player);
         }
 
-        if (depth == 0) {
+        if (System.currentTimeMillis() > (startTime + 9500)) {
             pointsBoardMove(reversi, player);
         }
 
@@ -157,7 +156,7 @@ public class ReversiAI {
         return possibleMoves;
     }
 
-    private static int[] pointsBoardMove(Reversi reversi, int player) {
+    public static int[] pointsBoardMove(Reversi reversi, int player) {
         int highestScore = -1000;
         int[] highestPosition = new int[]{-1, -1};
         ArrayList<int[]> possibleMoves = possibleMoves(reversi, player);
