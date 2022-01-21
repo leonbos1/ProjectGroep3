@@ -328,7 +328,6 @@ public class ReversiUI extends Application {
             changeTurn();
         }
         while (!reversi.canPlay(player) && !reversi.gameOver()) {
-            System.out.println("ha leon kan geen zet doen");
             reversi.AIMove(Reversi.getOpponent(player),8);
             updateBoard();
         }
