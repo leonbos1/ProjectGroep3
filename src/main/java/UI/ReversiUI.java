@@ -118,17 +118,18 @@ public class ReversiUI extends Application {
     public void aiLoop() throws InterruptedException {
         if (!online && !multiplayer && !manualOnline) {
 
-            while (running) {
-                Thread.sleep(300);
-                if (turn != player && !reversi.gameOver() && reversi.canPlay(Reversi.getOpponent(player))) {
-                    Aimove();
-                }
-                if (reversi.gameOver()) {
-                    Platform.runLater(
-                            () -> {
-                                endGameAlert();
-                            });
-                    running = false;
+            while (true) {
+                if (!reversi.gameOver()) {
+                    Thread.sleep(300);
+                    if (turn != player && !reversi.gameOver() && reversi.canPlay(Reversi.getOpponent(player))) {
+                        Aimove();
+                    }
+                    if (reversi.gameOver()) {
+                        Platform.runLater(
+                                () -> {
+                                    endGameAlert();
+                                });
+                    }
                 }
             }
         }
@@ -141,7 +142,6 @@ public class ReversiUI extends Application {
         int winnerChar;
         if (playerScore > aiScore) {winner = player;}
         else {winner = Reversi.getOpponent(player);}
-        aiThread.stop();
         Alert gameOverAlert = new Alert(Alert.AlertType.CONFIRMATION);
         gameOverAlert.setTitle("Game over");
         gameOverAlert.setHeaderText(null);
@@ -158,25 +158,7 @@ public class ReversiUI extends Application {
 
                 reversi = new Reversi(1);
                 rules = new CheckRulesReversi(reversi.getBoard(), reversi.getPlayer());
-                /*
-                try {
-                    aiLoop();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                 */
-                Platform.runLater(
-                        () -> {
-                            updateBoard();
-                            try {
-                                aiLoop();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                );
+                updateBoard();
 
             } else if (btnType == ButtonType.CANCEL) {
 
@@ -331,8 +313,6 @@ public class ReversiUI extends Application {
             reversi.AIMove(Reversi.getOpponent(player),8);
             updateBoard();
         }
-
-
     }
 
 
