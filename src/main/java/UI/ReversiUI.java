@@ -300,12 +300,13 @@ public class ReversiUI extends Application {
             else if (manualOnline) {
                 setOnMouseClicked(event -> {
 
-                    if (rules.checkLegalMove(row,col, reversi.getPlayer())) {
+                    if (rules.checkLegalMove(row,col, reversi.getPlayer()) && turn == reversi.getPlayer()) {
 
                         int move = ((row) * 8) + ((col));
                         server.move(move);
                         reversi.makeMove(reversi.getPlayer(), row, col);
                         updateBoard();
+                        changeTurn();
                     }
                 });
             }
@@ -329,6 +330,10 @@ public class ReversiUI extends Application {
     public void changeTurn() {
         if (this.turn == 1) {this.turn = 2;}
         else {this.turn = 1;}
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 
 }

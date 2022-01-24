@@ -152,6 +152,7 @@ public class Server{
                                                     else {
                                                         stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, false,this)));
                                                     }
+                                                    reversiUI.setTurn(2);
                                                     stage.show();
                                                 });
                                     }
@@ -178,12 +179,15 @@ public class Server{
                                                 Stage stage = new Stage();
                                                 if (manual) {
                                                     stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, true, this)));
+
                                                 }
                                                 else {
                                                     stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, false, this)));
                                                 }
+                                                reversiUI.setTurn(1);
                                                 stage.show();
                                                 });
+
                                 }
 
                                 else if (game.equals("tictactoe")) {
@@ -230,6 +234,9 @@ public class Server{
                                             reversi.getBoard().showBoard();
                                             System.out.println();
                                             reversiUI.updateBoard();
+                                        }
+                                        else {
+                                            reversiUI.changeTurn();
                                         }
                                     }
                                 }
