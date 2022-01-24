@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import src.main.java.main.GUI;
 import src.main.java.main.Server;
@@ -33,6 +34,9 @@ public class ServerHubController extends GUI {
     Parent root;
     Thread autoRefresh;
     String playType;
+
+    @FXML
+    Label subscribeLabel;
 
     @FXML
     Button backButton;
@@ -132,6 +136,7 @@ public class ServerHubController extends GUI {
 
     @FXML
     private void subscribeTicTacToe(){
+        setSubscribeLabel("Tic-tac-toe");
         server.subscribe("tic-tac-toe");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Succes!");
@@ -142,12 +147,18 @@ public class ServerHubController extends GUI {
 
     @FXML
     private void subscribeReversi(){
+        setSubscribeLabel("Reversi");
         server.subscribe("Reversi");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Succes!");
         alert.setHeaderText(null);
         alert.setContentText("Succesvol aangemeld voor Reversi!");
         alert.showAndWait();
+    }
+
+    @FXML
+    private void setSubscribeLabel(String text) {
+        subscribeLabel.setText("Subscribe: "+text);
     }
 
     public void setServer(Server server) {
