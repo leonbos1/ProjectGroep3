@@ -174,12 +174,13 @@ public class ServerHubController extends GUI {
         Color green = Color.decode("#00ff00");
 
         if (toggleManual.getText().equals("AI")) {
-            this.playType = "manual";
+            server.setManual(true);
+            System.out.println("Nu manual!");
             toggleManual.setText("Manual");
             toggleManual.setStyle("-fx-text-fill: white; -fx-background-radius: 100; -fx-background-color: #00FF00;");
         }
         else {
-            this.playType = "ai";
+            server.setManual(false);
             toggleManual.setText("AI");
             toggleManual.setStyle("-fx-text-fill: white; -fx-background-radius: 100; -fx-background-color: #FF0000;");
 

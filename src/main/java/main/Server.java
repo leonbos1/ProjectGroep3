@@ -29,6 +29,7 @@ public class Server{
     public String game;
     public ArrayList<String> playerList;
     public GUI gui;
+    private boolean manual;
     ReversiUI reversiUI = new ReversiUI();
     TicTacToeUI ticTacToeUI = new TicTacToeUI();
 
@@ -36,7 +37,7 @@ public class Server{
         this.sock = new Socket(ip, port);
         this.out = new PrintStream(sock.getOutputStream());
         this.in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        this.username = "ITV2C3";
+        this.username = "leon";
         this.gui = gui;
 
         thread = new Thread(() -> {
@@ -82,6 +83,9 @@ public class Server{
                 if (arr[0].equals("ERR")) {
                     if (arr[1].equals("duplicate")) {
                         gui.loginError();
+                    }
+                    else {
+                        gui.Disconnect();
                     }
                 }
 
@@ -142,8 +146,12 @@ public class Server{
                                         Platform.runLater(
                                                 () -> {
                                                     Stage stage = new Stage();
-
-                                                    stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, false)));
+                                                    if (manual) {
+                                                        stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, true,this)));
+                                                    }
+                                                    else {
+                                                        stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, false,this)));
+                                                    }
                                                     stage.show();
                                                 });
                                     }
@@ -168,8 +176,12 @@ public class Server{
                                     Platform.runLater(
                                             () -> {
                                                 Stage stage = new Stage();
-
-                                                stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, false)));
+                                                if (manual) {
+                                                    stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, true, this)));
+                                                }
+                                                else {
+                                                    stage.setScene(new Scene(reversiUI.createContent(reversi, true, false, false, this)));
+                                                }
                                                 stage.show();
                                                 });
                                 }
@@ -210,13 +222,15 @@ public class Server{
                                     }
 
                                     else if (game.equals("reversi")) {
-                                        int[] movearray = reversi.AIMove(reversi.getPlayer(),5);
-                                        int move = ((movearray[0] - 1) * 8 ) + ((movearray[1] - 1) );
-                                        System.out.println(move);
-                                        move(move);
-                                        reversi.getBoard().showBoard();
-                                        System.out.println();
-                                        reversiUI.updateBoard();
+                                        if (!manual) {
+                                            int[] movearray = reversi.AIMove(reversi.getPlayer(), 5);
+                                            int move = ((movearray[0] - 1) * 8) + ((movearray[1] - 1));
+                                            System.out.println(move);
+                                            move(move);
+                                            reversi.getBoard().showBoard();
+                                            System.out.println();
+                                            reversiUI.updateBoard();
+                                        }
                                     }
                                 }
                                 break;
@@ -306,4 +320,8 @@ public class Server{
     public String getUsername() {return this.username;}
 
     public void setGame(String game) {this.game = game;}
+
+    public void setManual(boolean manual) {
+        this.manual = manual;
+    }
 }

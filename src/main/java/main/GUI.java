@@ -238,13 +238,41 @@ public class GUI extends Application {
                 });
     }
 
+    public void Disconnect() {
+        Platform.runLater(
+                () -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Disconnect");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Disconnected from server");
+                    alert.showAndWait().ifPresent(buttonType -> {
+                        if (buttonType == buttonType.OK) {
+                            try {
+                                serverHubController.back();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            try {
+                                serverHubController.back();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                }
+        );
+    }
+
     public void loginError() {
         Platform.runLater(
                 () -> {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Login error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Deze naam bestaat al");
+                    alert.setContentText("Ongeldige naam");
                     alert.showAndWait().ifPresent(buttonType -> {
                         if (buttonType == buttonType.OK) {
                             try {
@@ -329,7 +357,7 @@ public class GUI extends Application {
         Reversi reversi = new Reversi(1);
         Stage stage = new Stage();
 
-        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer, false)));
+        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer, false,null)));
         stage.show();
     }
 

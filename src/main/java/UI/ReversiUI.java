@@ -16,8 +16,11 @@ import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import src.main.java.main.Server;
 import src.main.java.reversi.CheckRulesReversi;
 import src.main.java.reversi.Reversi;
+
+import java.io.Serial;
 
 
 //1 is X
@@ -37,8 +40,10 @@ public class ReversiUI extends Application {
     boolean manualOnline;
     Thread aiThread;
     private boolean running;
+    Server server;
 
-    public Parent createContent(Reversi reversi, boolean online, boolean multiplayer, boolean manualOnline) {
+
+    public Parent createContent(Reversi reversi, boolean online, boolean multiplayer, boolean manualOnline, Server server) {
         this.online = online;
         this.reversi = reversi;
         this.rules = new CheckRulesReversi(reversi.getBoard(), reversi.getPlayer());
@@ -47,20 +52,25 @@ public class ReversiUI extends Application {
         this.player = reversi.getPlayer();
         this.turn = player;
         this.multiplayer = multiplayer;
+        this.manualOnline = manualOnline;
+        this.server = server;
         running = true;
 
-        this.aiThread = new Thread(){
-            public void run() {
-                try {
-                    aiLoop();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+        if (!manualOnline) {
 
-        if (!online && !multiplayer && !manualOnline) {
-            aiThread.start();
+            this.aiThread = new Thread() {
+                public void run() {
+                    try {
+                        aiLoop();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            if (!online && !multiplayer && !manualOnline) {
+                aiThread.start();
+            }
         }
 
         Pane root = new Pane();
@@ -102,7 +112,7 @@ public class ReversiUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setScene(new Scene(createContent(new Reversi(1), false, false, false)));
+        primaryStage.setScene(new Scene(createContent(new Reversi(1), false, false, false, null)));
         primaryStage.show();
 
     }
@@ -196,18 +206,6 @@ public class ReversiUI extends Application {
             }
             }
         }
-
-        /*if (!online) {
-            if (reversi.gameOver()) {
-                Platform.runLater( () -> {
-                        endGameAlert();
-                    }
-                );
-            }
-        }
-
-         */
-
     }
 
     private class Tile extends StackPane {
@@ -296,6 +294,18 @@ public class ReversiUI extends Application {
                                 }
                             }
                         }
+                    }
+                });
+            }
+            else if (manualOnline) {
+                setOnMouseClicked(event -> {
+
+                    if (rules.checkLegalMove(row,col, reversi.getPlayer())) {
+
+                        int move = ((row) * 8) + ((col));
+                        server.move(move);
+                        reversi.makeMove(reversi.getPlayer(), row, col);
+                        updateBoard();
                     }
                 });
             }
