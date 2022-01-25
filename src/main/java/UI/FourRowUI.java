@@ -61,8 +61,8 @@ public class FourRowUI extends Application {
             for (int j = 0; j < Ysize; j++) {
                 Tile tile = new Tile(i, j);
 
-                tile.setTranslateX(j * (115));
-                tile.setTranslateY(i * (85));
+                tile.setTranslateX(j * (100));
+                tile.setTranslateY(i * (100));
                 tileArray[i][j] = (tile);
 
                 if (fourrow.getBoardArray()[i][j] == fourrow.getPlayer()) {
@@ -120,7 +120,7 @@ public class FourRowUI extends Application {
 
 
             } else if (btnType == ButtonType.CANCEL) {
-
+                fourrow = null;
                 gameOverAlert.close();
             }
         });
@@ -165,7 +165,7 @@ public class FourRowUI extends Application {
         int row;
         int col;
 
-        private Rectangle border = new Rectangle(xWindowSize/Xsize,yWindowSize/Ysize);
+        private Rectangle border = new Rectangle(xWindowSize/7,yWindowSize/6);
         private Text text = new Text();
         public javafx.scene.image.ImageView imageView1;
         public javafx.scene.image.ImageView imageView2;
@@ -214,7 +214,7 @@ public class FourRowUI extends Application {
             text.setFont(Font.font(72));
 
             border.setStrokeWidth(2);
-            border.setFill(Color.GREEN);
+            border.setFill(Color.BLUE);
             border.setStroke(Color.BLACK);
 
             setAlignment(Pos.CENTER);
