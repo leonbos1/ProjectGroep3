@@ -138,22 +138,12 @@ public class ServerHubController extends GUI {
     private void subscribeTicTacToe(){
         setSubscribeLabel("Tic-tac-toe");
         server.subscribe("tic-tac-toe");
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Succes!");
-        alert.setHeaderText(null);
-        alert.setContentText("Succesvol aangemeld voor TicTacToe!");
-        alert.showAndWait();
     }
 
     @FXML
     private void subscribeReversi(){
         setSubscribeLabel("Reversi");
         server.subscribe("Reversi");
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Succes!");
-        alert.setHeaderText(null);
-        alert.setContentText("Succesvol aangemeld voor Reversi!");
-        alert.showAndWait();
     }
 
     @FXML
