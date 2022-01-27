@@ -10,6 +10,7 @@ import java.util.Random;
 public class ReversiAI {
 
     int maxTreeDepth = 20;
+    public static final ArrayList<int[]> badTiles = new ArrayList<>();
 
     private static final int[][] pointsBoard = new int[][]{
             {500, -100, 100, 50, 50, 100, -100, 500},
@@ -24,11 +25,12 @@ public class ReversiAI {
 
     Board board;
     int player;
-
     public ReversiAI(Board board, int player) {
         this.board = board;
         this.player = player;
-
+        badTiles.add(new int[] {0,1});  badTiles.add(new int[] {0,6});  badTiles.add(new int[] {1,1});  badTiles.add(new int[] {1,0});
+        badTiles.add(new int[] {1,6}); badTiles.add(new int[] {1,7}); badTiles.add(new int[] {6,0}); badTiles.add(new int[] {6,1});
+        badTiles.add(new int[] {6,6}); badTiles.add(new int[] {6,7}); badTiles.add(new int[] {7,1}); badTiles.add(new int[] {7,6});
     }
 
 
@@ -50,16 +52,19 @@ public class ReversiAI {
 
     private static int[] bestMove(Reversi reversi, int depth, int player) {
         int bestScore = -99999;
-        int[] bestMove = new int[]{0, 0};
+        int[] bestMove = new int[]{-1, 0};
         long startTime = System.currentTimeMillis();
         Reversi reversiCopy = copyReversi(reversi);
         CheckRulesReversi newRules = new CheckRulesReversi(reversiCopy.getBoard(), player);
 
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
+
+
                 if (newRules.checkLegalMove(row, col, player)) {
                     reversiCopy.makeMove(player, row, col);
-                    int score = MiniMax(reversi, depth - 1, true, newRules.player, startTime);
+                    int score = AlphaBeta(reversiCopy, depth - 1, true, player, -99999, 99999, startTime);
+                    //int score = MiniMax(reversiCopy, depth, true, player, startTime);
                     if (score > bestScore) {
                         bestScore = score;
                         bestMove = new int[]{row, col};
@@ -67,7 +72,31 @@ public class ReversiAI {
                 }
             }
         }
+
+        System.out.println(System.currentTimeMillis() - startTime);
+
         return bestMove;
+    }
+
+    private static boolean cornerPossible(Reversi reversi, int player) {
+
+        CheckRulesReversi rules = new CheckRulesReversi(reversi.getBoard(), reversi.getPlayer());
+        if (rules.checkLegalMove(0,0,player) || rules.checkLegalMove(7,0,player) || rules.checkLegalMove(0,7,player) || rules.checkLegalMove(7,7,player)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static int[] checkCorners(Reversi reversi, int player) {
+        int[] move = new int[] {0,0};
+        CheckRulesReversi rules = new CheckRulesReversi(reversi.getBoard(),reversi.getPlayer());
+        if (rules.checkLegalMove(0,0,player)) {move[0] = 0; move[1] = 0;}
+        else if (rules.checkLegalMove(0,7,player)) {move[0] = 0; move[1] = 7;}
+        else if (rules.checkLegalMove(7,0,player)) {move[0] = 7; move[1] = 0;}
+        else if (rules.checkLegalMove(7,7,player)) {move[0] = 7; move[1] = 7;}
+
+        return move;
     }
 
     private static int evaluateBoard(Reversi reversi, int player) {
@@ -88,16 +117,55 @@ public class ReversiAI {
 
     }
 
+    private static int AlphaBeta(Reversi reversi, int depth, boolean myTurn, int player, int alpha, int beta, double startTime) {
+        Reversi reversiCopy = copyReversi(reversi);
+        CheckRulesReversi newRules = new CheckRulesReversi(reversiCopy.getBoard(),reversiCopy.getPlayer());
+
+        if (System.currentTimeMillis() > (startTime + 9500) || isTerminalNode(reversiCopy, player) || depth == 0 ) {
+            return evaluateBoard(reversiCopy, player);
+        }
+
+        int bestScore;
+        if (myTurn) {
+            bestScore = -99999;
+            for (int row = 0; row < 8; row++) {
+                for (int col = 0; col < 8; col++) {
+                    if (newRules.checkLegalMove(row,col,player)) {
+                        reversiCopy.makeMove(player, row, col);
+                        bestScore = Math.max(bestScore,AlphaBeta(reversiCopy, depth - 1, false, player, alpha, beta, startTime));
+                        alpha = Math.max(alpha, bestScore);
+                        if (beta <= alpha) {
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            bestScore = 99999;
+            for (int row = 0; row < 8; row++) {
+                for (int col = 0; col < 8; col++) {
+                    if (newRules.checkLegalMove(row,col,player)) {
+                        reversiCopy.makeMove(Reversi.getOpponent(player), row, col);
+                        bestScore = Math.max(bestScore,AlphaBeta(reversiCopy, depth - 1, true, player, alpha, beta, startTime));
+                        beta = Math.min(beta, bestScore);
+                        if (beta <= alpha) {
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+        return bestScore;
+
+    }
+
     private static int MiniMax(Reversi reversi, int depth, boolean myTurn, int player, long startTime) {
         Reversi reversiCopy = copyReversi(reversi);
         CheckRulesReversi newRules = new CheckRulesReversi(reversiCopy.getBoard(),reversiCopy.getPlayer());
 
-        if (isTerminalNode(reversiCopy, player)  || depth == 0) {
+        if (System.currentTimeMillis() > (startTime + 9500) || isTerminalNode(reversiCopy, player) || depth == 0 ) {
             return evaluateBoard(reversiCopy, player);
-        }
-
-        if (System.currentTimeMillis() > (startTime + 9500)) {
-            pointsBoardMove(reversi, player);
         }
 
         int bestScore;
@@ -191,20 +259,25 @@ public class ReversiAI {
     }
 
     public int[] AIMove(Reversi reversi, int player, int depth) {
-        CheckRulesReversi newRules = new CheckRulesReversi(reversi.getBoard(),player);
+        Reversi reversiCopy;
+        CheckRulesReversi newRules;
 
-        if (emptySpaces(reversi.getBoard()) <= depth) {
-            int[] move = bestMove(reversi, depth, player);
-            if (newRules.checkLegalMove(move[0], move[1], player)) {
-                return move;
-            } else {
-                System.out.println("illegale minimax move");
-                return pointsBoardMove(reversi, player);
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                reversiCopy = copyReversi(reversi);
+                newRules = new CheckRulesReversi(reversiCopy.getBoard(),reversiCopy.getPlayer());
+                // Checkt of hij de tegenstander kan laten passen
+                if (newRules.checkLegalMove(row,col,player)) {
+                    reversiCopy.makeMove(player,row,col);
+                    if (!reversiCopy.canPlay(Reversi.getOpponent(player))) {
+                        return new int[] {row, col};
+                    }
+                }
             }
         }
-        else {
-            return NewAI(reversi,player);
-        }
+
+        return pointsBoardMove(reversi,player);
+        //return bestMove(reversi, depth, player);
 
 
 
