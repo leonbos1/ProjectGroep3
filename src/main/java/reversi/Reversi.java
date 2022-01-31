@@ -7,14 +7,12 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class Reversi {
-    private Random randomMove;
     public Board board;
     private int player;
     ReversiAI ai;
     CheckRulesReversi rules;
 
     public Reversi(int player) {
-        this.randomMove = new Random();
         this.board = new Board(8,8);
         board.updateBoard(1, 3, 3);
         board.updateBoard(1, 4, 4);
@@ -140,9 +138,9 @@ public class Reversi {
         }
     }
 
-    public int[] AIMove(int player) {
+    public int[] AIMoveTry(int player, int depth) {
 
-        int[] result = ai.AIMove(this ,player, 60);
+        int[] result = ai.AIMove(this,player, depth);
 
         if (!rules.checkLegalMove(result[0],result[1],player)) {
             System.out.println("Illegaal!!!!!!!!!!!!!!!!");
@@ -153,6 +151,15 @@ public class Reversi {
         result[0] +=1;
         result[1] +=1;
 
+        return result;
+    }
+
+    public int[] AIMove(int player, int depth) {
+        int[] result = ai.AIMove(this, player, depth);
+
+        makeMove(player, result[0], result[1]);
+        result[0]++;
+        result[1]++;
         return result;
     }
 
@@ -167,14 +174,6 @@ public class Reversi {
             }
         }
         return moves;
-    }
-
-    public int[] randomAIMove(int player) {
-        int[] result = ai.RandomAIMove();
-
-        makeMove(player, result[0],result[1]);
-
-        return result;
     }
 
     public boolean canPlay(int player) {
@@ -220,6 +219,15 @@ public class Reversi {
         } else {
             return 1;
         }
+    }
+
+    public int[] AIPointMove(Reversi reversi, int player) {
+        int[] result = ReversiAI.pointsBoardMove(reversi, player);
+
+        makeMove(player, result[0], result[1]);
+        result[0]++;
+        result[1]++;
+        return result;
     }
 }
 

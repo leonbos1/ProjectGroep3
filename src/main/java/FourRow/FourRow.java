@@ -142,12 +142,7 @@ public class FourRow {
 
     public void AIMove(int player) {
 
-        int col = randomMove.nextInt(board.getWidth());
-        if (rules.checkLegalMove(col)) {
-            board.updateBoardFourRow(player, col);
-        } else {
-            AIMove(player);
-        }
+        makeMove(player, FourRowAI.AiMove(getBoard(),player));
 
     }
 
@@ -160,5 +155,20 @@ public class FourRow {
 
     public int[][] getBoardArray() {
             return board.board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public boolean boardFull() {
+        for (int row = 0; row < getBoardArray().length; row++) {
+            for (int col = 0; col < getBoardArray()[0].length; col++) {
+                if (getBoardArray()[row][col] == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

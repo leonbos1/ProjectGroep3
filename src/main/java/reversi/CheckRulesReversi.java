@@ -339,4 +339,5 @@ public class CheckRulesReversi {
             return 1;
         }
     }
+
 }

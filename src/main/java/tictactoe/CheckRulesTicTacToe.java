@@ -1,6 +1,6 @@
 package src.main.java.tictactoe;
 
-public class CheckRules {
+public class CheckRulesTicTacToe {
 
     /**
      * controleert of een zet legaal is

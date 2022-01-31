@@ -118,6 +118,8 @@ public class GUI extends Application {
     }
 
 
+
+
     public static class guiServerHub{
         private final Stage stage;
         private final Server server;
@@ -216,8 +218,81 @@ public class GUI extends Application {
 
     }
 
+    public void endGameAlert(String winner) {
+        Platform.runLater(
+                () -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Game ended");
+                    alert.setHeaderText(null);
+                    if (winner.equals("opponent")) {
+                        alert.setContentText(String.format("Helaas, je hebt verloren."));
+                    }
+                    else if (winner.equals("you")) {
+                        alert.setContentText(String.format("YES!, je hebt gewonnen."));
+                    }
+                    else {
+                        alert.setContentText(String.format("Gelijkspel!"));
+                    }
+                    alert.showAndWait();
 
+                });
+    }
 
+    public void Disconnect() {
+        Platform.runLater(
+                () -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Disconnect");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Disconnected from server");
+                    alert.showAndWait().ifPresent(buttonType -> {
+                        if (buttonType == buttonType.OK) {
+                            try {
+                                serverHubController.back();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            try {
+                                serverHubController.back();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                }
+        );
+    }
+
+    public void loginError() {
+        Platform.runLater(
+                () -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Login error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Ongeldige naam");
+                    alert.showAndWait().ifPresent(buttonType -> {
+                        if (buttonType == buttonType.OK) {
+                            try {
+                                serverHubController.back();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            try {
+                                serverHubController.back();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                }
+        );
+    }
 
     public void challengeAlert(String name, String game, String challengenumber) {
         Platform.runLater(
@@ -282,7 +357,7 @@ public class GUI extends Application {
         Reversi reversi = new Reversi(1);
         Stage stage = new Stage();
 
-        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer)));
+        stage.setScene(new Scene(reversiUI.createContent(reversi, false, multiplayer, false,null)));
         stage.show();
     }
 

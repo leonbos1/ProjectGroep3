@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.effect.Glow;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -16,9 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import src.main.java.reversi.CheckRulesReversi;
-import src.main.java.reversi.Reversi;
-import src.main.java.tictactoe.CheckRules;
+import src.main.java.tictactoe.CheckRulesTicTacToe;
 import src.main.java.tictactoe.TicTacToe;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -99,16 +96,16 @@ public class TicTacToeUI extends Application {
             }
         }
 
-        if (CheckRules.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) || CheckRules.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) || CheckRules.checkBoardFull(ticTacToe.getBoardArray())) {
+        if (CheckRulesTicTacToe.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) || CheckRulesTicTacToe.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) || CheckRulesTicTacToe.checkBoardFull(ticTacToe.getBoardArray())) {
 
             Alert gameOverAlert = new Alert(Alert.AlertType.CONFIRMATION);
             gameOverAlert.setTitle("Game over");
             gameOverAlert.setHeaderText(null);
 
-            if (CheckRules.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength())) {
+            if (CheckRulesTicTacToe.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength())) {
                 gameOverAlert.setContentText("Je hebt gewonnen!\nWil je nog een keer spelen?");
             }
-            else if (CheckRules.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength())) {
+            else if (CheckRulesTicTacToe.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength())) {
                 gameOverAlert.setContentText("De ai heeft gewonnen!\nWil je nog een keer spelen?");
             }
             else {gameOverAlert.setContentText("Gelijkspel!!\nWil je nog een keer spelen?");}
@@ -177,16 +174,16 @@ public class TicTacToeUI extends Application {
 
             if (!online) {
                 setOnMouseClicked(event -> {
-                    if (turn.get() == player && (!CheckRules.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) && (!CheckRules.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) && !(CheckRules.checkBoardFull(ticTacToe.getBoardArray()))))) {
+                    if (turn.get() == player && (!CheckRulesTicTacToe.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) && (!CheckRulesTicTacToe.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) && !(CheckRulesTicTacToe.checkBoardFull(ticTacToe.getBoardArray()))))) {
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            if (CheckRules.checkLegalMove(ticTacToe.getBoardArray(), getRow(), getCol())) {
+                            if (CheckRulesTicTacToe.checkLegalMove(ticTacToe.getBoardArray(), getRow(), getCol())) {
                                 ticTacToe.makeMove(getRow(), getCol());
                                 updateBoard();
                                 turn.set(changeTurn(turn.get()));
                             }
                         }
                     }
-                    if (turn.get() == ticTacToe.getOpponent(player) && (!CheckRules.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) && (!CheckRules.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) && !(CheckRules.checkBoardFull(ticTacToe.getBoardArray()))))) {
+                    if (turn.get() == ticTacToe.getOpponent(player) && (!CheckRulesTicTacToe.checkWinner(ticTacToe.getBoardArray(), player, ticTacToe.getBoardWinLength()) && (!CheckRulesTicTacToe.checkWinner(ticTacToe.getBoardArray(), ticTacToe.getOpponent(player), ticTacToe.getBoardWinLength()) && !(CheckRulesTicTacToe.checkBoardFull(ticTacToe.getBoardArray()))))) {
                         ticTacToe.aiMove(ticTacToe.getOpponent(player));
                         updateBoard();
                         turn.set(changeTurn(turn.get()));

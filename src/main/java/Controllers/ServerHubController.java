@@ -1,16 +1,21 @@
 package src.main.java.Controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import src.main.java.main.GUI;
 import src.main.java.main.Server;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,9 +33,16 @@ public class ServerHubController extends GUI {
     Stage stage;
     Parent root;
     Thread autoRefresh;
+    String playType;
+
+    @FXML
+    Label subscribeLabel;
 
     @FXML
     Button backButton;
+
+    @FXML
+    ToggleButton toggleManual;
 
     Server server;
 
@@ -41,7 +53,15 @@ public class ServerHubController extends GUI {
             while (running.get()) {
                 try {
                     Thread.sleep(1000);
-                    refreshPlayers();
+                    Platform.runLater(
+                            () -> {
+                                try {
+                                    refreshPlayers();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
                 } catch (InterruptedException e) {
                     running.set(false);
                 }
@@ -98,34 +118,37 @@ public class ServerHubController extends GUI {
 
     @FXML
     public void back() throws IOException {
-        server.endConnection();
+
         autoRefresh.stop();
         stage = (Stage) backButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getClassLoader().getResource("Start.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        try {
+            server.endConnection();
+        }
+        catch (Error ignored) {
+
+        }
     }
 
 
     @FXML
     private void subscribeTicTacToe(){
+        setSubscribeLabel("Tic-tac-toe");
         server.subscribe("tic-tac-toe");
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Succes!");
-        alert.setHeaderText(null);
-        alert.setContentText("Succesvol aangemeld voor TicTacToe!");
-        alert.showAndWait();
     }
 
     @FXML
     private void subscribeReversi(){
+        setSubscribeLabel("Reversi");
         server.subscribe("Reversi");
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Succes!");
-        alert.setHeaderText(null);
-        alert.setContentText("Succesvol aangemeld voor Reversi!");
-        alert.showAndWait();
+    }
+
+    @FXML
+    private void setSubscribeLabel(String text) {
+        subscribeLabel.setText("Subscribe: "+text);
     }
 
     public void setServer(Server server) {
@@ -134,5 +157,24 @@ public class ServerHubController extends GUI {
 
     public void setPlayerlist(ArrayList<String> playerlist) {
         this.playerlist = playerlist;
+    }
+
+    public void toggleManual(ActionEvent event) {
+        Color red = Color.decode("#FF0000");
+        Color green = Color.decode("#00ff00");
+
+        if (toggleManual.getText().equals("AI")) {
+            server.setManual(true);
+            System.out.println("Nu manual!");
+            toggleManual.setText("Manual");
+            toggleManual.setStyle("-fx-text-fill: white; -fx-background-radius: 100; -fx-background-color: #00FF00;");
+        }
+        else {
+            server.setManual(false);
+            toggleManual.setText("AI");
+            toggleManual.setStyle("-fx-text-fill: white; -fx-background-radius: 100; -fx-background-color: #FF0000;");
+
+        }
+
     }
 }
