@@ -142,7 +142,7 @@ class main{
                             }
                         }
                     } else {
-                        move = game.AIMove(turn);
+                        move = game.AIMove(turn,turn);
                         System.out.println("De ai doet row: " + (move[0] + 1) + " col: " + (move[1] + 1));
                         game.getBoard().showBoard();
                     }
