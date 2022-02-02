@@ -28,7 +28,7 @@ public class Experiment {
 
             if (turn == 1 && reversi.canPlay(2) && !reversi.gameOver()) {
                 moveTime = System.currentTimeMillis();
-                reversi.AIMove(1, depth1);
+                reversi.AIMove(1);
                 moveTime = System.currentTimeMillis() - moveTime;
                 totaltime1 += moveTime;
                 turn = 2;
@@ -38,7 +38,7 @@ public class Experiment {
 
             while (!reversi.canPlay(2) && !reversi.gameOver()) {
                 moveTime = System.currentTimeMillis();
-                reversi.AIMove(1, depth1);
+                reversi.AIMove(1);
                 moveTime = System.currentTimeMillis() - moveTime;
                 totaltime1 += moveTime;
                 moveCounter1++;
@@ -72,7 +72,7 @@ public class Experiment {
             System.out.println("minimax verliest");
         }
 
-        System.out.printf("aantal gezette stenen: %s \n", 64-ReversiAI.emptySpaces(reversi.getBoard()));
+        System.out.printf("aantal gezette stenen: %s \n", 64-ReversiAI.emptySpaces(reversi.getBoardArray()));
 
         System.out.printf("avg duration 1: %s\n", totaltime1 / moveCounter1);
 

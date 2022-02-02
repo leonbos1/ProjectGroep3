@@ -2,8 +2,6 @@ package src.main.java.reversi;
 
 import src.main.java.main.Board;
 
-import java.util.List;
-import java.util.Random;
 import java.util.ArrayList;
 
 public class Reversi {
@@ -138,9 +136,9 @@ public class Reversi {
         }
     }
 
-    public int[] AIMoveTry(int player, int depth) {
+    public Integer[] AIMoveTry(int player) {
 
-        int[] result = ai.AIMove(this,player, depth);
+        Integer[] result = ai.AIMove(this,player);
 
         if (!rules.checkLegalMove(result[0],result[1],player)) {
             System.out.println("Illegaal!!!!!!!!!!!!!!!!");
@@ -154,8 +152,8 @@ public class Reversi {
         return result;
     }
 
-    public int[] AIMove(int player, int depth) {
-        int[] result = ai.AIMove(this, player, depth);
+    public Integer[] AIMove(int player) {
+        Integer[] result = ai.AIMove(this, player);
 
         makeMove(player, result[0], result[1]);
         result[0]++;
