@@ -316,7 +316,7 @@ public class ReversiUI extends Application {
     private void Aimove() {
 
         if (turn == Reversi.getOpponent(player) && reversi.canPlay(Reversi.getOpponent(player)) && !reversi.gameOver()) {
-            reversi.AIMove(Reversi.getOpponent(player));
+            Integer[] s = reversi.AIMove(Reversi.getOpponent(player));
             updateBoard();
             changeTurn();
         }

@@ -138,7 +138,7 @@ public class Reversi {
 
     public Integer[] AIMoveTry(int player) {
 
-        Integer[] result = ai.AIMove(this,player);
+        Integer[] result = ai.AIMove(this,player, 10);
 
         if (!rules.checkLegalMove(result[0],result[1],player)) {
             System.out.println("Illegaal!!!!!!!!!!!!!!!!");
@@ -153,7 +153,7 @@ public class Reversi {
     }
 
     public Integer[] AIMove(int player) {
-        Integer[] result = ai.AIMove(this, player);
+        Integer[] result = ai.AIMove(this, player, 8);
 
         makeMove(player, result[0], result[1]);
         result[0]++;
@@ -219,8 +219,8 @@ public class Reversi {
         }
     }
 
-    public int[] AIPointMove(Reversi reversi, int player) {
-        int[] result = ReversiAI.pointsBoardMove(reversi, player);
+    public Integer[] AIPointMove(Reversi reversi, int player) {
+        Integer[] result = ReversiAI.pointsBoardMove(reversi, player);
 
         makeMove(player, result[0], result[1]);
         result[0]++;

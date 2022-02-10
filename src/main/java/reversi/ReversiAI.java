@@ -6,7 +6,7 @@ import java.util.*;
 
 public class ReversiAI {
 
-    private static final int[][] pointsBoard = new int[][]{
+    private static final Integer[][] pointsBoard = new Integer[][]{
             {500, -100, 100, 100, 100, 100, -100, 500},
             {-100, -200, -50, -50, -50, -50, -200, -100},
             {100, -50, 100, 75, 75, 100, -50, 100},
@@ -96,9 +96,9 @@ public class ReversiAI {
         return possibleMoves;
     }
 
-    public static int[] pointsBoardMove(Reversi reversi, int player) {
+    public static Integer[] pointsBoardMove(Reversi reversi, int player) {
         int highestScore = -1000;
-        int[] highestPosition = new int[]{-1, -1};
+        Integer[] highestPosition = new Integer[]{-1, -1};
         ArrayList<int[]> possibleMoves = possibleMoves(reversi, player);
 
         for (int[] position : possibleMoves) {
@@ -126,16 +126,16 @@ public class ReversiAI {
         if (System.currentTimeMillis() > (startTime + 9500) || isTerminalNode(board, player)  || depth == 0) {
             return evaluateBoard(board,player);
         }
-
+        int[][] board2;
         int bestScore;
         if (myTurn) {
             bestScore = Integer.MIN_VALUE;
             for (int row = 0; row < 8; row++) {
                 for (int col = 0; col < 8; col++) {
                     if (AIStatic.checkLegalMove(board,row, col, player)) {
-                        board = boardCopy(board);
-                        board = AIStatic.makeMove(board, player, row, col);
-                        bestScore = Math.max(bestScore, AlphaBeta(board, depth - 1, false, player, alpha, beta, startTime));
+                        board2 = boardCopy(board);
+                        board2 = AIStatic.makeMove(board2, player, row, col);
+                        bestScore = Math.max(bestScore, AlphaBeta(board2, depth - 1, false, player, alpha, beta, startTime));
                         alpha = Math.max(alpha, bestScore);
                         if (beta <= alpha) {
                             break;
@@ -148,9 +148,9 @@ public class ReversiAI {
             for (int row = 0; row < 8; row++) {
                 for (int col = 0; col < 8; col++) {
                     if (AIStatic.checkLegalMove(board, row, col, Reversi.getOpponent(player))) {
-                        board = boardCopy(board);
-                        board = AIStatic.makeMove(board, Reversi.getOpponent(player), row, col);
-                        bestScore = Math.min(bestScore, AlphaBeta(board, depth - 1, true, player, alpha, beta, startTime));
+                        board2 = boardCopy(board);
+                        board2 = AIStatic.makeMove(board2, Reversi.getOpponent(player), row, col);
+                        bestScore = Math.min(bestScore, AlphaBeta(board2, depth - 1, true, player, alpha, beta, startTime));
                         beta = Math.min(beta, bestScore);
                         if (beta <= alpha) {
                             break;
@@ -239,11 +239,13 @@ public class ReversiAI {
         return bestMove;
     }
 
-    public Integer[] AIMove(Reversi reversi, int player) {
-        int depth = 10;
+    public Integer[] AIMove(Reversi reversi, int player, int depth) {
         Reversi reversi1 = copyReversi(reversi);
         int[][] board = reversi1.getBoardArray();
-        return bestMove(board, depth, player);
+        if (emptySpaces(reversi.getBoardArray()) < 50) {
+            return bestMove(board, depth, player);
+        }
+        return pointsBoardMove(reversi1, player);
 
     }
 
