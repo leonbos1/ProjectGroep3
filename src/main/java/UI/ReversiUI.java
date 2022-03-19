@@ -316,12 +316,12 @@ public class ReversiUI extends Application {
     private void Aimove() {
 
         if (turn == Reversi.getOpponent(player) && reversi.canPlay(Reversi.getOpponent(player)) && !reversi.gameOver()) {
-            reversi.AIMove(Reversi.getOpponent(player),8);
+            Integer[] s = reversi.AIMove(Reversi.getOpponent(player));
             updateBoard();
             changeTurn();
         }
         while (!reversi.canPlay(player) && !reversi.gameOver()) {
-            reversi.AIMove(Reversi.getOpponent(player),8);
+            reversi.AIMove(Reversi.getOpponent(player));
             updateBoard();
         }
     }
